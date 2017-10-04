@@ -6,10 +6,10 @@ services:
       context: .
       dockerfile: api.Dockerfile
     environment:
-      - VIRTUAL_HOST: "api.micro-twitter.quazarus.com"
-      - VIRTUAL_PORT: 8080
-      - BUILD_NO: ${BUILD_NO}
-      - COMMIT: ${COMMIT}
+      VIRTUAL_HOST: api.micro-twitter.quazarus.com
+      VIRTUAL_PORT: 8080
+      BUILD_NO: ${BUILD_NO}
+      COMMIT: ${COMMIT}
     networks:
       - nginx-proxy
 
