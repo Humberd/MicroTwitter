@@ -12,6 +12,15 @@ services:
       COMMIT: ${COMMIT}
     networks:
       - nginx-proxy
+  api-test-reports:
+    build:
+      context: .
+      dockerfile: api.test-reports.Dockerfile
+    environment:
+      VIRTUAL_HOST: test-reports.micro-twitter.quazarus.com
+      VIRTUAL_PORT: 80
+    networks:
+      - ngxinx-proxy
 
 networks:
   nginx-proxy:

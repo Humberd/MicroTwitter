@@ -38,6 +38,7 @@ node {
                     dir("api") {
                         withMaven(maven: "Maven") {
                             sh "mvn test"
+                            sh "mvn jacoco:report"
                         }
                     }
                 }
