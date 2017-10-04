@@ -15,7 +15,7 @@ services:
   api-test-reports:
     build:
       context: .
-      dockerfile: api.test-reports.Dockerfile
+      dockerfile: test-reports.Dockerfile
     environment:
       VIRTUAL_HOST: test-reports.micro-twitter.quazarus.com
       VIRTUAL_PORT: 80
