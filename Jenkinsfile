@@ -20,15 +20,28 @@ node {
     }
 
     stage("Build") {
-        withMaven(maven: "Maven") {
-            sh "mvn clean install -DskipTests=true"
-        }
+        parallel(
+                API: {
+                    dir("api") {
+                        withMaven(maven: "Maven") {
+                            sh "mvn clean install -DskipTests=true"
+                        }
+                    }
+                }
+        )
+
     }
 
     stage("Test") {
-        withMaven(maven: "Maven") {
-            sh "mvn test"
-        }
+        parallel(
+                API: {
+                    dir("api") {
+                        withMaven(maven: "Maven") {
+                            sh "mvn test"
+                        }
+                    }
+                }
+        )
     }
 
     stage("Deploy") {
