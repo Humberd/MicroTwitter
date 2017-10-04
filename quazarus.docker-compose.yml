@@ -20,7 +20,7 @@ services:
       VIRTUAL_HOST: test-reports.micro-twitter.quazarus.com
       VIRTUAL_PORT: 80
     networks:
-      - ngxinx-proxy
+      - nginx-proxy
 
 networks:
   nginx-proxy:
