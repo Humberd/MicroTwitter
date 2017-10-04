@@ -1,6 +1,6 @@
 FROM openjdk:8-jdk-alpine
 VOLUME /tmp
-COPY target/microtwitter*.jar microtwitter.jar
+COPY ui/target/microtwitter*.jar microtwitter.jar
 ENV JAVA_OPTS=""
 
 EXPOSE 8080
