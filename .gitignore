@@ -5,6 +5,7 @@
 
 # User-specific stuff:
 .idea/**/workspace.xml
+.idea/sonarlint
 .idea/**/tasks.xml
 .idea/dictionaries
 

@@ -12,7 +12,14 @@ services:
       COMMIT: ${COMMIT}
     networks:
       - nginx-proxy
-  api-test-reports:
+      - db
+
+  postgres:
+    image: postgres:10-alpine
+    networks:
+      - db
+
+  test-reports:
     build:
       context: .
       dockerfile: test-reports.Dockerfile
@@ -26,3 +33,4 @@ networks:
   nginx-proxy:
     external:
       name: nginx-proxy
+  db:
