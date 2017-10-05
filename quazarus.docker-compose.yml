@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: api.Dockerfile
+    depends_on:
+      - postgres
     environment:
       VIRTUAL_HOST: api.micro-twitter.quazarus.com
       VIRTUAL_PORT: 8080
