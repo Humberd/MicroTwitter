@@ -1,6 +1,5 @@
 package pl.bas.microtwitter.dao
 
-import org.springframework.data.annotation.Id
 import javax.persistence.*
 
 @Entity

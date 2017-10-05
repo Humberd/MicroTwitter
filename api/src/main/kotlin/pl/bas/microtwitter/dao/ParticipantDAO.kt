@@ -1,6 +1,5 @@
 package pl.bas.microtwitter.dao
 
-import org.springframework.data.annotation.Id
 import javax.persistence.*
 
 @Entity
@@ -17,6 +16,4 @@ data class ParticipantDAO(
         @ManyToOne
         @JoinColumn
         var event: EventDAO? = null
-) {
-
-}
+)

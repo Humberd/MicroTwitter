@@ -26,6 +26,7 @@
         <kotlin.version>1.1.51</kotlin.version>
         <kotlin-logging.version>1.4.6</kotlin-logging.version>
         <jacoco.version>0.7.9</jacoco.version>
+        <hibernate-core.version>5.2.11.Final</hibernate-core.version>
 
         <start-class>pl.bas.microtwitter.MicrotwitterApplication</start-class>
     </properties>
@@ -101,11 +102,16 @@
             <artifactId>junit-jupiter-api</artifactId>
             <version>RELEASE</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate-core.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
-        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
-        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
