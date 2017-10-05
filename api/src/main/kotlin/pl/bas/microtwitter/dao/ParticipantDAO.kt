@@ -7,13 +7,13 @@ import javax.persistence.*
 data class ParticipantDAO(
         @Id
         @Column(name = "id")
-        @GeneratedValue(strategy = GenerationType.SEQUENCE)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Int = 0,
 
         @Column(name = "name")
         var name: String,
 
-        @ManyToOne
-        @JoinColumn
+        @ManyToOne(fetch = FetchType.EAGER)
+        @JoinColumn(name = "event_id")
         var event: EventDAO? = null
 )

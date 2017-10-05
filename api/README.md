@@ -50,3 +50,4 @@ mvn test
 # Helpful links (dont remove)
 
 https://medium.com/@crsandeep/creating-and-testing-a-kotlin-restful-web-services-using-spring-boot-1a11aeda279e
+http://javasampleapproach.com/spring-framework/spring-data/kotlin-springjpa-hibernate-one-many-relationship

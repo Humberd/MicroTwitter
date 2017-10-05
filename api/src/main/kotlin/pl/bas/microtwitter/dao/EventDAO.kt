@@ -7,7 +7,7 @@ import javax.persistence.*
 data class EventDAO(
         @Id
         @Column(name = "id")
-        @GeneratedValue(strategy = GenerationType.SEQUENCE)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Int = 0,
 
         @Column(name = "title")
@@ -16,7 +16,7 @@ data class EventDAO(
         @Column(name = "description")
         var description: String,
 
-        @OneToMany(mappedBy = "event")
+        @OneToMany(mappedBy = "event", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
         @OrderColumn(name = "id")
-        var participants: Array<ParticipantDAO>
+        var participants: List<ParticipantDAO> = emptyList()
 )
