@@ -24,7 +24,7 @@ node {
                 API: {
                     dir("api") {
                         withMaven(maven: "Maven") {
-                            sh "mvn clean install -DskipTests=true -Dspring.profiles.active=development"
+                            sh "mvn clean install -DskipTests=true -Dspring.profiles.active=production"
                         }
                     }
                 }
@@ -37,7 +37,7 @@ node {
                 API: {
                     dir("api") {
                         withMaven(maven: "Maven") {
-                            sh "mvn test"
+                            sh "mvn test -Dspring.profiles.active=production"
                             sh "mvn jacoco:report"
                         }
                     }
