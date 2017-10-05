@@ -1,8 +1,8 @@
 package pl.bas.microtwitter.repositories
 
 import org.springframework.data.repository.CrudRepository
-import pl.bas.microtwitter.dbmodels.Event
+import pl.bas.microtwitter.dao.EventDAO
 
-interface EventsRepository : CrudRepository<Event, Int> {
+interface EventRepository : CrudRepository<EventDAO, Int> {
 
 }
