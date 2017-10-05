@@ -16,6 +16,8 @@ services:
       - nginx-proxy
       - db
 
+  # todo add postgress configs: port, env, etc.
+  # todo apply these in test applicaiton properties
   postgres:
     image: postgres:10-alpine
     networks:

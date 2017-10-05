@@ -36,6 +36,7 @@ node {
         parallel(
                 API: {
                     dir("api") {
+
                         withMaven(maven: "Maven") {
                             sh "mvn test -Dspring.profiles.active=production"
                             sh "mvn jacoco:report"
