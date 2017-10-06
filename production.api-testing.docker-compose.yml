@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  postgres:
+      image: postgres:10-alpine
+      ports:
+        - "5435:5432"
+      environment:
+        POSTGRES_PASSWORD: admin-test
+      networks:
+        - db
+
+networks:
+  db:

@@ -1,3 +1,4 @@
+# this Dockerfile is responsible for hosting a
 FROM openjdk:8-jdk-alpine
 VOLUME /tmp
 COPY api/target/microtwitter*.jar microtwitter.jar

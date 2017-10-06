@@ -32,24 +32,30 @@ node {
 
     }
 
-//    stage("Test") {
-//        parallel(
-//                API: {
-//                    dir("api") {
-//                        sh "docker run --rm -d -p '5432:5432' --name postgres-test -e POSTGRES_PASSWORD=admin-test postgres:10-alpine"
-//                        withMaven(maven: "Maven") {
-//                            sh "mvn test"
-//                            sh "mvn jacoco:report"
-//                        }
-//
-//                        sh "docker stop postgres-test"
-//                    }
-//                }
-//        )
-//    }
+    stage("Test") {
+        parallel(
+                API: {
+                    dir("api") {
+                        dockerComposeFile = "production.api-testing.docker-compose.yml"
+
+                        sh "docker-compose -f ${dockerComposeFile} down --rmi all --remove-orphans"
+                        sh "docker-compose -f ${dockerComposeFile} up -d"
+
+                        try {
+                            withMaven(maven: "Maven") {
+                                sh "mvn test -Drun.jvmArguments='-Dspring.profiles.active=production'"
+                                sh "mvn jacoco:report"
+                            }
+                        } finally {
+                            sh "docker-compose -f ${dockerComposeFile} down --rmi all --remove-orphans"
+                        }
+                    }
+                }
+        )
+    }
 
     stage("Deploy") {
-        dockerComposeFile = "quazarus.docker-compose.yml"
+        dockerComposeFile = "production.deploy.docker-compose.yml"
 
         /**
          * Setting environment variables only for a docker container
