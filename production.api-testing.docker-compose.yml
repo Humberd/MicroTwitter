@@ -7,8 +7,3 @@ services:
         - "5435:5432"
       environment:
         POSTGRES_PASSWORD: admin-test
-      networks:
-        - db
-
-networks:
-  db:
