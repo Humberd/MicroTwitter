@@ -20,6 +20,10 @@ services:
   # todo apply these in test applicaiton properties
   postgres:
     image: postgres:10-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: admin123
     networks:
       - db
 

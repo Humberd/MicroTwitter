@@ -36,11 +36,13 @@ node {
         parallel(
                 API: {
                     dir("api") {
-
+                        sh "docker run --rm -d -p '5432:5432' --name postgres-test -e POSTGRES_PASSWORD=admin-test postgres:10-alpine"
                         withMaven(maven: "Maven") {
-                            sh "mvn test -Dspring.profiles.active=production"
+                            sh "mvn test"
                             sh "mvn jacoco:report"
                         }
+
+                        sh "docker stop postgres-test"
                     }
                 }
         )
