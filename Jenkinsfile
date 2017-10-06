@@ -24,7 +24,7 @@ node {
                 API: {
                     dir("api") {
                         withMaven(maven: "Maven") {
-                            sh "mvn clean install -DskipTests=true -Dspring.profiles.active=production"
+                            sh "mvn clean install -DskipTests=true"
                         }
                     }
                 }
