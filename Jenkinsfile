@@ -36,7 +36,7 @@ node {
         parallel(
                 API: {
                     dir("api") {
-                        dockerComposeFile = "production.api-testing.docker-compose.yml"
+                        dockerComposeFile = "../production.api-testing.docker-compose.yml"
 
                         sh "docker-compose -f ${dockerComposeFile} down --rmi all --remove-orphans"
                         sh "docker-compose -f ${dockerComposeFile} up -d"
