@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpStatus
+import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import pl.bas.microtwitter.dto.SignupDTO
 import pl.bas.microtwitter.helpers.EndpointTest
 
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
 internal class AuthControllerTest {
     @Autowired lateinit var http: TestRestTemplate
 
@@ -37,7 +39,17 @@ internal class AuthControllerTest {
 
         @Test
         fun `should not signup when there is no user with the same username`() {
+            val data = SignupDTO(
+                    username = "JanKowdalski",
+                    email = "jan@kowdalski.com",
+                    fullName = "Jan Kowdalski",
+                    password = "admin123"
+            )
 
+            val response = http.postForEntity(url, data, String::class.java)
+
+            assertNotNull(response)
+            assertEquals(response.statusCode, HttpStatus.INTERNAL_SERVER_ERROR)
         }
 
         @Test

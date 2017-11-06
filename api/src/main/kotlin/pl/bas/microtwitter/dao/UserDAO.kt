@@ -12,13 +12,24 @@ class UserDAO {
 
     @Column(name = "username")
     var username: String? = null
+    @Column(name = "lcusername", unique = true)
+    var lcusername: String? = null
 
     @Column(name = "email")
     var email: String? = null
+    @Column(name = "lcemail", unique = true)
+    var lcemail: String? = null
 
     @Column(name = "fullName")
     var fullName: String? = null
 
     @Column(name = "password")
     var password: String? = null
+
+    @PrePersist
+    @PreUpdate
+    fun prepare() {
+        lcusername = username?.toLowerCase()
+        lcemail = email?.toLowerCase()
+    }
 }
