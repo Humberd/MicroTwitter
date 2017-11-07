@@ -1,9 +1,11 @@
 package pl.bas.microtwitter.helpers
 
+import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.http.ResponseEntity
 import pl.bas.microtwitter.dto.SignupDTO
 
 object AuthHelper {
-    var user1: SignupDTO = SignupDTO("","","","")
+    var user1: SignupDTO = SignupDTO("", "", "", "")
         get() = SignupDTO(
                 username = "JanKowalski",
                 email = "jan@kowalski.com",
@@ -11,7 +13,7 @@ object AuthHelper {
                 password = "admin123"
         )
 
-    var user2: SignupDTO = SignupDTO("","","","")
+    var user2: SignupDTO = SignupDTO("", "", "", "")
         get() = SignupDTO(
                 username = "AdamNowak",
                 email = "adam@nowak.com",
@@ -19,7 +21,7 @@ object AuthHelper {
                 password = "admin1234"
         )
 
-    var user3: SignupDTO = SignupDTO("","","","")
+    var user3: SignupDTO = SignupDTO("", "", "", "")
         get() = SignupDTO(
                 username = "StefanBatory",
                 email = "stefan@Batory.pl",
@@ -27,10 +29,14 @@ object AuthHelper {
                 password = "password"
         )
 
-//    fun login(http: TestRestTemplate,
-//              user: SignupDTO = user1):  {
-//
-//    }
+    fun signUp(http: TestRestTemplate,
+               user: SignupDTO = user1): ResponseEntity<String> {
+        return http.postForEntity("/auth/signup", user1, String::class.java)
+    }
 
-//    fun login()
+    fun login(http: TestRestTemplate,
+              user: SignupDTO = user1): ResponseEntity<String> {
+        return http.postForEntity("/auth/login", user1, String::class.java)
+    }
+
 }

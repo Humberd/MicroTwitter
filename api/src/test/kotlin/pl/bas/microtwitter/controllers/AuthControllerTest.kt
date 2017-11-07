@@ -1,6 +1,6 @@
 package pl.bas.microtwitter.controllers
 
-import org.junit.jupiter.api.AfterEach
+import mu.KLogging
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpStatus
-import org.springframework.test.annotation.Rollback
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.transaction.annotation.Transactional
 import pl.bas.microtwitter.helpers.AuthHelper
@@ -25,6 +24,8 @@ internal class AuthControllerTest {
     @Autowired lateinit var http: TestRestTemplate
     @Autowired lateinit var userRepository: UserRepository
 
+    companion object : KLogging()
+
     @Nested
     inner class signup : EndpointTest("/auth/signup") {
         @BeforeEach
@@ -34,7 +35,7 @@ internal class AuthControllerTest {
 
         @Test
         fun `should sign up a new user`() {
-            http.postForEntity(url, AuthHelper.user1, String::class.java).apply {
+            AuthHelper.signUp(http, AuthHelper.user3).apply {
                 assertEquals(this.statusCode, HttpStatus.OK)
                 assertFalse(this.body!!.equals(""))
             }
@@ -42,30 +43,28 @@ internal class AuthControllerTest {
 
         @Test
         fun `should not signup when there is user with the same username`() {
-            http.postForEntity(url, AuthHelper.user1, String::class.java).apply {
+            AuthHelper.signUp(http, AuthHelper.user3).apply {
                 assertEquals(this.statusCode, HttpStatus.OK)
             }
 
-
             val userWithSameUsername = AuthHelper.user2.apply {
-                this.username = AuthHelper.user1.username
+                this.username = AuthHelper.user3.username
             }
-            http.postForEntity(url, userWithSameUsername, String::class.java).apply {
+            AuthHelper.signUp(http, userWithSameUsername).apply {
                 assertEquals(this.statusCode, HttpStatus.INTERNAL_SERVER_ERROR)
             }
         }
 
         @Test
         fun `should not signup when there is user with the same email`() {
-            http.postForEntity(url, AuthHelper.user1, String::class.java).apply {
+            AuthHelper.signUp(http, AuthHelper.user3).apply {
                 assertEquals(this.statusCode, HttpStatus.OK)
             }
 
-
             val userWithSameEmail = AuthHelper.user2.apply {
-                this.email = AuthHelper.user1.email
+                this.email = AuthHelper.user3.email
             }
-            http.postForEntity(url, userWithSameEmail, String::class.java).apply {
+            AuthHelper.signUp(http, userWithSameEmail).apply {
                 assertEquals(this.statusCode, HttpStatus.INTERNAL_SERVER_ERROR)
             }
         }
@@ -75,13 +74,27 @@ internal class AuthControllerTest {
 
     @Nested
     inner class login : EndpointTest("/auth/login") {
+        @BeforeEach
+        internal fun setUp() {
+            userRepository.deleteAll()
+        }
+
         @Test
         fun `should login a user`() {
+            AuthHelper.signUp(http)
 
+            AuthHelper.login(http).apply {
+                assertEquals(this.statusCode, HttpStatus.OK)
+                assert(this.headers.get("Authorization")?.get(0)?.startsWith("Bearer")!!)
+                assert(this.headers.get("Authorization")?.get(0)?.length!! > 20)
+            }
         }
 
         @Test
         fun `should not login a not existing user`() {
+            AuthHelper.login(http).apply {
+                assertEquals(this.statusCode, HttpStatus.FORBIDDEN)
+            }
         }
     }
 
