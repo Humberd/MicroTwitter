@@ -8,7 +8,7 @@ class UserDAO {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: String? = null
+    var id: Int? = null
 
     @Column(name = "username")
     var username: String? = null

@@ -12,11 +12,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 internal class AppControllerTest {
-    @Autowired lateinit var testRestTemplate: TestRestTemplate
+    @Autowired lateinit var http: TestRestTemplate
 
     @Test
     fun getStatus() {
-        val response = testRestTemplate.getForEntity("/app/status", String::class.java)
+        val response = http.getForEntity("/app/status", String::class.java)
 
         assertNotNull(response)
         assertEquals(response.statusCode, HttpStatus.OK)
@@ -25,7 +25,7 @@ internal class AppControllerTest {
 
     @Test
     fun ping() {
-        val response = testRestTemplate.getForEntity("/app/ping", String::class.java)
+        val response = http.getForEntity("/app/ping", String::class.java)
 
         assertNotNull(response)
         assertEquals(response.statusCode, HttpStatus.OK)

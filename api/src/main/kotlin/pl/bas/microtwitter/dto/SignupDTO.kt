@@ -1,9 +1,9 @@
 package pl.bas.microtwitter.dto
 
 data class SignupDTO(
-        val username: String,
-        val email: String,
-        val fullName: String,
-        val password: String
+        var username: String,
+        var email: String,
+        var fullName: String,
+        var password: String
 )
 
