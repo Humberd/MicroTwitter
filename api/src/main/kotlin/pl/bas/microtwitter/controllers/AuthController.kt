@@ -33,6 +33,7 @@ class AuthController {
 
     @PostMapping("login")
     fun login(): ResponseEntity<Unit> {
+        userRepository.fin
         return ResponseEntity.ok(Unit)
     }
 
