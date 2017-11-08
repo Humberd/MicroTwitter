@@ -28,6 +28,7 @@ internal class AuthControllerTest {
     @Autowired lateinit var http: TestRestTemplate
     @Autowired lateinit var userRepository: UserRepository
 
+
     companion object : KLogging()
 
     @Nested
@@ -40,7 +41,7 @@ internal class AuthControllerTest {
         @Test
         fun `should sign up a new user`() {
             AuthHelper.signUp(http, AuthHelper.user3).apply {
-                assertEquals(this.statusCode, HttpStatus.OK)
+                assertEquals(HttpStatus.OK, this.statusCode)
                 assertFalse(this.body!!.equals(""))
             }
         }
@@ -48,28 +49,28 @@ internal class AuthControllerTest {
         @Test
         fun `should not signup when there is user with the same username`() {
             AuthHelper.signUp(http, AuthHelper.user3).apply {
-                assertEquals(this.statusCode, HttpStatus.OK)
+                assertEquals(HttpStatus.OK, this.statusCode)
             }
 
             val userWithSameUsername = AuthHelper.user2.apply {
                 this.username = AuthHelper.user3.username
             }
             AuthHelper.signUp(http, userWithSameUsername).apply {
-                assertEquals(this.statusCode, HttpStatus.INTERNAL_SERVER_ERROR)
+                assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, this.statusCode)
             }
         }
 
         @Test
         fun `should not signup when there is user with the same email`() {
             AuthHelper.signUp(http, AuthHelper.user3).apply {
-                assertEquals(this.statusCode, HttpStatus.OK)
+                assertEquals(HttpStatus.OK, this.statusCode)
             }
 
             val userWithSameEmail = AuthHelper.user2.apply {
                 this.email = AuthHelper.user3.email
             }
             AuthHelper.signUp(http, userWithSameEmail).apply {
-                assertEquals(this.statusCode, HttpStatus.INTERNAL_SERVER_ERROR)
+                assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, this.statusCode)
             }
         }
 
@@ -88,7 +89,7 @@ internal class AuthControllerTest {
             AuthHelper.signUp(http)
 
             AuthHelper.login(http).apply {
-                assertEquals(this.statusCode, HttpStatus.OK)
+                assertEquals(HttpStatus.OK, this.statusCode)
                 assert(this.headers.get("Authorization")?.get(0)?.startsWith("Bearer")!!)
                 assert(this.headers.get("Authorization")?.get(0)?.length!! > 20)
             }
@@ -97,7 +98,7 @@ internal class AuthControllerTest {
         @Test
         fun `should not login a not existing user`() {
             AuthHelper.login(http).apply {
-                assertEquals(this.statusCode, HttpStatus.FORBIDDEN)
+                assertEquals(HttpStatus.FORBIDDEN, this.statusCode)
             }
         }
     }
@@ -120,11 +121,11 @@ internal class AuthControllerTest {
             )
 
             http.exchange(url, HttpMethod.POST, HttpEntity(data, authHeaders), String::class.java).apply {
-                assertEquals(this.statusCode, HttpStatus.OK)
+                assertEquals(HttpStatus.OK, this.statusCode)
             }
 
             AuthHelper.login(http, AuthHelper.user1.apply { password = "admin" }).apply {
-                assertEquals(this.statusCode, HttpStatus.OK)
+                assertEquals(HttpStatus.OK, this.statusCode)
             }
         }
     }

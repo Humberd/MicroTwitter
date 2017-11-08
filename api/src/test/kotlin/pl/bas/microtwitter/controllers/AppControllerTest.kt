@@ -18,8 +18,7 @@ internal class AppControllerTest {
     fun getStatus() {
         val response = http.getForEntity("/app/status", String::class.java)
 
-        assertNotNull(response)
-        assertEquals(response.statusCode, HttpStatus.OK)
+        assertEquals(HttpStatus.OK, response.statusCode)
         assertTrue(response.body?.length!! > 0)
     }
 
@@ -27,9 +26,8 @@ internal class AppControllerTest {
     fun ping() {
         val response = http.getForEntity("/app/ping", String::class.java)
 
-        assertNotNull(response)
-        assertEquals(response.statusCode, HttpStatus.OK)
-        assertEquals(response.body, "pong")
+        assertEquals(HttpStatus.OK, response.statusCode)
+        assertEquals("pong", response.body)
     }
 
 }

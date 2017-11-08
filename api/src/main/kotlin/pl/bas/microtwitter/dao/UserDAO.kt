@@ -26,6 +26,14 @@ class UserDAO {
     @Column(name = "password")
     var password: String? = null
 
+    @OneToMany(mappedBy = "user", cascade = arrayOf(CascadeType.ALL))
+    @OrderColumn(name = "id")
+    var tweets: List<TweetDAO> = emptyList()
+
+    @OneToMany(mappedBy = "user", cascade = arrayOf(CascadeType.ALL))
+    @OrderColumn(name = "id")
+    var likes: List<TweetLikeDAO> = emptyList()
+
     @PrePersist
     @PreUpdate
     fun prepare() {

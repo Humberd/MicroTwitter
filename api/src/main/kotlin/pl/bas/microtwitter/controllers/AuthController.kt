@@ -19,7 +19,6 @@ import pl.bas.microtwitter.repositories.UserRepository
 class AuthController(
         val userRepository: UserRepository,
         val bCryptPasswordEncoder: BCryptPasswordEncoder) {
-
     companion object : KLogging()
 
     @Transactional
