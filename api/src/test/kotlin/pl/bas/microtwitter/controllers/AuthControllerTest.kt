@@ -10,9 +10,13 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.transaction.annotation.Transactional
+import pl.bas.microtwitter.dto.UpdatePasswordDTO
 import pl.bas.microtwitter.helpers.AuthHelper
 import pl.bas.microtwitter.helpers.EndpointTest
 import pl.bas.microtwitter.repositories.UserRepository
@@ -100,6 +104,29 @@ internal class AuthControllerTest {
 
     @Nested
     inner class updatePassword : EndpointTest("/auth/password") {
+        lateinit var authHeaders: HttpHeaders
+
+        @BeforeEach
+        fun setUp() {
+            userRepository.deleteAll()
+            authHeaders = AuthHelper.signupAndLogin(http)
+        }
+
+        @Test
+        fun `should update a user password`() {
+            val data = UpdatePasswordDTO(
+                    oldPassword = "admin123",
+                    newPassword = "admin"
+            )
+
+            http.exchange(url, HttpMethod.POST, HttpEntity(data, authHeaders), String::class.java).apply {
+                assertEquals(this.statusCode, HttpStatus.OK)
+            }
+
+            AuthHelper.login(http, AuthHelper.user1.apply { password = "admin" }).apply {
+                assertEquals(this.statusCode, HttpStatus.OK)
+            }
+        }
     }
 
 }
