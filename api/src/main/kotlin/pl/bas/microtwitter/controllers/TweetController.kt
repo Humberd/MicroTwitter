@@ -1,8 +1,11 @@
 package pl.bas.microtwitter.controllers
 
 import mu.KLogging
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import pl.bas.microtwitter.builders.ResponseBuilder
 import pl.bas.microtwitter.dao.TweetDAO
 import pl.bas.microtwitter.dao.TweetLikeDAO
 import pl.bas.microtwitter.dao.UserDAO
@@ -18,7 +21,8 @@ import javax.transaction.Transactional
 @RequestMapping("/tweets")
 class TweetController(
         val tweetRepository: TweetRepository,
-        val tweetLikeRepository: TweetLikeRepository) {
+        val tweetLikeRepository: TweetLikeRepository,
+        val responseBuilder: ResponseBuilder) {
     companion object : KLogging()
 
     @PostMapping("/")
@@ -30,7 +34,7 @@ class TweetController(
         }
         val tweet = tweetRepository.save(tweetData)
 
-        return ResponseEntity.ok(buildTweetResponseDTO(tweet, tweetLikeRepository))
+        return ResponseEntity.ok(responseBuilder.buildTweetResponse(tweet))
     }
 
     @Transactional
@@ -59,6 +63,13 @@ class TweetController(
 
         tweetLikeRepository.save(tweetLike)
 
-        return ResponseEntity.ok(buildTweetResponseDTO(tweet, tweetLikeRepository))
+        return ResponseEntity.ok(responseBuilder.buildTweetResponse(tweet))
+    }
+
+    @GetMapping("/")
+    fun getTweets(@RequestParam username: String,
+                  pageable: Pageable): ResponseEntity<Page<TweetResponseDTO>> {
+        val page = tweetRepository.findAllByUserLcusername(username.toLowerCase(), pageable)
+        return ResponseEntity.ok(page.map { tweet -> responseBuilder.buildTweetResponse(tweet) })
     }
 }

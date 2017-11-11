@@ -17,6 +17,7 @@ data class TweetUserResponseDTO(
         var username: String?
 )
 
+
 fun buildTweetResponseDTO(tweet: TweetDAO, tweetLikeRepository: TweetLikeRepository): TweetResponseDTO {
     return TweetResponseDTO(
             id = tweet.id,
