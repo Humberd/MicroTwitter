@@ -5,6 +5,7 @@ RUN hostname
 COPY api/target/ microtwitter/
 RUN ls
 RUN ls microtwitter -al
+RUN ls microtwitter/site -al
 
 EXPOSE 80
 
