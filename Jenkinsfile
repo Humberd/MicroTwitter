@@ -57,7 +57,7 @@ node {
     stage("Deploy") {
         dockerComposeFile = "production.deploy.docker-compose.yml"
 
-        sh "ls api -al"
+//        sh "ls api -al"
 
         /**
          * Setting environment variables only for a docker container
