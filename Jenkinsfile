@@ -47,7 +47,7 @@ node {
 //                                sh "mvn jacoco:report"
                             }
                         } finally {
-                            sh "docker-compose -f ${dockerComposeFile} down --rmi all --remove-orphans"
+//                            sh "docker-compose -f ${dockerComposeFile} down --rmi all --remove-orphans"
                         }
                     }
                 }
