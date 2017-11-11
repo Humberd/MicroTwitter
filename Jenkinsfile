@@ -32,27 +32,27 @@ node {
 
     }
 
-    stage("Test") {
-        parallel(
-                API: {
-                    dir("api") {
-                        dockerComposeFile = "../production.api-testing.docker-compose.yml"
-
-                        sh "docker-compose -f ${dockerComposeFile} down --rmi all --remove-orphans"
-                        sh "docker-compose -f ${dockerComposeFile} up -d"
-
-                        try {
-                            withMaven(maven: "Maven") {
-                                sh "mvn test -DargLine='-Dspring.profiles.active=production'"
-                                sh "mvn jacoco:report"
-                            }
-                        } finally {
-                            sh "docker-compose -f ${dockerComposeFile} down --rmi all --remove-orphans"
-                        }
-                    }
-                }
-        )
-    }
+//    stage("Test") {
+//        parallel(
+//                API: {
+//                    dir("api") {
+//                        dockerComposeFile = "../production.api-testing.docker-compose.yml"
+//
+//                        sh "docker-compose -f ${dockerComposeFile} down --rmi all --remove-orphans"
+//                        sh "docker-compose -f ${dockerComposeFile} up -d"
+//
+//                        try {
+//                            withMaven(maven: "Maven") {
+//                                sh "mvn test -DargLine='-Dspring.profiles.active=production'"
+//                                sh "mvn jacoco:report"
+//                            }
+//                        } finally {
+//                            sh "docker-compose -f ${dockerComposeFile} down --rmi all --remove-orphans"
+//                        }
+//                    }
+//                }
+//        )
+//    }
 
     stage("Deploy") {
         dockerComposeFile = "production.deploy.docker-compose.yml"
