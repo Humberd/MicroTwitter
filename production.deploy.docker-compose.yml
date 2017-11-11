@@ -20,6 +20,8 @@ services:
     image: postgres:10-alpine
     ports:
       - "5432:5432"
+    volumes:
+      - "dbdata:/var/lib/postgresql/data"
     environment:
       POSTGRES_PASSWORD: admin123
     networks:
@@ -40,3 +42,6 @@ networks:
     external:
       name: nginx-proxy
   db:
+
+volumes:
+  dbdata:
