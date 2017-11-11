@@ -25,7 +25,7 @@ class UserController(
     fun getUsers(@RequestParam username: String,
                  pageable: Pageable): ResponseEntity<Page<UserResponseDTO>> {
         if (username.isBlank()) {
-            throw BadRequestException("Username must be a not empty string")
+            throw BadRequestException("Username must not by an empty string")
         }
         val page = userRepository.findAllByLcusernameContaining(username.toLowerCase(), pageable)
 
