@@ -34,12 +34,9 @@ class UserControllerTest {
 
     companion object : KLogging()
 
-    lateinit var authHeaders: HttpHeaders
-
     @BeforeAll
     fun setUpAll() {
         userRepository.deleteAll()
-        authHeaders = AuthHelper.signupAndLogin(http)
     }
 
     @Nested
@@ -64,8 +61,11 @@ class UserControllerTest {
         val user2 = AuthHelper.user2.apply { username = "adamNowakowskii322" }
         val user3 = AuthHelper.user3.apply { username = "AdammBielawieckii" }
 
+        lateinit var authHeaders: HttpHeaders
+
         @BeforeAll
         fun setUpAll() {
+            authHeaders = AuthHelper.signupAndLogin(http)
             AuthHelper.signUp(http, user1)
             AuthHelper.signUp(http, user2)
             AuthHelper.signUp(http, user3)
@@ -137,6 +137,14 @@ class UserControllerTest {
     @Nested
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     inner class getUser : EndpointTest("/users/") {
+        lateinit var authHeaders: HttpHeaders
+
+        @BeforeAll
+        fun setUpAll() {
+            userRepository.deleteAll()
+            authHeaders = AuthHelper.signupAndLogin(http)
+        }
+
         @Test
         fun `should get other user without private fields`() {
             AuthHelper.signUp(http, AuthHelper.user2)
