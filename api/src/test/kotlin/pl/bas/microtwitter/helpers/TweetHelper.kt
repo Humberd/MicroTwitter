@@ -15,7 +15,17 @@ object TweetHelper {
         val tweetData = TweetCreateDTO(content = "foobar")
 
         http.exchange("/tweets/", HttpMethod.POST, HttpEntity(tweetData, authHeaders), TweetResponseDTO::class.java).let {
-            assertEquals(it.statusCode, HttpStatus.OK)
+            assertEquals(HttpStatus.OK, it.statusCode, it.body?.toString())
+
+            return it.body!!
+        }
+    }
+
+    fun likeTweet(tweetId: Long, http: TestRestTemplate): TweetResponseDTO {
+        val authHeaders = AuthHelper.signupAndLogin(http)
+
+        http.exchange("/tweets/${tweetId}/likes", HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).let {
+            assertEquals(HttpStatus.OK, it.statusCode, it.body?.toString())
 
             return it.body!!
         }

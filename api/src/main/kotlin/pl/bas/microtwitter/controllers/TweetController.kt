@@ -11,7 +11,6 @@ import pl.bas.microtwitter.dao.TweetLikeDAO
 import pl.bas.microtwitter.dao.UserDAO
 import pl.bas.microtwitter.dto.TweetCreateDTO
 import pl.bas.microtwitter.dto.TweetResponseDTO
-import pl.bas.microtwitter.dto.buildTweetResponseDTO
 import pl.bas.microtwitter.exceptions.BadRequestException
 import pl.bas.microtwitter.repositories.TweetLikeRepository
 import pl.bas.microtwitter.repositories.TweetRepository
@@ -47,6 +46,7 @@ class TweetController(
     fun getTweets(@RequestParam username: String,
                   pageable: Pageable): ResponseEntity<Page<TweetResponseDTO>> {
         val page = tweetRepository.findAllByUserLcusername(username.toLowerCase(), pageable)
+
         return ResponseEntity.ok(page.map { tweet -> responseBuilder.buildTweetResponse(tweet) })
     }
 
@@ -56,13 +56,26 @@ class TweetController(
     @GetMapping("/{tweetId}")
     fun getTweet(@PathVariable tweetId: Long): ResponseEntity<TweetResponseDTO> {
         val tweet = tweetRepository.findById(tweetId).let {
-            if (!it.isPresent) {
-                throw BadRequestException("Cannot find a tweet with id '$tweetId'")
-            }
+            if (!it.isPresent) throw BadRequestException("Cannot find a tweet with id '$tweetId'")
             it.get()
         }
 
         return ResponseEntity.ok(responseBuilder.buildTweetResponse(tweet))
+    }
+
+    /**
+     * Deletes a tweet by [tweetId] only by a tweet creator
+     */
+    @Transactional
+    @DeleteMapping("/{tweetId}")
+    fun deleteTweet(@PathVariable tweetId: Long): ResponseEntity<Unit> {
+        val tweet = tweetRepository.findById(tweetId).let {
+            if (!it.isPresent) throw BadRequestException("Cannot find a tweet with id '$tweetId'")
+            it.get()
+        }
+        tweetRepository.delete(tweet)
+
+        return ResponseEntity.ok(Unit)
     }
 
     /**
@@ -74,24 +87,22 @@ class TweetController(
     fun likeTweet(@PathVariable tweetId: Long,
                   user: UserDAO): ResponseEntity<TweetResponseDTO> {
         val tweet = tweetRepository.findById(tweetId).let {
-            if (!it.isPresent) {
-                throw BadRequestException("Cannot find a tweet with id '$tweetId'")
-            }
+            if (!it.isPresent) throw BadRequestException("Cannot find a tweet with id '$tweetId'")
             it.get()
         }
 
         tweet.likes.find {
             it?.user?.id === user.id
         }.apply {
-            if (this !== null) {
-                throw BadRequestException("Already liked")
-            }
+            if (this !== null) throw BadRequestException("Already liked")
         }
 
         val tweetLike = TweetLikeDAO().apply {
             this.tweet = tweet
             this.user = user
         }
+
+        println(tweet.toString())
 
         tweetLikeRepository.save(tweetLike)
 

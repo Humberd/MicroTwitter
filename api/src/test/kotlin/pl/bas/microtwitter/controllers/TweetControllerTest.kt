@@ -5,7 +5,6 @@ import com.google.gson.Gson
 import mu.KLogging
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -128,7 +127,7 @@ internal class TweetControllerTest {
 
     @Nested
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-    inner class getTweet : EndpointTest("/tweets") {
+    inner class getTweet : EndpointTest("/tweets/") {
         var tweetId: Long = 0
 
         @BeforeAll
@@ -155,6 +154,46 @@ internal class TweetControllerTest {
 
     @Nested
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class deleteTweet : EndpointTest("/tweets/") {
+        var tweetId: Long = 0
+
+        @BeforeEach
+        fun setUp() {
+            tweetRepository.deleteAll()
+            tweetLikeRepository.deleteAll()
+
+            tweetId = TweetHelper.createTweet(http).id!!
+
+            TweetHelper.likeTweet(tweetId, http)
+        }
+
+        @Test
+        fun `should delete a tweet and all of its likes by id `() {
+            assertEquals(1, tweetRepository.findAll().size)
+            assertEquals(1, tweetLikeRepository.findAll().size)
+
+            http.exchange("$url/$tweetId", HttpMethod.DELETE, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
+                assertEquals(HttpStatus.OK, statusCode)
+            }
+
+            assertEquals(0, tweetRepository.findAll().size)
+            assertEquals(0, tweetLikeRepository.findAll().size)
+        }
+
+        @Test
+        fun `should not delete w tweet by a not existing id`() {
+            http.exchange("$url/defenitelyNotExistingTwitterId", HttpMethod.DELETE, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
+                assertEquals(HttpStatus.BAD_REQUEST, statusCode)
+            }
+
+            assertEquals(1, tweetRepository.findAll().size)
+            assertEquals(1, tweetLikeRepository.findAll().size)
+        }
+    }
+
+
+    @Nested
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     inner class likeTweet : EndpointTest("") {
         lateinit var tweet: TweetResponseDTO
 
@@ -176,7 +215,7 @@ internal class TweetControllerTest {
             http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.OK, this.statusCode)
                 assertEquals(1, this.body?.likes)
-                assert(tweetLikeRepository.findAll().size == 1)
+                assertEquals(1, tweetLikeRepository.findAll().size)
             }
         }
 
