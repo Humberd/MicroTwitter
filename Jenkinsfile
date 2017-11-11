@@ -24,7 +24,7 @@ node {
                 API: {
                     dir("api") {
                         withMaven(maven: "Maven") {
-                            sh "mvn clean jacoco:prepare-agent install -DskipTests=true"
+                            sh "mvn clean install -DskipTests=true"
                         }
                     }
                 }
@@ -43,6 +43,7 @@ node {
 
                         try {
                             withMaven(maven: "Maven") {
+                                sh "mvn jacoco:prepare-agent"
                                 sh "mvn test -DargLine='-Dspring.profiles.active=production'"
                                 sh "mvn jacoco:report"
                             }
@@ -56,6 +57,9 @@ node {
 
     stage("Deploy") {
         dockerComposeFile = "production.deploy.docker-compose.yml"
+
+        sh "ls api/target"
+        sh "ls api/target/site"
 
         /**
          * Setting environment variables only for a docker container
