@@ -44,7 +44,6 @@ internal class TweetControllerTest {
         authHeaders = AuthHelper.signupAndLogin(http)
     }
 
-
     @Nested
     inner class createTweet : EndpointTest("/tweets/") {
         @BeforeEach
@@ -114,6 +113,7 @@ internal class TweetControllerTest {
         fun `should get 3 user tweets`() {
             http.exchange("$url?username=JanKowalski", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
                 assertEquals(3, body.content.size)
             }
         }
@@ -122,6 +122,7 @@ internal class TweetControllerTest {
         fun `should get 3 user tweets with different username casing`() {
             http.exchange("$url?username=janKOWALSKI", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
                 assertEquals(3, body.content.size)
             }
         }
@@ -130,22 +131,25 @@ internal class TweetControllerTest {
         fun `should paginate user tweets`() {
             http.exchange("$url?username=JanKowalski&size=2&page=0", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
                 assertEquals(2, body.content.size)
             }
 
             http.exchange("$url?username=JanKowalski&size=2&page=1", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
                 assertEquals(1, body.content.size)
             }
 
             http.exchange("$url?username=JanKowalski&size=2&page=2", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
                 assertEquals(0, body.content.size)
             }
         }
 
         @Test
-        fun `should not get tweets of not existing user`() {
+        fun `should not get tweets of a not existing user`() {
             http.exchange("$url?username=defenitelyNotExistingUser", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
                 assertEquals(0, body.content.size)
@@ -264,6 +268,52 @@ internal class TweetControllerTest {
             http.exchange("/tweets/543534534/likes", HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.BAD_REQUEST, this.statusCode)
                 assertEquals(0, tweetLikeRepository.findAll().size)
+            }
+        }
+    }
+
+    @Nested
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class getComments : EndpointTest("/tweets/") {
+        @BeforeAll
+        fun setUpAll() {
+            tweetRepository.deleteAll()
+
+            val tweet = TweetHelper.createTweet(http)
+            TweetHelper.createTweet(http, TweetCreateDTO(content = "a", inReplyToTweetId = tweet.id))
+            TweetHelper.createTweet(http, TweetCreateDTO(content = "b", inReplyToTweetId = tweet.id))
+            TweetHelper.createTweet(http, TweetCreateDTO(content = "c", inReplyToTweetId = tweet.id))
+
+            super.url = "/tweets/${tweet.id}/comments"
+        }
+
+        @Test
+        fun `should get 3 comments for a tweet`() {
+            http.exchange(url , HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
+                assertEquals(3, body.content.size)
+            }
+        }
+
+        @Test
+        fun `should paginate comments`() {
+            http.exchange("$url?size=2&page=0" , HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
+                assertEquals(2, body.content.size)
+            }
+
+            http.exchange("$url?size=2&page=1" , HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
+                assertEquals(1, body.content.size)
+            }
+
+            http.exchange("$url?size=2&page=2" , HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
+                assertEquals(0, body.content.size)
             }
         }
     }

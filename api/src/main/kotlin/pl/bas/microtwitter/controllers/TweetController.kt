@@ -113,4 +113,18 @@ class TweetController(
 
         return ResponseEntity.ok(responseBuilder.buildTweetResponse(tweet))
     }
+
+    @GetMapping("/{tweetId}/comments")
+    fun getComments(@PathVariable tweetId: Long,
+                    pageable: Pageable): ResponseEntity<Page<TweetResponseDTO>> {
+        val baseTweet = tweetRepository.findById(tweetId).let {
+            if (!it.isPresent) {
+                throw BadRequestException("Tweet does not exist")
+            }
+            it.get()
+        }
+        val page = tweetRepository.findAllByInReplyToTweet(baseTweet, pageable)
+
+        return ResponseEntity.ok(page. map { tweet -> responseBuilder.buildTweetResponse(tweet) })
+    }
 }

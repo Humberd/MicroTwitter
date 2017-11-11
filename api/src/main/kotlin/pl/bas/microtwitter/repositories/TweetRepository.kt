@@ -9,4 +9,6 @@ interface TweetRepository: JpaRepository<TweetDAO, Long> {
     fun findAllByUserLcusername(lcusername: String,
                                 pageable: Pageable): Page<TweetDAO>
     fun countByInReplyToTweet(inReplyToTweet: TweetDAO): Int
+    fun findAllByInReplyToTweet(inReplyToTweet: TweetDAO,
+                                pageable: Pageable): Page<TweetDAO>
 }
