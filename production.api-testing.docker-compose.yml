@@ -4,6 +4,6 @@ services:
   postgres:
       image: postgres:10-alpine
       ports:
-        - "localhost:5435:5432"
+        - "127.0.0.1:5435:5432"
       environment:
         POSTGRES_PASSWORD: admin-test
