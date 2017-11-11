@@ -25,15 +25,16 @@ services:
     networks:
       - db
 
-  test-reports:
-    build:
-      context: .
-      dockerfile: test-reports.Dockerfile
-    environment:
-      VIRTUAL_HOST: test-reports.micro-twitter.quazarus.com
-      VIRTUAL_PORT: 80
-    networks:
-      - nginx-proxy
+#  Skipping JaCoCo execution due to missing execution data file.
+#  test-reports:
+#    build:
+#      context: .
+#      dockerfile: test-reports.Dockerfile
+#    environment:
+#      VIRTUAL_HOST: test-reports.micro-twitter.quazarus.com
+#      VIRTUAL_PORT: 80
+#    networks:
+#      - nginx-proxy
 
 networks:
   nginx-proxy:

@@ -43,7 +43,8 @@ node {
 
                         try {
                             withMaven(maven: "Maven") {
-                                sh "mvn install -DargLine='-Dspring.profiles.active=production'"
+                                sh "mvn test -DargLine='-Dspring.profiles.active=production'"
+                                //  Error - Skipping JaCoCo execution due to missing execution data file.
                                 sh "mvn jacoco:report"
                             }
                         } finally {
@@ -56,9 +57,6 @@ node {
 
     stage("Deploy") {
         dockerComposeFile = "production.deploy.docker-compose.yml"
-
-        sh "ls api/target -al"
-        sh "ls api/target/site -al"
 
         /**
          * Setting environment variables only for a docker container
