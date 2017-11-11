@@ -41,6 +41,31 @@ class TweetController(
     }
 
     /**
+     * Gets a paginated list of tweets by given [username]
+     */
+    @GetMapping("/")
+    fun getTweets(@RequestParam username: String,
+                  pageable: Pageable): ResponseEntity<Page<TweetResponseDTO>> {
+        val page = tweetRepository.findAllByUserLcusername(username.toLowerCase(), pageable)
+        return ResponseEntity.ok(page.map { tweet -> responseBuilder.buildTweetResponse(tweet) })
+    }
+
+    /**
+     * Gets a tweet by [tweetId]
+     */
+    @GetMapping("/{tweetId}")
+    fun getTweet(@PathVariable tweetId: Long): ResponseEntity<TweetResponseDTO> {
+        val tweet = tweetRepository.findById(tweetId).let {
+            if (!it.isPresent) {
+                throw BadRequestException("Cannot find a tweet with id '$tweetId'")
+            }
+            it.get()
+        }
+
+        return ResponseEntity.ok(responseBuilder.buildTweetResponse(tweet))
+    }
+
+    /**
      * Adds a like to a tweet.
      * Likes from user are unique per tweet
      */
@@ -71,15 +96,5 @@ class TweetController(
         tweetLikeRepository.save(tweetLike)
 
         return ResponseEntity.ok(responseBuilder.buildTweetResponse(tweet))
-    }
-
-    /**
-     * Gets a paginated list of tweets by given [username]
-     */
-    @GetMapping("/")
-    fun getTweets(@RequestParam username: String,
-                  pageable: Pageable): ResponseEntity<Page<TweetResponseDTO>> {
-        val page = tweetRepository.findAllByUserLcusername(username.toLowerCase(), pageable)
-        return ResponseEntity.ok(page.map { tweet -> responseBuilder.buildTweetResponse(tweet) })
     }
 }

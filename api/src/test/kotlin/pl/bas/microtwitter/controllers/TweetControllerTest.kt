@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import mu.KLogging
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -72,57 +73,7 @@ internal class TweetControllerTest {
 
     @Nested
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-    inner class likeTweet : EndpointTest("") {
-        lateinit var tweet: TweetResponseDTO
-
-        @BeforeAll
-        fun setUpAll() {
-            tweetRepository.deleteAll()
-
-            tweet = TweetHelper.createTweet(http)
-            super.url = "/tweets/${tweet.id}/likes"
-        }
-
-        @BeforeEach
-        fun setUp() {
-            tweetLikeRepository.deleteAll()
-        }
-
-        @Test
-        fun `should like a tweet`() {
-            http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
-                assertEquals(HttpStatus.OK, this.statusCode)
-                assertEquals(1, this.body?.likes)
-                assert(tweetLikeRepository.findAll().size == 1)
-            }
-        }
-
-        @Test
-        fun `should not like a tweet more than once`() {
-            http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
-                assertEquals(HttpStatus.OK, this.statusCode)
-                assertEquals(1, this.body?.likes)
-                assert(tweetLikeRepository.findAll().size == 1)
-            }
-            http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
-                assertEquals(HttpStatus.BAD_REQUEST, this.statusCode)
-                assert(tweetLikeRepository.findAll().size == 1)
-            }
-        }
-
-        @Test
-        fun `should not like a not existing tweet`() {
-            http.exchange("/tweets/543534534/likes", HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
-                assertEquals(HttpStatus.BAD_REQUEST, this.statusCode)
-                assert(tweetLikeRepository.findAll().size == 0)
-            }
-        }
-    }
-
-    @Nested
-    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     inner class getTweets : EndpointTest("/tweets/") {
-
         @BeforeAll
         fun setUpAll() {
             tweetRepository.deleteAll()
@@ -171,6 +122,82 @@ internal class TweetControllerTest {
             http.exchange("$url?username=defenitelyNotExistingUser", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
                 assertEquals(0, body.content.size)
+            }
+        }
+    }
+
+    @Nested
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class getTweet : EndpointTest("/tweets") {
+        var tweetId: Long = 0
+
+        @BeforeAll
+        fun setUpAll() {
+            tweetRepository.deleteAll()
+            tweetId = TweetHelper.createTweet(http).id!!
+        }
+
+        @Test
+        fun `should get a tweet by id`() {
+            http.exchange("$url/$tweetId", HttpMethod.GET, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
+                assertEquals(HttpStatus.OK, statusCode)
+                assertEquals(tweetId, body?.id)
+            }
+        }
+
+        @Test
+        fun `should not get a tweet by not existing id`() {
+            http.exchange("$url/defenitelyNotAValidTweetId", HttpMethod.GET, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
+                assertEquals(HttpStatus.BAD_REQUEST, statusCode)
+            }
+        }
+    }
+
+    @Nested
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class likeTweet : EndpointTest("") {
+        lateinit var tweet: TweetResponseDTO
+
+        @BeforeAll
+        fun setUpAll() {
+            tweetRepository.deleteAll()
+
+            tweet = TweetHelper.createTweet(http)
+            super.url = "/tweets/${tweet.id}/likes"
+        }
+
+        @BeforeEach
+        fun setUp() {
+            tweetLikeRepository.deleteAll()
+        }
+
+        @Test
+        fun `should like a tweet`() {
+            http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
+                assertEquals(HttpStatus.OK, this.statusCode)
+                assertEquals(1, this.body?.likes)
+                assert(tweetLikeRepository.findAll().size == 1)
+            }
+        }
+
+        @Test
+        fun `should not like a tweet more than once`() {
+            http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
+                assertEquals(HttpStatus.OK, this.statusCode)
+                assertEquals(1, this.body?.likes)
+                assert(tweetLikeRepository.findAll().size == 1)
+            }
+            http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
+                assertEquals(HttpStatus.BAD_REQUEST, this.statusCode)
+                assert(tweetLikeRepository.findAll().size == 1)
+            }
+        }
+
+        @Test
+        fun `should not like a not existing tweet`() {
+            http.exchange("/tweets/543534534/likes", HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
+                assertEquals(HttpStatus.BAD_REQUEST, this.statusCode)
+                assert(tweetLikeRepository.findAll().size == 0)
             }
         }
     }

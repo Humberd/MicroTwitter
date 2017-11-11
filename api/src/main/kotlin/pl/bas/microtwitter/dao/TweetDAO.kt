@@ -30,6 +30,9 @@ class TweetDAO {
     @ManyToOne
     var user: UserDAO? = null
 
+//    @ManyToOne
+//    var inReplyToTweet: TweetDAO? = null
+
     @PrePersist
     protected fun onCreate() {
         createdAt = Date()
