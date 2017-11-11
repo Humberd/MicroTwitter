@@ -4,7 +4,7 @@ FROM kyma/docker-nginx
 RUN hostname
 COPY api/target/* microtwitter/
 RUN ls
-RUN ls microtwitter
+RUN ls microtwitter -al
 
 EXPOSE 80
 
