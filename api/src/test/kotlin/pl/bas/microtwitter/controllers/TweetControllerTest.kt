@@ -53,21 +53,49 @@ internal class TweetControllerTest {
         }
 
         @Test
-        fun `should create a tweet`() {
+        fun `should create 2 separate tweets`() {
             val data1 = TweetCreateDTO(content = "foobar")
             http.exchange(url, HttpMethod.POST, HttpEntity(data1, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.OK, this.statusCode)
                 assertEquals("foobar", this.body?.content)
-                assert(tweetRepository.findAll().size == 1)
+                assertEquals(1, tweetRepository.findAll().size)
             }
 
             val data2 = TweetCreateDTO(content = "hello")
             http.exchange(url, HttpMethod.POST, HttpEntity(data2, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.OK, this.statusCode)
                 assertEquals("hello", this.body?.content)
-                assert(tweetRepository.findAll().size == 2)
+                assertEquals(2, tweetRepository.findAll().size)
             }
         }
+
+        @Test
+        fun `should create a tweet in response of the other tweet`() {
+            val data1 = TweetCreateDTO(content = "foobar")
+            val tweet1Id = TweetHelper.createTweet(http, data1).id.apply {
+                assert(this is Long)
+            }
+
+            val data2 = TweetCreateDTO(content = "hello", inReplyToTweetId = tweet1Id)
+            TweetHelper.createTweet(http, data2).apply {
+                assertEquals(0, this.commentsCount)
+            }
+
+            TweetHelper.getTweet(http, tweet1Id!!).apply {
+                assertEquals(1, this.commentsCount)
+            }
+        }
+
+        @Test
+        fun `should not create a tweet in response to the not existing tweet`() {
+            val notExistingTweetId: Long = 6239045803485039852
+            val data2 = TweetCreateDTO(content = "hello", inReplyToTweetId = notExistingTweetId)
+
+            http.exchange(url, HttpMethod.POST, HttpEntity(data2, authHeaders), TweetResponseDTO::class.java).apply {
+                assertEquals(HttpStatus.BAD_REQUEST, this.statusCode)
+            }
+        }
+
     }
 
     @Nested
@@ -164,7 +192,7 @@ internal class TweetControllerTest {
 
             tweetId = TweetHelper.createTweet(http).id!!
 
-            TweetHelper.likeTweet(tweetId, http)
+            TweetHelper.likeTweet(http, tweetId)
         }
 
         @Test
@@ -191,7 +219,6 @@ internal class TweetControllerTest {
         }
     }
 
-
     @Nested
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     inner class likeTweet : EndpointTest("") {
@@ -214,7 +241,7 @@ internal class TweetControllerTest {
         fun `should like a tweet`() {
             http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.OK, this.statusCode)
-                assertEquals(1, this.body?.likes)
+                assertEquals(1, this.body?.likesCount)
                 assertEquals(1, tweetLikeRepository.findAll().size)
             }
         }
@@ -223,12 +250,12 @@ internal class TweetControllerTest {
         fun `should not like a tweet more than once`() {
             http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.OK, this.statusCode)
-                assertEquals(1, this.body?.likes)
-                assert(tweetLikeRepository.findAll().size == 1)
+                assertEquals(1, this.body?.likesCount)
+                assertEquals(1, tweetLikeRepository.findAll().size)
             }
             http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.BAD_REQUEST, this.statusCode)
-                assert(tweetLikeRepository.findAll().size == 1)
+                assertEquals(1, tweetLikeRepository.findAll().size)
             }
         }
 
@@ -236,7 +263,7 @@ internal class TweetControllerTest {
         fun `should not like a not existing tweet`() {
             http.exchange("/tweets/543534534/likes", HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.BAD_REQUEST, this.statusCode)
-                assert(tweetLikeRepository.findAll().size == 0)
+                assertEquals(0, tweetLikeRepository.findAll().size)
             }
         }
     }

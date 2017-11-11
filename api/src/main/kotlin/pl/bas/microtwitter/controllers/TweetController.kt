@@ -33,6 +33,11 @@ class TweetController(
         val tweetData = TweetDAO().apply {
             content = body.content
             this.user = user
+
+            if (body.inReplyToTweetId !== null) {
+                inReplyToTweet = tweetRepository.findById(body.inReplyToTweetId!!)
+                        .orElseThrow { throw BadRequestException("inReplyToTweet does not exist") }
+            }
         }
         val tweet = tweetRepository.save(tweetData)
 

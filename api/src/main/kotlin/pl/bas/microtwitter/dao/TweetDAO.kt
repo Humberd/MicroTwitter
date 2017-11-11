@@ -30,8 +30,12 @@ class TweetDAO {
     @ManyToOne
     var user: UserDAO? = null
 
-//    @ManyToOne
-//    var inReplyToTweet: TweetDAO? = null
+    @OneToMany(mappedBy = "inReplyToTweet")
+    @OrderColumn(name = "id")
+    var comments: List<TweetDAO> = emptyList()
+
+    @ManyToOne
+    var inReplyToTweet: TweetDAO? = null
 
     @PrePersist
     protected fun onCreate() {
