@@ -1,6 +1,8 @@
 package pl.bas.microtwitter.dao
 
+import java.util.*
 import javax.persistence.*
+import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "userx")// need to name it like this because 'user' is a reserved keyword in postgres
@@ -9,6 +11,11 @@ class UserDAO {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
+
+    @NotNull
+    @Column(name = "createdAt")
+    @Temporal(TemporalType.TIMESTAMP)
+    var createdAt: Date? = null
 
     @Column(name = "username")
     var username: String? = null
@@ -34,9 +41,28 @@ class UserDAO {
     @OrderColumn(name = "id")
     var likes: List<TweetLikeDAO> = emptyList()
 
-    @PrePersist
+    @ManyToMany(cascade = arrayOf(CascadeType.ALL))
+    @JoinTable(name = "userFollower",
+            joinColumns = arrayOf(JoinColumn(name = "userId")),
+            inverseJoinColumns = arrayOf(JoinColumn(name = "followerId"))
+    )
+    var follows: List<UserDAO> = emptyList()
+
+    @ManyToMany(mappedBy = "follows")
+    var isFollowedBy: List<UserDAO> = emptyList()
+
     @PreUpdate
-    fun prepare() {
+    protected fun onUpdate() {
+        lowerCaseFields()
+    }
+
+    @PrePersist
+    protected fun onCreate() {
+        createdAt = Date()
+        lowerCaseFields()
+    }
+
+    private fun lowerCaseFields() {
         lcusername = username?.toLowerCase()
         lcemail = email?.toLowerCase()
     }
