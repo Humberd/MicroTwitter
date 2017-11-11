@@ -44,7 +44,7 @@ node {
                         try {
                             withMaven(maven: "Maven") {
                                 sh "mvn jacoco:prepare-agent"
-                                sh 'ls target -al'
+                                sh 'ls /var/jenkins_home/workspace/MicroTwitter/api/target/ -al'
                                 sh "mvn test -DargLine='-Dspring.profiles.active=production'"
                                 sh "mvn jacoco:report"
                             }
