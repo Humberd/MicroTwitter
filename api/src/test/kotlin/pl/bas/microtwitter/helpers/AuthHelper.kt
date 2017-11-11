@@ -40,9 +40,7 @@ object AuthHelper {
 
     fun login(http: TestRestTemplate,
               user: SignupDTO = user1): ResponseEntity<String> {
-        return http.postForEntity("/auth/login", user, String::class.java).apply {
-            assertEquals(HttpStatus.OK, statusCode)
-        }
+        return http.postForEntity("/auth/login", user, String::class.java)
     }
 
     fun signupAndLogin(http: TestRestTemplate,
