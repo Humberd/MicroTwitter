@@ -149,6 +149,24 @@ internal class TweetControllerTest {
         }
 
         @Test
+        fun `should paginate user tweets`() {
+            http.exchange("$url?username=JanKowalski&size=2&page=0", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(2, body.content.size)
+            }
+
+            http.exchange("$url?username=JanKowalski&size=2&page=1", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(1, body.content.size)
+            }
+
+            http.exchange("$url?username=JanKowalski&size=2&page=2", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(0, body.content.size)
+            }
+        }
+
+        @Test
         fun `should not get tweets of not existing user`() {
             http.exchange("$url?username=defenitelyNotExistingUser", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
