@@ -1,10 +1,9 @@
 package pl.bas.microtwitter.controllers
 
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import pl.bas.microtwitter.builders.ResponseBuilder
 import pl.bas.microtwitter.dao.UserDAO
 import pl.bas.microtwitter.dto.UserResponseDTO
@@ -20,6 +19,17 @@ class UserController(
     @GetMapping("/me")
     fun getMe(user: UserDAO): ResponseEntity<UserResponseDTO> {
         return ResponseEntity.ok(responseBuilder.buildUserResponse(user, privateResponse = true))
+    }
+
+    @GetMapping("/users")
+    fun getUsers(@RequestParam username: String,
+                 pageable: Pageable): ResponseEntity<Page<UserResponseDTO>> {
+        if (username.isBlank()) {
+            throw BadRequestException("Username must be a not empty string")
+        }
+        val page = userRepository.findAllByLcusernameContaining(username.toLowerCase(), pageable)
+
+        return ResponseEntity.ok(page.map { user -> responseBuilder.buildUserResponse(user) })
     }
 
     @GetMapping("/users/{username}")

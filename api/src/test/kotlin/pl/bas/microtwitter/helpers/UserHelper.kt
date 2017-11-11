@@ -1,11 +1,13 @@
 package pl.bas.microtwitter.helpers
 
+import com.github.salomonbrys.kotson.fromJson
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import pl.bas.microtwitter.dto.SignupDTO
+import pl.bas.microtwitter.dto.TweetResponseDTO
 import pl.bas.microtwitter.dto.UserResponseDTO
 
 object UserHelper {
