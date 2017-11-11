@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/app")
 class AppController {
 
+    /**
+     * Returns a status of the backend application including:
+     *  * Docker containerId
+     *  * Jenkins build number
+     *  * Git commit id
+     */
     @GetMapping("/status", produces = arrayOf("text/html"))
     fun getStatus(): String {
         return """
@@ -22,6 +28,9 @@ class AppController {
             """
     }
 
+    /**
+     * Returns a hardcoded message to check if the service is alive
+     */
     @GetMapping("/ping")
     fun ping(): String {
         return "pong"

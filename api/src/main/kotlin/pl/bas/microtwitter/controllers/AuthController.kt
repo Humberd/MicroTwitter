@@ -21,6 +21,9 @@ class AuthController(
         val bCryptPasswordEncoder: BCryptPasswordEncoder) {
     companion object : KLogging()
 
+    /**
+     * Signs up user
+     */
     @Transactional
     @PostMapping("/signup")
     fun signup(@RequestBody body: SignupDTO): ResponseEntity<Unit> {
@@ -35,12 +38,18 @@ class AuthController(
         return ResponseEntity.ok(Unit)
     }
 
+    /**
+     * Logs in user and responds with ["Authorization"] header
+     * Login is handled by JWT filters in a [pl.bas.microtwitter.security] package
+     */
     @PostMapping("login")
     fun login(): ResponseEntity<Unit> {
-        // Login is handled by JWT filters in a securty package
         return ResponseEntity.ok(Unit)
     }
 
+    /**
+     * Updates user password
+     */
     @Transactional
     @PostMapping("/password")
     fun updatePassword(@RequestBody body: UpdatePasswordDTO,

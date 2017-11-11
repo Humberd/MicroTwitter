@@ -25,6 +25,9 @@ class TweetController(
         val responseBuilder: ResponseBuilder) {
     companion object : KLogging()
 
+    /**
+     * Creates a tweet and returns its new instance
+     */
     @PostMapping("/")
     fun createTweet(@RequestBody body: TweetCreateDTO,
                     user: UserDAO): ResponseEntity<TweetResponseDTO> {
@@ -37,6 +40,10 @@ class TweetController(
         return ResponseEntity.ok(responseBuilder.buildTweetResponse(tweet))
     }
 
+    /**
+     * Adds a like to a tweet.
+     * Likes from user are unique per tweet
+     */
     @Transactional
     @PostMapping("/{tweetId}/likes")
     fun likeTweet(@PathVariable tweetId: Long,
@@ -66,6 +73,9 @@ class TweetController(
         return ResponseEntity.ok(responseBuilder.buildTweetResponse(tweet))
     }
 
+    /**
+     * Gets a paginated list of tweets by given [username]
+     */
     @GetMapping("/")
     fun getTweets(@RequestParam username: String,
                   pageable: Pageable): ResponseEntity<Page<TweetResponseDTO>> {
