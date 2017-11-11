@@ -16,7 +16,7 @@ services:
       - nginx-proxy
       - db
 
-  postgres:
+  postgresprod:
     image: postgres:10-alpine
     ports:
       - "5432:5432"
