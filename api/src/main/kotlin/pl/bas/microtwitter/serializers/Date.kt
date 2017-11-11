@@ -5,7 +5,7 @@ import java.lang.reflect.Type
 import java.util.*
 
 
-internal class DateDeserializer : JsonDeserializer<Date> {
+class DateDeserializer : JsonDeserializer<Date> {
 
     override fun deserialize(json: JsonElement?, typeOfT: Type,
                     context: JsonDeserializationContext): Date? {
@@ -13,7 +13,7 @@ internal class DateDeserializer : JsonDeserializer<Date> {
     }
 }
 
-internal class DateSerializer : JsonSerializer<Date> {
+class DateSerializer : JsonSerializer<Date> {
     override fun serialize(date: Date?, typeOfSrc: Type,
                   context: JsonSerializationContext): JsonElement? {
         return if (date == null) null else JsonPrimitive(date!!.getTime())

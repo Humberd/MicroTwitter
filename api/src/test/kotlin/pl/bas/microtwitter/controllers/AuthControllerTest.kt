@@ -128,6 +128,22 @@ internal class AuthControllerTest {
                 assertEquals(HttpStatus.OK, this.statusCode)
             }
         }
+
+        @Test
+        fun `should not update a user passwor when the old password is incorrect`() {
+            val data = UpdatePasswordDTO(
+                    oldPassword = "notAValidPassword",
+                    newPassword = "admin"
+            )
+
+            http.exchange(url, HttpMethod.POST, HttpEntity(data, authHeaders), String::class.java).apply {
+                assertEquals(HttpStatus.BAD_REQUEST, this.statusCode)
+            }
+
+            AuthHelper.login(http, AuthHelper.user1).apply {
+                assertEquals(HttpStatus.OK, this.statusCode)
+            }
+        }
     }
 
 }
