@@ -15,7 +15,7 @@ class AppController {
      *  * Jenkins build number
      *  * Git commit id
      */
-    @GetMapping("/status", produces = arrayOf("text/html"))
+    @GetMaping("/status", produces = arrayOf("text/html"))
     fun getStatus(): String {
         return """
             <h2>Status</h2>
