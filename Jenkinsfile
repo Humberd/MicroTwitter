@@ -43,7 +43,7 @@ node {
 
                         try {
                             withMaven(maven: "Maven") {
-                                sh "mvn test -DargLine='Dspring.profiles.active=production'"
+                                sh "mvn test -DargLine='-Dspring.profiles.active=production'"
 //                                sh "mvn jacoco:report"
                             }
                         } finally {
