@@ -316,5 +316,12 @@ internal class TweetControllerTest {
                 assertEquals(0, body.content.size)
             }
         }
+
+        @Test
+        fun `should not get comments of a not existing tweet`() {
+            http.exchange("/tweets/243983904203984/comments" , HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+                assertEquals(HttpStatus.BAD_REQUEST, statusCode)
+            }
+        }
     }
 }

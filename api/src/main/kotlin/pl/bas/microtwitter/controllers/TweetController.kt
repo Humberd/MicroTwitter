@@ -114,6 +114,9 @@ class TweetController(
         return ResponseEntity.ok(responseBuilder.buildTweetResponse(tweet))
     }
 
+    /**
+     * Gets a comment list of a tweet with [tweetId]
+     */
     @GetMapping("/{tweetId}/comments")
     fun getComments(@PathVariable tweetId: Long,
                     pageable: Pageable): ResponseEntity<Page<TweetResponseDTO>> {
