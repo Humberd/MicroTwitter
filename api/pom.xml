@@ -197,6 +197,9 @@
                         <version>RELEASE</version>
                     </dependency>
                 </dependencies>
+                <configuration>
+                    <argLine>${argLine}</argLine>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
