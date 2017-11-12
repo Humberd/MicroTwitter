@@ -27,7 +27,7 @@ fun buildUserResponseDTO(user: UserDAO,
             fullName = user.fullName,
             tweetsCount = userRepository.countByTweets_User(user),
             likesCount = 999,
-            followsCount = 999,
-            followedByCount = 999
+            followsCount = userRepository.countByFollows_IsFollowedBy(user),
+            followedByCount = userRepository.countByIsFollowedBy_Follows(user)
     )
 }

@@ -3,12 +3,9 @@ package pl.bas.microtwitter.controllers
 import com.github.salomonbrys.kotson.fromJson
 import com.google.gson.Gson
 import mu.KLogging
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -18,9 +15,11 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.junit.jupiter.SpringExtension
-import pl.bas.microtwitter.dto.TweetResponseDTO
 import pl.bas.microtwitter.dto.UserResponseDTO
-import pl.bas.microtwitter.helpers.*
+import pl.bas.microtwitter.helpers.AuthHelper
+import pl.bas.microtwitter.helpers.CustomPageImpl
+import pl.bas.microtwitter.helpers.EndpointTest
+import pl.bas.microtwitter.helpers.UserHelper
 import pl.bas.microtwitter.repositories.UserRepository
 import java.util.*
 
@@ -192,13 +191,61 @@ class UserControllerTest {
     }
 
 
+    @Nested
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class followUser : EndpointTest("/users/") {
+        lateinit var authHeaders1: HttpHeaders
+        lateinit var authHeaders2: HttpHeaders
 
-//    @Nested
-//    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-//    inner class followUser : EndpointTest("/users/") {
-//        @Test
-//        fun `should follow a user`() {
-//            http.exchange(url)
-//        }
-//    }
+        @BeforeEach
+        fun setUp() {
+            userRepository.deleteAll()
+            authHeaders1 = AuthHelper.signupAndLogin(http, AuthHelper.user1)
+            UserHelper.getMe(http, AuthHelper.user1).apply {
+                url = "/users/$id/follow"
+            }
+            authHeaders2 = AuthHelper.signupAndLogin(http, AuthHelper.user2)
+        }
+
+        @Test
+        fun `should follow a user`() {
+            http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders2), String::class.java).apply {
+                assertEquals(HttpStatus.OK, statusCode)
+            }
+            UserHelper.getMe(http, AuthHelper.user1).apply {
+                assertEquals(0, followsCount)
+                assertEquals(1, followedByCount)
+            }
+            UserHelper.getMe(http, AuthHelper.user2).apply {
+                assertEquals(1, followsCount)
+                assertEquals(0, followedByCount)
+            }
+        }
+
+        @Test
+        fun `should not follow a user when the user is already followed`() {
+            http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders2), String::class.java).apply {
+                assertEquals(HttpStatus.OK, statusCode)
+            }
+            http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders2), String::class.java).apply {
+                assertEquals(HttpStatus.BAD_REQUEST, statusCode)
+            }
+            UserHelper.getMe(http, AuthHelper.user1).apply {
+                assertEquals(0, followsCount)
+                assertEquals(1, followedByCount)
+            }
+            UserHelper.getMe(http, AuthHelper.user2).apply {
+                assertEquals(1, followsCount)
+                assertEquals(0, followedByCount)
+            }
+        }
+
+        @Test
+        fun `should not follow myself`() {
+            http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders1), String::class.java).apply {
+                assertEquals(HttpStatus.BAD_REQUEST, statusCode)
+            }
+        }
+
+    }
 }

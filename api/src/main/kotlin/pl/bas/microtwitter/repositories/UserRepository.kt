@@ -11,4 +11,6 @@ interface UserRepository : JpaRepository<UserDAO, Long> {
                                       pageable: Pageable): Page<UserDAO>
 
     fun countByTweets_User(user: UserDAO): Int?
+    fun countByFollows_IsFollowedBy(user: UserDAO): Int?
+    fun countByIsFollowedBy_Follows(user: UserDAO): Int?
 }

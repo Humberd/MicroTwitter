@@ -1,5 +1,6 @@
 package pl.bas.microtwitter.controllers
 
+import org.hibernate.collection.internal.PersistentBag
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
@@ -9,6 +10,7 @@ import pl.bas.microtwitter.dao.UserDAO
 import pl.bas.microtwitter.dto.UserResponseDTO
 import pl.bas.microtwitter.exceptions.BadRequestException
 import pl.bas.microtwitter.repositories.UserRepository
+import javax.transaction.Transactional
 
 @RestController
 @RequestMapping("/")
@@ -47,5 +49,26 @@ class UserController(
                 selectedUser,
                 privateResponse = selectedUser === user))
     }
+
+    @Transactional
+    @PostMapping("/users/{userId}/follow")
+    fun followUser(@PathVariable userId: Long,
+                   user: UserDAO): ResponseEntity<Unit> {
+        if (userId == user.id) throw BadRequestException("Cannot follow myself")
+
+        if (user.follows.find { userDAO -> userDAO.id == userId } !== null) {
+            throw BadRequestException("You have already followed $userId")
+        }
+
+        val userToFollow = userRepository.findById(userId).let {
+            if (!it.isPresent) throw BadRequestException("User does not exist")
+            it.get()
+        }
+
+        (user.follows as PersistentBag).add(userToFollow)
+
+        return ResponseEntity.ok(Unit)
+    }
+
 }
 
