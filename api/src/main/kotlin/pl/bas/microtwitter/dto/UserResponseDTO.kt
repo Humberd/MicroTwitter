@@ -14,6 +14,7 @@ data class UserResponseDTO(
         var likesCount: Int?,
         var followsCount: Int?,
         var followedByCount: Int?
+//        var isFollowing: Boolean,
 )
 
 fun buildUserResponseDTO(user: UserDAO,
@@ -26,7 +27,7 @@ fun buildUserResponseDTO(user: UserDAO,
             email = if (privateResponse) user.email else null,
             fullName = user.fullName,
             tweetsCount = userRepository.countByTweets_User(user),
-            likesCount = 999,
+            likesCount = userRepository.countByLikes_User(user),
             followsCount = userRepository.countByFollows_IsFollowedBy(user),
             followedByCount = userRepository.countByIsFollowedBy_Follows(user)
     )

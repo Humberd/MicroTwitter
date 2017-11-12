@@ -16,10 +16,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import pl.bas.microtwitter.dto.TweetCreateDTO
 import pl.bas.microtwitter.dto.TweetResponseDTO
-import pl.bas.microtwitter.helpers.AuthHelper
-import pl.bas.microtwitter.helpers.CustomPageImpl
-import pl.bas.microtwitter.helpers.EndpointTest
-import pl.bas.microtwitter.helpers.TweetHelper
+import pl.bas.microtwitter.helpers.*
 import pl.bas.microtwitter.repositories.TweetLikeRepository
 import pl.bas.microtwitter.repositories.TweetRepository
 import pl.bas.microtwitter.repositories.UserRepository
@@ -243,31 +240,52 @@ internal class TweetControllerTest {
 
         @Test
         fun `should like a tweet`() {
+            UserHelper.getMe(http).apply {
+                assertEquals(0, likesCount)
+            }
             http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.OK, this.statusCode)
                 assertEquals(1, this.body?.likesCount)
                 assertEquals(1, tweetLikeRepository.findAll().size)
+            }
+            UserHelper.getMe(http).apply {
+                assertEquals(1, likesCount)
             }
         }
 
         @Test
         fun `should not like a tweet more than once`() {
+            UserHelper.getMe(http).apply {
+                assertEquals(0, likesCount)
+            }
             http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.OK, this.statusCode)
                 assertEquals(1, this.body?.likesCount)
                 assertEquals(1, tweetLikeRepository.findAll().size)
             }
+            UserHelper.getMe(http).apply {
+                assertEquals(1, likesCount)
+            }
             http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.BAD_REQUEST, this.statusCode)
                 assertEquals(1, tweetLikeRepository.findAll().size)
+            }
+            UserHelper.getMe(http).apply {
+                assertEquals(1, likesCount)
             }
         }
 
         @Test
         fun `should not like a not existing tweet`() {
+            UserHelper.getMe(http).apply {
+                assertEquals(0, likesCount)
+            }
             http.exchange("/tweets/543534534/likes", HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.BAD_REQUEST, this.statusCode)
                 assertEquals(0, tweetLikeRepository.findAll().size)
+            }
+            UserHelper.getMe(http).apply {
+                assertEquals(0, likesCount)
             }
         }
     }
