@@ -41,7 +41,7 @@ class TweetController(
         }
         val tweet = tweetRepository.save(tweetData)
 
-        return ResponseEntity.ok(responseBuilder.buildTweetResponse(tweet))
+        return ResponseEntity.ok(responseBuilder.buildTweetResponse(user, tweet))
     }
 
     /**
@@ -49,23 +49,25 @@ class TweetController(
      */
     @GetMapping("/")
     fun getTweets(@RequestParam username: String,
-                  pageable: Pageable): ResponseEntity<Page<TweetResponseDTO>> {
+                  pageable: Pageable,
+                  user: UserDAO): ResponseEntity<Page<TweetResponseDTO>> {
         val page = tweetRepository.findAllByUserLcusername(username.toLowerCase(), pageable)
 
-        return ResponseEntity.ok(page.map { tweet -> responseBuilder.buildTweetResponse(tweet) })
+        return ResponseEntity.ok(page.map { tweet -> responseBuilder.buildTweetResponse(user, tweet) })
     }
 
     /**
      * Gets a tweet by [tweetId]
      */
     @GetMapping("/{tweetId}")
-    fun getTweet(@PathVariable tweetId: Long): ResponseEntity<TweetResponseDTO> {
+    fun getTweet(@PathVariable tweetId: Long,
+                 user: UserDAO): ResponseEntity<TweetResponseDTO> {
         val tweet = tweetRepository.findById(tweetId).let {
             if (!it.isPresent) throw BadRequestException("Cannot find a tweet with id '$tweetId'")
             it.get()
         }
 
-        return ResponseEntity.ok(responseBuilder.buildTweetResponse(tweet))
+        return ResponseEntity.ok(responseBuilder.buildTweetResponse(user, tweet))
     }
 
     /**
@@ -111,7 +113,7 @@ class TweetController(
 
         tweetLikeRepository.save(tweetLike)
 
-        return ResponseEntity.ok(responseBuilder.buildTweetResponse(tweet))
+        return ResponseEntity.ok(responseBuilder.buildTweetResponse(user, tweet))
     }
 
     /**
@@ -119,7 +121,8 @@ class TweetController(
      */
     @GetMapping("/{tweetId}/comments")
     fun getComments(@PathVariable tweetId: Long,
-                    pageable: Pageable): ResponseEntity<Page<TweetResponseDTO>> {
+                    pageable: Pageable,
+                    user: UserDAO): ResponseEntity<Page<TweetResponseDTO>> {
         val baseTweet = tweetRepository.findById(tweetId).let {
             if (!it.isPresent) {
                 throw BadRequestException("Tweet does not exist")
@@ -128,6 +131,6 @@ class TweetController(
         }
         val page = tweetRepository.findAllByInReplyToTweet(baseTweet, pageable)
 
-        return ResponseEntity.ok(page. map { tweet -> responseBuilder.buildTweetResponse(tweet) })
+        return ResponseEntity.ok(page. map { tweet -> responseBuilder.buildTweetResponse(user, tweet) })
     }
 }

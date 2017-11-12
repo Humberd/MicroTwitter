@@ -5,6 +5,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
+import pl.bas.microtwitter.dto.SignupDTO
 import pl.bas.microtwitter.dto.TweetCreateDTO
 import pl.bas.microtwitter.dto.TweetResponseDTO
 
@@ -21,8 +22,9 @@ object TweetHelper {
     }
 
     fun getTweet(http: TestRestTemplate,
-                 tweetId: Long): TweetResponseDTO {
-        val authHeaders = AuthHelper.signupAndLogin(http)
+                 tweetId: Long,
+                 authUser: SignupDTO = AuthHelper.user1): TweetResponseDTO {
+        val authHeaders = AuthHelper.signupAndLogin(http, authUser)
         http.exchange("/tweets/$tweetId", HttpMethod.GET, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).let {
             assertEquals(HttpStatus.OK, it.statusCode, it.body?.toString())
 

@@ -1,6 +1,7 @@
 package pl.bas.microtwitter.dto
 
 import pl.bas.microtwitter.dao.TweetDAO
+import pl.bas.microtwitter.dao.UserDAO
 import pl.bas.microtwitter.repositories.TweetLikeRepository
 import pl.bas.microtwitter.repositories.TweetRepository
 import java.util.*
@@ -11,7 +12,8 @@ data class TweetResponseDTO(
         var createdAt: Date?,
         var likesCount: Int?,
         var commentsCount: Int?,
-        var user: TweetUserResponseDTO?
+        var user: TweetUserResponseDTO?,
+        var isLiked: Boolean?
 )
 
 data class TweetUserResponseDTO(
@@ -20,7 +22,8 @@ data class TweetUserResponseDTO(
 )
 
 
-fun buildTweetResponseDTO(tweet: TweetDAO,
+fun buildTweetResponseDTO(me: UserDAO,
+                          tweet: TweetDAO,
                           tweetLikeRepository: TweetLikeRepository,
                           tweetRepository: TweetRepository): TweetResponseDTO {
     return TweetResponseDTO(
@@ -32,6 +35,7 @@ fun buildTweetResponseDTO(tweet: TweetDAO,
             user = TweetUserResponseDTO(
                     id = tweet.user?.id,
                     username = tweet.user?.username
-            )
+            ),
+            isLiked = if (tweetLikeRepository.countByTweetAndUser(tweet, me) == 0) false else true
     )
 }

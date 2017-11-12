@@ -4,7 +4,7 @@ import com.github.salomonbrys.kotson.fromJson
 import com.google.gson.Gson
 import mu.KLogging
 import org.junit.jupiter.api.*
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -243,6 +243,9 @@ internal class TweetControllerTest {
             UserHelper.getMe(http).apply {
                 assertEquals(0, likesCount)
             }
+            TweetHelper.getTweet(http, tweet.id!!).apply {
+                assertFalse(this.isLiked!!)
+            }
             http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.OK, this.statusCode)
                 assertEquals(1, this.body?.likesCount)
@@ -250,6 +253,12 @@ internal class TweetControllerTest {
             }
             UserHelper.getMe(http).apply {
                 assertEquals(1, likesCount)
+            }
+            TweetHelper.getTweet(http, tweet.id!!).apply {
+                assertTrue(this.isLiked!!)
+            }
+            TweetHelper.getTweet(http, tweet.id!!, AuthHelper.user3).apply {
+                assertFalse(this.isLiked!!)
             }
         }
 
@@ -258,6 +267,9 @@ internal class TweetControllerTest {
             UserHelper.getMe(http).apply {
                 assertEquals(0, likesCount)
             }
+            TweetHelper.getTweet(http, tweet.id!!).apply {
+                assertFalse(this.isLiked!!)
+            }
             http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.OK, this.statusCode)
                 assertEquals(1, this.body?.likesCount)
@@ -266,12 +278,18 @@ internal class TweetControllerTest {
             UserHelper.getMe(http).apply {
                 assertEquals(1, likesCount)
             }
+            TweetHelper.getTweet(http, tweet.id!!).apply {
+                assertTrue(this.isLiked!!)
+            }
             http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.BAD_REQUEST, this.statusCode)
                 assertEquals(1, tweetLikeRepository.findAll().size)
             }
             UserHelper.getMe(http).apply {
                 assertEquals(1, likesCount)
+            }
+            TweetHelper.getTweet(http, tweet.id!!).apply {
+                assertTrue(this.isLiked!!)
             }
         }
 
@@ -280,12 +298,18 @@ internal class TweetControllerTest {
             UserHelper.getMe(http).apply {
                 assertEquals(0, likesCount)
             }
+            TweetHelper.getTweet(http, tweet.id!!).apply {
+                assertFalse(this.isLiked!!)
+            }
             http.exchange("/tweets/543534534/likes", HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.BAD_REQUEST, this.statusCode)
                 assertEquals(0, tweetLikeRepository.findAll().size)
             }
             UserHelper.getMe(http).apply {
                 assertEquals(0, likesCount)
+            }
+            TweetHelper.getTweet(http, tweet.id!!).apply {
+                assertFalse(this.isLiked!!)
             }
         }
     }
