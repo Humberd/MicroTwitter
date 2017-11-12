@@ -190,7 +190,6 @@ class UserControllerTest {
         }
     }
 
-
     @Nested
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     inner class followUser : EndpointTest("/users/") {
@@ -247,5 +246,102 @@ class UserControllerTest {
             }
         }
 
+        @Test
+        fun `should not follow a not existing user`() {
+            http.exchange("/users/defenitelyNotExistingUserId/follow", HttpMethod.POST, HttpEntity(null, authHeaders1), String::class.java).apply {
+                assertEquals(HttpStatus.BAD_REQUEST, statusCode)
+            }
+        }
+    }
+
+    @Nested
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class unfollowUser : EndpointTest("/users/") {
+        lateinit var authHeaders1: HttpHeaders
+        lateinit var authHeaders2: HttpHeaders
+        lateinit var followUrl: String
+        lateinit var unfollowUrl: String
+
+        @BeforeEach
+        fun setUp() {
+            userRepository.deleteAll()
+            authHeaders1 = AuthHelper.signupAndLogin(http, AuthHelper.user1)
+            UserHelper.getMe(http, AuthHelper.user1).apply {
+                followUrl = "/users/$id/follow"
+                unfollowUrl = "/users/$id/unfollow"
+            }
+            authHeaders2 = AuthHelper.signupAndLogin(http, AuthHelper.user2)
+        }
+
+        @Test
+        fun `should unfollow a user`() {
+            http.exchange(followUrl, HttpMethod.POST, HttpEntity(null, authHeaders2), String::class.java).apply {
+                assertEquals(HttpStatus.OK, statusCode)
+            }
+            UserHelper.getMe(http, AuthHelper.user1).apply {
+                assertEquals(0, followsCount)
+                assertEquals(1, followedByCount)
+            }
+            UserHelper.getMe(http, AuthHelper.user2).apply {
+                assertEquals(1, followsCount)
+                assertEquals(0, followedByCount)
+            }
+
+            http.exchange(unfollowUrl, HttpMethod.POST, HttpEntity(null, authHeaders2), String::class.java).apply {
+                assertEquals(HttpStatus.OK, statusCode)
+            }
+            UserHelper.getMe(http, AuthHelper.user1).apply {
+                assertEquals(0, followsCount)
+                assertEquals(0, followedByCount)
+            }
+            UserHelper.getMe(http, AuthHelper.user2).apply {
+                assertEquals(0, followsCount)
+                assertEquals(0, followedByCount)
+            }
+        }
+
+        @Test
+        fun `should not unfollow a user when the user was not already followed`() {
+            http.exchange(followUrl, HttpMethod.POST, HttpEntity(null, authHeaders2), String::class.java).apply {
+                assertEquals(HttpStatus.OK, statusCode)
+            }
+            UserHelper.getMe(http, AuthHelper.user1).apply {
+                assertEquals(0, followsCount)
+                assertEquals(1, followedByCount)
+            }
+            UserHelper.getMe(http, AuthHelper.user2).apply {
+                assertEquals(1, followsCount)
+                assertEquals(0, followedByCount)
+            }
+
+            http.exchange(unfollowUrl, HttpMethod.POST, HttpEntity(null, authHeaders2), String::class.java).apply {
+                assertEquals(HttpStatus.OK, statusCode)
+            }
+            UserHelper.getMe(http, AuthHelper.user1).apply {
+                assertEquals(0, followsCount)
+                assertEquals(0, followedByCount)
+            }
+            UserHelper.getMe(http, AuthHelper.user2).apply {
+                assertEquals(0, followsCount)
+                assertEquals(0, followedByCount)
+            }
+            http.exchange(unfollowUrl, HttpMethod.POST, HttpEntity(null, authHeaders2), String::class.java).apply {
+                assertEquals(HttpStatus.BAD_REQUEST, statusCode)
+            }
+        }
+
+        @Test
+        fun `should not unfollow myself`() {
+            http.exchange(unfollowUrl, HttpMethod.POST, HttpEntity(null, authHeaders1), String::class.java).apply {
+                assertEquals(HttpStatus.BAD_REQUEST, statusCode)
+            }
+        }
+
+        @Test
+        fun `should not unfollow a not existing user`() {
+            http.exchange("/users/defenitelyNotExistingUserId/unfollow", HttpMethod.POST, HttpEntity(null, authHeaders1), String::class.java).apply {
+                assertEquals(HttpStatus.BAD_REQUEST, statusCode)
+            }
+        }
     }
 }

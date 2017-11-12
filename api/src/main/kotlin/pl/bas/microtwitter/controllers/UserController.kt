@@ -70,5 +70,25 @@ class UserController(
         return ResponseEntity.ok(Unit)
     }
 
+    @Transactional
+    @PostMapping("/users/{userId}/unfollow")
+    fun unfollowUser(@PathVariable userId: Long,
+                   user: UserDAO): ResponseEntity<Unit> {
+        if (userId == user.id) throw BadRequestException("Cannot unfollow myself")
+
+        if (user.follows.find { userDAO -> userDAO.id == userId } === null) {
+            throw BadRequestException("You are not following $userId")
+        }
+
+        val userToUnfollow = userRepository.findById(userId).let {
+            if (!it.isPresent) throw BadRequestException("User does not exist")
+            it.get()
+        }
+
+        (user.follows as PersistentBag).removeIf { userDAO -> (userDAO as UserDAO).id == userToUnfollow.id }
+
+        return ResponseEntity.ok(Unit)
+    }
+
 }
 
