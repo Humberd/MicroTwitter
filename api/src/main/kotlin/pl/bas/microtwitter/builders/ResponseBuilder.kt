@@ -21,7 +21,7 @@ class ResponseBuilder(
         return buildTweetResponseDTO(tweetDAO, tweetLikeRepository, tweetRepository)
     }
 
-    fun buildUserResponse(user: UserDAO, privateResponse: Boolean = false): UserResponseDTO {
-        return buildUserResponseDTO(user, userRepository, privateResponse)
+    fun buildUserResponse(me: UserDAO, user: UserDAO, privateResponse: Boolean = false): UserResponseDTO {
+        return buildUserResponseDTO(me, user, userRepository, privateResponse)
     }
 }

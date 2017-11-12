@@ -4,8 +4,7 @@ import com.github.salomonbrys.kotson.fromJson
 import com.google.gson.Gson
 import mu.KLogging
 import org.junit.jupiter.api.*
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -219,6 +218,9 @@ class UserControllerTest {
                 assertEquals(1, followsCount)
                 assertEquals(0, followedByCount)
             }
+            UserHelper.getUser(http, user = AuthHelper.user1, authUser = AuthHelper.user2).apply {
+                assertTrue(this.isFollowing!!)
+            }
         }
 
         @Test
@@ -236,6 +238,9 @@ class UserControllerTest {
             UserHelper.getMe(http, AuthHelper.user2).apply {
                 assertEquals(1, followsCount)
                 assertEquals(0, followedByCount)
+            }
+            UserHelper.getUser(http, user = AuthHelper.user1, authUser = AuthHelper.user2).apply {
+                assertTrue(this.isFollowing!!)
             }
         }
 
@@ -286,6 +291,9 @@ class UserControllerTest {
                 assertEquals(1, followsCount)
                 assertEquals(0, followedByCount)
             }
+            UserHelper.getUser(http, user = AuthHelper.user1, authUser = AuthHelper.user2).apply {
+                assertTrue(this.isFollowing!!)
+            }
 
             http.exchange(unfollowUrl, HttpMethod.POST, HttpEntity(null, authHeaders2), String::class.java).apply {
                 assertEquals(HttpStatus.OK, statusCode)
@@ -297,6 +305,9 @@ class UserControllerTest {
             UserHelper.getMe(http, AuthHelper.user2).apply {
                 assertEquals(0, followsCount)
                 assertEquals(0, followedByCount)
+            }
+            UserHelper.getUser(http, user = AuthHelper.user1, authUser = AuthHelper.user2).apply {
+                assertFalse(this.isFollowing!!)
             }
         }
 
@@ -313,6 +324,9 @@ class UserControllerTest {
                 assertEquals(1, followsCount)
                 assertEquals(0, followedByCount)
             }
+            UserHelper.getUser(http, user = AuthHelper.user1, authUser = AuthHelper.user2).apply {
+                assertTrue(this.isFollowing!!)
+            }
 
             http.exchange(unfollowUrl, HttpMethod.POST, HttpEntity(null, authHeaders2), String::class.java).apply {
                 assertEquals(HttpStatus.OK, statusCode)
@@ -325,8 +339,23 @@ class UserControllerTest {
                 assertEquals(0, followsCount)
                 assertEquals(0, followedByCount)
             }
+            UserHelper.getUser(http, user = AuthHelper.user1, authUser = AuthHelper.user2).apply {
+                assertFalse(this.isFollowing!!)
+            }
+
             http.exchange(unfollowUrl, HttpMethod.POST, HttpEntity(null, authHeaders2), String::class.java).apply {
                 assertEquals(HttpStatus.BAD_REQUEST, statusCode)
+            }
+            UserHelper.getMe(http, AuthHelper.user1).apply {
+                assertEquals(0, followsCount)
+                assertEquals(0, followedByCount)
+            }
+            UserHelper.getMe(http, AuthHelper.user2).apply {
+                assertEquals(0, followsCount)
+                assertEquals(0, followedByCount)
+            }
+            UserHelper.getUser(http, user = AuthHelper.user1, authUser = AuthHelper.user2).apply {
+                assertFalse(this.isFollowing!!)
             }
         }
 

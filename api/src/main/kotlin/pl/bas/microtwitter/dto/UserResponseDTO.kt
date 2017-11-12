@@ -13,11 +13,13 @@ data class UserResponseDTO(
         var tweetsCount: Int?,
         var likesCount: Int?,
         var followsCount: Int?,
-        var followedByCount: Int?
-//        var isFollowing: Boolean,
+        var followedByCount: Int?,
+        // does user follow user in this object
+        var isFollowing: Boolean?
 )
 
-fun buildUserResponseDTO(user: UserDAO,
+fun buildUserResponseDTO(me: UserDAO,
+                         user: UserDAO,
                          userRepository: UserRepository,
                          privateResponse: Boolean = false): UserResponseDTO {
     return UserResponseDTO(
@@ -29,6 +31,8 @@ fun buildUserResponseDTO(user: UserDAO,
             tweetsCount = userRepository.countByTweets_User(user),
             likesCount = userRepository.countByLikes_User(user),
             followsCount = userRepository.countByFollows_IsFollowedBy(user),
-            followedByCount = userRepository.countByIsFollowedBy_Follows(user)
+            followedByCount = userRepository.countByIsFollowedBy_Follows(user),
+            isFollowing = if (me.id == user.id) null
+            else if (me.follows.find { followingUser -> followingUser.id == user.id } === null) false else true
     )
 }

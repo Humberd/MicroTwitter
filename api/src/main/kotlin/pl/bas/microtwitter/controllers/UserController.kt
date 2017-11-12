@@ -20,18 +20,19 @@ class UserController(
 
     @GetMapping("/me")
     fun getMe(user: UserDAO): ResponseEntity<UserResponseDTO> {
-        return ResponseEntity.ok(responseBuilder.buildUserResponse(user, privateResponse = true))
+        return ResponseEntity.ok(responseBuilder.buildUserResponse(user, user, privateResponse = true))
     }
 
     @GetMapping("/users")
     fun getUsers(@RequestParam username: String,
-                 pageable: Pageable): ResponseEntity<Page<UserResponseDTO>> {
+                 pageable: Pageable,
+                 user: UserDAO): ResponseEntity<Page<UserResponseDTO>> {
         if (username.isBlank()) {
             throw BadRequestException("Username must not by an empty string")
         }
         val page = userRepository.findAllByLcusernameContaining(username.toLowerCase(), pageable)
 
-        return ResponseEntity.ok(page.map { user -> responseBuilder.buildUserResponse(user) })
+        return ResponseEntity.ok(page.map { userDAO -> responseBuilder.buildUserResponse(user, userDAO) })
     }
 
     @GetMapping("/users/{username}")
@@ -46,7 +47,8 @@ class UserController(
         }
 
         return ResponseEntity.ok(responseBuilder.buildUserResponse(
-                selectedUser,
+                me = user,
+                user = selectedUser,
                 privateResponse = selectedUser === user))
     }
 
