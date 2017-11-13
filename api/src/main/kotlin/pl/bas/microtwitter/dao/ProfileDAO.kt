@@ -26,6 +26,6 @@ class ProfileDAO {
     var url: String? = ""
 
     @OneToOne(fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL))
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "birthdateId")
     var birthdate: BirthdateDAO? = null
 }
