@@ -27,11 +27,12 @@ class UserDAO {
     @Column(name = "lcemail", unique = true)
     var lcemail: String? = null
 
-    @Column(name = "fullName")
-    var fullName: String? = null
-
     @Column(name = "password")
     var password: String? = null
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL))
+    @JoinColumn(name = "profileId")
+    var profile: ProfileDAO? = null
 
     @OneToMany(mappedBy = "user", cascade = arrayOf(CascadeType.ALL))
     @OrderColumn(name = "id")

@@ -75,7 +75,7 @@ class UserController(
     @Transactional
     @PostMapping("/users/{userId}/unfollow")
     fun unfollowUser(@PathVariable userId: Long,
-                   user: UserDAO): ResponseEntity<Unit> {
+                     user: UserDAO): ResponseEntity<Unit> {
         if (userId == user.id) throw BadRequestException("Cannot unfollow myself")
 
         if (user.follows.find { userDAO -> userDAO.id == userId } === null) {

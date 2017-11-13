@@ -47,7 +47,7 @@ class UserControllerTest {
                 assert(this.createdAt is Date)
                 assertEquals(AuthHelper.user1.email, this.email)
                 assertEquals(AuthHelper.user1.username, this.username)
-                assertEquals(AuthHelper.user1.fullName, this.fullName)
+                assertEquals(AuthHelper.user1.fullName, this.profile?.fullName)
             }
         }
     }
@@ -152,7 +152,7 @@ class UserControllerTest {
                 assert(this.createdAt === null)
                 assertNotEquals(AuthHelper.user2.email, this.email)
                 assertEquals(AuthHelper.user2.username, this.username)
-                assertEquals(AuthHelper.user2.fullName, this.fullName)
+                assertEquals(AuthHelper.user2.fullName, this.profile?.fullName)
             }
         }
 
@@ -165,7 +165,7 @@ class UserControllerTest {
                 assert(this.createdAt === null)
                 assertNotEquals(AuthHelper.user2.email, this.email)
                 assertEquals(AuthHelper.user2.username, this.username)
-                assertEquals(AuthHelper.user2.fullName, this.fullName)
+                assertEquals(AuthHelper.user2.fullName, this.profile?.fullName)
             }
         }
 
@@ -176,7 +176,7 @@ class UserControllerTest {
                 assert(this.createdAt is Date)
                 assertEquals(AuthHelper.user1.email, this.email)
                 assertEquals(AuthHelper.user1.username, this.username)
-                assertEquals(AuthHelper.user1.fullName, this.fullName)
+                assertEquals(AuthHelper.user1.fullName, this.profile?.fullName)
             }
         }
 

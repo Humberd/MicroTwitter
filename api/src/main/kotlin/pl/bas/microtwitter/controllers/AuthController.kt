@@ -1,6 +1,7 @@
 package pl.bas.microtwitter.controllers
 
 import mu.KLogging
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.transaction.annotation.Transactional
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import pl.bas.microtwitter.dao.ProfileDAO
 import pl.bas.microtwitter.dao.UserDAO
 import pl.bas.microtwitter.dto.SignupDTO
 import pl.bas.microtwitter.dto.UpdatePasswordDTO
@@ -30,11 +32,20 @@ class AuthController(
         val user = UserDAO().apply {
             username = body.username
             email = body.email
-            fullName = body.fullName
             password = bCryptPasswordEncoder.encode(body.password)
+            profile = ProfileDAO().apply {
+                fullName = body.fullName
+            }
         }
+        try {
+            userRepository.save(user)
+        } catch (e: DataIntegrityViolationException) {
+            println("foo")
+            println(e.cause?.cause)
+//            throw BadRequestException(e.cause?.cause?.toString())
+        } catch (e: TypeCastException) {
 
-        userRepository.save(user)
+        }
         return ResponseEntity.ok(Unit)
     }
 
