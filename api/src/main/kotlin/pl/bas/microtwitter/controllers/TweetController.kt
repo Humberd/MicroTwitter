@@ -1,6 +1,7 @@
 package pl.bas.microtwitter.controllers
 
 import mu.KLogging
+import org.hibernate.collection.internal.PersistentList
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
@@ -90,7 +91,7 @@ class TweetController(
      * Likes from user are unique per tweet
      */
     @Transactional
-    @PostMapping("/{tweetId}/likes")
+    @PostMapping("/{tweetId}/like")
     fun likeTweet(@PathVariable tweetId: Long,
                   user: UserDAO): ResponseEntity<TweetResponseDTO> {
         val tweet = tweetRepository.findById(tweetId).let {
@@ -99,7 +100,7 @@ class TweetController(
         }
 
         tweet.likes.find {
-            it?.user?.id === user.id
+            it.user?.id === user.id
         }.apply {
             if (this !== null) throw BadRequestException("Already liked")
         }
@@ -109,9 +110,27 @@ class TweetController(
             this.user = user
         }
 
-        println(tweet.toString())
-
         tweetLikeRepository.save(tweetLike)
+
+        return ResponseEntity.ok(responseBuilder.buildTweetResponse(user, tweet))
+    }
+
+    @Transactional
+    @PostMapping("/{tweetId}/unlike")
+    fun unlikeTweet(@PathVariable tweetId: Long,
+                    user: UserDAO): ResponseEntity<TweetResponseDTO> {
+        val tweet = tweetRepository.findById(tweetId).let {
+            if (!it.isPresent) throw BadRequestException("Cannot find a tweet with id '$tweetId'")
+            it.get()
+        }
+
+        val tweetLike = tweet.likes.find {
+            it.user?.id === user.id
+        }.apply {
+            if (this === null) throw BadRequestException("Tweet was not liked")
+        }
+
+        (tweet.likes as PersistentList).remove(tweetLike)
 
         return ResponseEntity.ok(responseBuilder.buildTweetResponse(user, tweet))
     }

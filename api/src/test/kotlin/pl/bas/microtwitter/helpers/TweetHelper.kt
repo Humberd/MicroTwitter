@@ -36,7 +36,18 @@ object TweetHelper {
                   tweetId: Long): TweetResponseDTO {
         val authHeaders = AuthHelper.signupAndLogin(http)
 
-        http.exchange("/tweets/${tweetId}/likes", HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).let {
+        http.exchange("/tweets/${tweetId}/like", HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).let {
+            assertEquals(HttpStatus.OK, it.statusCode, it.body?.toString())
+
+            return it.body!!
+        }
+    }
+
+    fun unlikeTweet(http: TestRestTemplate,
+                    tweetId: Long): TweetResponseDTO {
+        val authHeaders = AuthHelper.signupAndLogin(http)
+
+        http.exchange("/tweets/${tweetId}/unlike", HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).let {
             assertEquals(HttpStatus.OK, it.statusCode, it.body?.toString())
 
             return it.body!!

@@ -3,7 +3,6 @@ package pl.bas.microtwitter.repositories
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.stereotype.Repository
 import pl.bas.microtwitter.dao.UserDAO
 
 interface UserRepository : JpaRepository<UserDAO, Long> {
@@ -15,5 +14,4 @@ interface UserRepository : JpaRepository<UserDAO, Long> {
     fun countByLikes_User(user: UserDAO): Int?
     fun countByFollows_IsFollowedBy(user: UserDAO): Int?
     fun countByIsFollowedBy_Follows(user: UserDAO): Int?
-//    fun findUserByFollows_IsFollowedBy(user: UserDAO, follows: UserDAO): Boolean?
 }

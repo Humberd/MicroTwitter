@@ -222,6 +222,73 @@ internal class TweetControllerTest {
 
     @Nested
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class unlikeTweet : EndpointTest("") {
+        lateinit var tweet: TweetResponseDTO
+
+        @BeforeAll
+        fun setUpAll() {
+            tweetRepository.deleteAll()
+
+            tweet = TweetHelper.createTweet(http)
+            super.url = "/tweets/${tweet.id}/unlike"
+        }
+
+        @BeforeEach
+        fun setUp() {
+            tweetLikeRepository.deleteAll()
+        }
+
+        @Test
+        fun `should unlike a tweet`() {
+            UserHelper.getMe(http).apply {
+                assertEquals(0, likesCount)
+            }
+            TweetHelper.getTweet(http, tweet.id!!).apply {
+                assertFalse(this.isLiked!!)
+            }
+            TweetHelper.likeTweet(http, tweet.id!!)
+            UserHelper.getMe(http).apply {
+                assertEquals(1, likesCount)
+            }
+            TweetHelper.getTweet(http, tweet.id!!).apply {
+                assertTrue(this.isLiked!!)
+            }
+            http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
+                assertEquals(HttpStatus.OK, this.statusCode)
+                assertEquals(0, this.body?.likesCount)
+                assertEquals(0, tweetLikeRepository.findAll().size)
+            }
+            UserHelper.getMe(http).apply {
+                assertEquals(0, likesCount)
+            }
+            TweetHelper.getTweet(http, tweet.id!!).apply {
+                assertFalse(this.isLiked!!)
+            }
+        }
+
+        @Test
+        fun `should not unlike a tweet when the tweet was not liked`() {
+            UserHelper.getMe(http).apply {
+                assertEquals(0, likesCount)
+            }
+            TweetHelper.getTweet(http, tweet.id!!).apply {
+                assertFalse(this.isLiked!!)
+            }
+            http.exchange(url, HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
+                assertEquals(HttpStatus.BAD_REQUEST, this.statusCode)
+            }
+            UserHelper.getMe(http).apply {
+                assertEquals(0, likesCount)
+            }
+            TweetHelper.getTweet(http, tweet.id!!).apply {
+                assertFalse(this.isLiked!!)
+            }
+        }
+
+    }
+
+    @Nested
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     inner class likeTweet : EndpointTest("") {
         lateinit var tweet: TweetResponseDTO
 
@@ -230,7 +297,7 @@ internal class TweetControllerTest {
             tweetRepository.deleteAll()
 
             tweet = TweetHelper.createTweet(http)
-            super.url = "/tweets/${tweet.id}/likes"
+            super.url = "/tweets/${tweet.id}/like"
         }
 
         @BeforeEach
@@ -301,7 +368,7 @@ internal class TweetControllerTest {
             TweetHelper.getTweet(http, tweet.id!!).apply {
                 assertFalse(this.isLiked!!)
             }
-            http.exchange("/tweets/543534534/likes", HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
+            http.exchange("/tweets/543534534/like", HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.BAD_REQUEST, this.statusCode)
                 assertEquals(0, tweetLikeRepository.findAll().size)
             }

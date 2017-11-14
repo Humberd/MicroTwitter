@@ -1,7 +1,6 @@
 package pl.bas.microtwitter.controllers
 
 import mu.KLogging
-import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.transaction.annotation.Transactional
@@ -37,15 +36,8 @@ class AuthController(
                 fullName = body.fullName
             }
         }
-        try {
-            userRepository.save(user)
-        } catch (e: DataIntegrityViolationException) {
-            println("foo")
-            println(e.cause?.cause)
-//            throw BadRequestException(e.cause?.cause?.toString())
-        } catch (e: TypeCastException) {
+        userRepository.save(user)
 
-        }
         return ResponseEntity.ok(Unit)
     }
 

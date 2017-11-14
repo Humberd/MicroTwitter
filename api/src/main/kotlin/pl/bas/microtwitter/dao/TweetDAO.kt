@@ -3,7 +3,6 @@ package pl.bas.microtwitter.dao
 import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.NotNull
-import javax.persistence.PrePersist
 
 @Entity
 @Table(name = "tweet")
@@ -22,7 +21,7 @@ class TweetDAO {
     @Temporal(TemporalType.TIMESTAMP)
     var createdAt: Date? = null
 
-    @OneToMany(mappedBy = "tweet", cascade = arrayOf(CascadeType.ALL))
+    @OneToMany(mappedBy = "tweet", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
     @OrderColumn(name = "id")
     var likes: List<TweetLikeDAO> = emptyList()
 
