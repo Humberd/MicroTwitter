@@ -115,6 +115,9 @@ class TweetController(
         return ResponseEntity.ok(responseBuilder.buildTweetResponse(user, tweet))
     }
 
+    /**
+     * Removes a like from a tweet
+     */
     @Transactional
     @PostMapping("/{tweetId}/unlike")
     fun unlikeTweet(@PathVariable tweetId: Long,

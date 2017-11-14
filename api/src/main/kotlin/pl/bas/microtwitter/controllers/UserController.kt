@@ -18,11 +18,17 @@ class UserController(
         val userRepository: UserRepository,
         val responseBuilder: ResponseBuilder) {
 
+    /**
+     * Gets logged in user info
+     */
     @GetMapping("/me")
     fun getMe(user: UserDAO): ResponseEntity<UserResponseDTO> {
         return ResponseEntity.ok(responseBuilder.buildUserResponse(user, user, privateResponse = true))
     }
 
+    /**
+     * Gets a paginated list of users selected by [username]
+     */
     @GetMapping("/users")
     fun getUsers(@RequestParam username: String,
                  pageable: Pageable,
@@ -35,6 +41,9 @@ class UserController(
         return ResponseEntity.ok(page.map { userDAO -> responseBuilder.buildUserResponse(user, userDAO) })
     }
 
+    /**
+     * Gets a user info by [username]
+     */
     @GetMapping("/users/{username}")
     fun getUser(@PathVariable username: String,
                 user: UserDAO): ResponseEntity<UserResponseDTO> {
@@ -52,6 +61,10 @@ class UserController(
                 privateResponse = selectedUser === user))
     }
 
+    /**
+     * Follows a user
+     * If user x follows user y, then user x will receive user y tweets on his wall
+     */
     @Transactional
     @PostMapping("/users/{userId}/follow")
     fun followUser(@PathVariable userId: Long,
@@ -72,6 +85,10 @@ class UserController(
         return ResponseEntity.ok(Unit)
     }
 
+    /**
+     * Unfollows a user
+     *
+     */
     @Transactional
     @PostMapping("/users/{userId}/unfollow")
     fun unfollowUser(@PathVariable userId: Long,
