@@ -100,7 +100,7 @@ class TweetController(
         }
 
         tweet.likes.find {
-            it.user?.id === user.id
+            it?.user?.id === user.id
         }.apply {
             if (this !== null) throw BadRequestException("Already liked")
         }
@@ -128,7 +128,7 @@ class TweetController(
         }
 
         val tweetLike = tweet.likes.find {
-            it.user?.id === user.id
+            it?.user?.id === user.id
         }.apply {
             if (this === null) throw BadRequestException("Tweet was not liked")
         }
