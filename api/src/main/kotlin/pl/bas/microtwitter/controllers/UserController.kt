@@ -7,12 +7,14 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import pl.bas.microtwitter.builders.ResponseBuilder
 import pl.bas.microtwitter.dao.UserDAO
+import pl.bas.microtwitter.dto.ProfileUpdateDTO
 import pl.bas.microtwitter.dto.UserResponseDTO
 import pl.bas.microtwitter.exceptions.BadRequestException
 import pl.bas.microtwitter.repositories.UserRepository
 import javax.transaction.Transactional
 
 @RestController
+@ControllerAdvice
 @RequestMapping("/")
 class UserController(
         val userRepository: UserRepository,
@@ -23,6 +25,29 @@ class UserController(
      */
     @GetMapping("/me")
     fun getMe(user: UserDAO): ResponseEntity<UserResponseDTO> {
+        return ResponseEntity.ok(responseBuilder.buildUserResponse(user, user, privateResponse = true))
+    }
+
+    /**
+     * Updates user profile
+     */
+    @Transactional
+    @PutMapping("/me/profile")
+    fun updateProfile(@RequestBody body: ProfileUpdateDTO,
+                      user: UserDAO): ResponseEntity<UserResponseDTO> {
+        user.profile?.apply {
+            fullName = body.fullName
+            description = body.description
+            location = body.location
+            profileLinkColor = body.profileLinkColor
+            url = body.url
+            birthdate!!.apply {
+                day = body.birthdate?.day
+                month = body.birthdate?.month
+                year = body.birthdate?.year
+            }
+        }
+
         return ResponseEntity.ok(responseBuilder.buildUserResponse(user, user, privateResponse = true))
     }
 

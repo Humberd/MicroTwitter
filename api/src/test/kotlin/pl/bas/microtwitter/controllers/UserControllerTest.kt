@@ -14,6 +14,8 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.junit.jupiter.SpringExtension
+import pl.bas.microtwitter.dto.BirthdateDTO
+import pl.bas.microtwitter.dto.ProfileUpdateDTO
 import pl.bas.microtwitter.dto.UserResponseDTO
 import pl.bas.microtwitter.helpers.AuthHelper
 import pl.bas.microtwitter.helpers.CustomPageImpl
@@ -48,6 +50,66 @@ class UserControllerTest {
                 assertEquals(AuthHelper.user1.email, this.email)
                 assertEquals(AuthHelper.user1.username, this.username)
                 assertEquals(AuthHelper.user1.fullName, this.profile?.fullName)
+            }
+        }
+    }
+
+    @Nested
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class updateProfile : EndpointTest("/me/profile") {
+        lateinit var authHeaders: HttpHeaders
+        val newProfileData = ProfileUpdateDTO(
+                fullName = "Pawel Gawowski",
+                description = "foobar",
+                location = "location",
+                profileLinkColor = "#aa14a1",
+                url = "www.google.com",
+                birthdate = BirthdateDTO(
+                        day = 1,
+                        month = 1,
+                        year = 1978
+                )
+        )
+
+        @BeforeEach
+        fun setUp() {
+            authHeaders = AuthHelper.signupAndLogin(http)
+        }
+
+        @Test
+        fun `should update profile`() {
+            http.exchange(url, HttpMethod.PUT, HttpEntity(newProfileData, authHeaders), UserResponseDTO::class.java).apply {
+                assertEquals(HttpStatus.OK, statusCode)
+                assertEquals(newProfileData.fullName, body?.profile?.fullName)
+                assertEquals(newProfileData.description, body?.profile?.description)
+                assertEquals(newProfileData.location, body?.profile?.location)
+                assertEquals(newProfileData.profileLinkColor, body?.profile?.profileLinkColor)
+                assertEquals(newProfileData.url, body?.profile?.url)
+                assertEquals(newProfileData.birthdate?.day, body?.profile?.birthdate?.day)
+                assertEquals(newProfileData.birthdate?.month, body?.profile?.birthdate?.month)
+                assertEquals(newProfileData.birthdate?.year, body?.profile?.birthdate?.year)
+            }
+        }
+
+        @Test
+        fun `should not update profile when the day is invalid`() {
+            val badProfileData = newProfileData.copy().apply {
+                birthdate = birthdate?.copy()!!.apply {
+                    day = 0
+                }
+            }
+            http.exchange(url, HttpMethod.PUT, HttpEntity(badProfileData, authHeaders), UserResponseDTO::class.java).apply {
+                assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, statusCode)
+            }
+        }
+
+        @Test
+        fun `should not update profile when the hex color has invalid format`() {
+            val badProfileData = newProfileData.copy().apply {
+                profileLinkColor = "not a valid color"
+            }
+            http.exchange(url, HttpMethod.PUT, HttpEntity(badProfileData, authHeaders), UserResponseDTO::class.java).apply {
+                assertEquals(HttpStatus.BAD_REQUEST, statusCode)
             }
         }
     }

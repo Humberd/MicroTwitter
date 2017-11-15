@@ -24,7 +24,7 @@ data class ProfileResponseDTO(
         var location: String?,
         var profileLinkColor: String?,
         var url: String?,
-        var birthdateResponseDTO: BirthdateResponseDTO
+        var birthdate: BirthdateResponseDTO
 )
 
 data class BirthdateResponseDTO(
@@ -54,7 +54,7 @@ fun buildUserResponseDTO(me: UserDAO,
                     location = user.profile!!.location,
                     profileLinkColor = user.profile!!.profileLinkColor,
                     url = user.profile!!.url,
-                    birthdateResponseDTO = BirthdateResponseDTO(
+                    birthdate = BirthdateResponseDTO(
                             day = user.profile!!.birthdate?.day,
                             month = user.profile!!.birthdate?.month,
                             year = user.profile!!.birthdate?.year
