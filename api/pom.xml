@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>pl.bas</groupId>
-    <artifactId>microtwitter</artifactId>
+    <artifactId>micro-twitter-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
