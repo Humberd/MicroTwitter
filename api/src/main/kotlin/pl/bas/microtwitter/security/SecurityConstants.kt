@@ -1,4 +1,4 @@
-package pl.bas.microtwitter.security 
+package pl.bas.microtwitter.security
 
 object SecurityConstants {
     val SECRET = "SecretKeyToGenJWTs"

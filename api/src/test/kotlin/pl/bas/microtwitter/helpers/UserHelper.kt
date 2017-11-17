@@ -34,7 +34,7 @@ object UserHelper {
 
     fun followUser(http: TestRestTemplate,
                    user: UserResponseDTO,
-                   authUser:SignupDTO = AuthHelper.user1): UserResponseDTO {
+                   authUser: SignupDTO = AuthHelper.user1): UserResponseDTO {
         val authHeaders = AuthHelper.signupAndLogin(http, authUser)
 
         http.exchange("/users/${user.id}/follow", HttpMethod.POST, HttpEntity(null, authHeaders), UserResponseDTO::class.java).let {

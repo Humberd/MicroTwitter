@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param
 import pl.bas.microtwitter.dao.TweetDAO
 import pl.bas.microtwitter.dao.UserDAO
 
-interface TweetRepository: JpaRepository<TweetDAO, Long> {
+interface TweetRepository : JpaRepository<TweetDAO, Long> {
     fun findAllByUserLcusername(lcusername: String,
                                 pageable: Pageable): Page<TweetDAO>
 
@@ -20,8 +20,8 @@ interface TweetRepository: JpaRepository<TweetDAO, Long> {
 
     /**
     SELECT DISTINCT t.* FROM
-        tweet t,
-        (SELECT * FROM user_follower uf WHERE uf.user_id = 1) myFollower
+    tweet t,
+    (SELECT * FROM user_follower uf WHERE uf.user_id = 1) myFollower
     WHERE t.user_id = 1 OR t.user_id = myFollower.followed_user_id;
      */
     @Language("JPAQL")
