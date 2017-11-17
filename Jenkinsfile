@@ -3,6 +3,7 @@ node {
      * Making sure, that there are only at most 2 artifacts stored on a server,
      * because We don't want to waste a storage on a server, do we?
      */
+    //noinspection GroovyAssignabilityCheck
     properties([buildDiscarder(logRotator(
             artifactDaysToKeepStr: '',
             artifactNumToKeepStr: '2',
@@ -10,6 +11,9 @@ node {
             numToKeepStr: '')),
                 disableConcurrentBuilds(),
                 pipelineTriggers([githubPush()])])
+
+    env.NODEJS_HOME = "${tool 'Node 8.9.1'}"
+    env.PATH = "${env.NODEJS_HOME}/bin:${env.PATH}"
 
     stage("Pre Cleanup") {
         deleteDir()
@@ -20,6 +24,7 @@ node {
     }
 
     stage("Build") {
+        //noinspection GroovyAssignabilityCheck
         parallel(
                 API: {
                     dir("api") {
@@ -27,12 +32,18 @@ node {
                             sh "mvn clean install -DskipTests=true"
                         }
                     }
+                },
+                UI: {
+                    dir("ui") {
+                        sh "npm --version"
+                    }
                 }
         )
 
     }
 
     stage("Test") {
+        //noinspection GroovyAssignabilityCheck
         parallel(
                 API: {
                     dir("api") {
