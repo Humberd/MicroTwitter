@@ -30,7 +30,6 @@
           <option name="FORCE_QUOTE_STYlE" value="true" />
           <option name="SPACES_WITHIN_IMPORTS" value="true" />
           <option name="SPACES_WITHIN_OBJECT_TYPE_BRACES" value="false" />
-          <option name="BLACKLIST_IMPORTS" value="rxjs/Rx,rxjs" />
         </TypeScriptCodeStyleSettings>
         <codeStyleSettings language="CSS">
           <indentOptions>
