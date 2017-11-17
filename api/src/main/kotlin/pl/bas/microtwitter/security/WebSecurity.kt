@@ -15,7 +15,10 @@ import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import pl.bas.microtwitter.security.SecurityConstants.APP_STATUS_URLS
 import pl.bas.microtwitter.security.SecurityConstants.SIGN_UP_URL
-
+import pl.bas.microtwitter.security.SecurityConstants.SWAGGER_API_DOCS_URL
+import pl.bas.microtwitter.security.SecurityConstants.SWAGGER_RESOURCES_URL
+import pl.bas.microtwitter.security.SecurityConstants.SWAGGER_UI_URL
+import pl.bas.microtwitter.security.SecurityConstants.SWAGGER_UI_URL2
 
 @EnableWebSecurity
 class WebSecurity(private val userDetailsService: UserDetailsService,
@@ -25,6 +28,12 @@ class WebSecurity(private val userDetailsService: UserDetailsService,
     override fun configure(http: HttpSecurity) {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+                .antMatchers(HttpMethod.GET,
+                        SWAGGER_API_DOCS_URL,
+                        SWAGGER_RESOURCES_URL,
+                        SWAGGER_UI_URL,
+                        SWAGGER_UI_URL2
+                ).permitAll()
                 .antMatchers(APP_STATUS_URLS).permitAll()
                 .anyRequest().authenticated()
                 .and()
