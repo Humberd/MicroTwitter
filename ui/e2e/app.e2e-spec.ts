@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('microtwitter App', () => {
+describe('microtwitter-ui App', () => {
   let page: AppPage;
 
   beforeEach(() => {

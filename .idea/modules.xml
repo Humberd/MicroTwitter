@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/micro-twitter.iml" filepath="$PROJECT_DIR$/.idea/micro-twitter.iml" />
       <module fileurl="file://$PROJECT_DIR$/api/microtwitter.iml" filepath="$PROJECT_DIR$/api/microtwitter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ui/microtwitter-ui.iml" filepath="$PROJECT_DIR$/ui/microtwitter-ui.iml" />
     </modules>
   </component>
 </project>
