@@ -11,8 +11,9 @@ import pl.bas.microtwitter.dto.TweetResponseDTO
 
 object TweetHelper {
     fun createTweet(http: TestRestTemplate,
-                    tweetData: TweetCreateDTO = TweetCreateDTO(content = "foobar")): TweetResponseDTO {
-        val authHeaders = AuthHelper.signupAndLogin(http)
+                    tweetData: TweetCreateDTO = TweetCreateDTO(content = "foobar"),
+                    authUser: SignupDTO = AuthHelper.user1): TweetResponseDTO {
+        val authHeaders = AuthHelper.signupAndLogin(http, authUser)
 
         http.exchange("/tweets/", HttpMethod.POST, HttpEntity(tweetData, authHeaders), TweetResponseDTO::class.java).let {
             assertEquals(HttpStatus.OK, it.statusCode, it.body?.toString())

@@ -96,7 +96,7 @@ class UserController(
                    user: UserDAO): ResponseEntity<Unit> {
         if (userId == user.id) throw BadRequestException("Cannot follow myself")
 
-        if (user.follows.find { userDAO -> userDAO.id == userId } !== null) {
+        if (user.followedUsers.find { userDAO -> userDAO.id == userId } !== null) {
             throw BadRequestException("You have already followed $userId")
         }
 
@@ -105,7 +105,7 @@ class UserController(
             it.get()
         }
 
-        (user.follows as PersistentBag).add(userToFollow)
+        (user.followedUsers as PersistentBag).add(userToFollow)
 
         return ResponseEntity.ok(Unit)
     }
@@ -120,7 +120,7 @@ class UserController(
                      user: UserDAO): ResponseEntity<Unit> {
         if (userId == user.id) throw BadRequestException("Cannot unfollow myself")
 
-        if (user.follows.find { userDAO -> userDAO.id == userId } === null) {
+        if (user.followedUsers.find { userDAO -> userDAO.id == userId } === null) {
             throw BadRequestException("You are not following $userId")
         }
 
@@ -129,7 +129,7 @@ class UserController(
             it.get()
         }
 
-        (user.follows as PersistentBag).removeIf { userDAO -> (userDAO as UserDAO).id == userToUnfollow.id }
+        (user.followedUsers as PersistentBag).removeIf { userDAO -> (userDAO as UserDAO).id == userToUnfollow.id }
 
         return ResponseEntity.ok(Unit)
     }

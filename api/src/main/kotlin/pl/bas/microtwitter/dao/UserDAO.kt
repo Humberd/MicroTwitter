@@ -30,27 +30,27 @@ class UserDAO {
     @Column(name = "password")
     var password: String? = null
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL))
+    @OneToOne(fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
     @JoinColumn(name = "profileId")
     var profile: ProfileDAO? = null
 
-    @OneToMany(mappedBy = "user", cascade = arrayOf(CascadeType.ALL))
+    @OneToMany(mappedBy = "user", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
     @OrderColumn(name = "id")
     var tweets: List<TweetDAO> = emptyList()
 
-    @OneToMany(mappedBy = "user", cascade = arrayOf(CascadeType.ALL))
+    @OneToMany(mappedBy = "user", cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
     @OrderColumn(name = "id")
     var likes: List<TweetLikeDAO> = emptyList()
 
-    @ManyToMany(cascade = arrayOf(CascadeType.ALL))
+    @ManyToMany()
     @JoinTable(name = "userFollower",
             joinColumns = arrayOf(JoinColumn(name = "userId")),
-            inverseJoinColumns = arrayOf(JoinColumn(name = "followerId"))
+            inverseJoinColumns = arrayOf(JoinColumn(name = "followedUserId"))
     )
-    var follows: List<UserDAO> = emptyList()
+    var followedUsers: List<UserDAO> = emptyList()
 
-    @ManyToMany(mappedBy = "follows")
-    var isFollowedBy: List<UserDAO> = emptyList()
+    @ManyToMany(mappedBy = "followedUsers")
+    var followedByUsers: List<UserDAO> = emptyList()
 
     @PreUpdate
     protected fun onUpdate() {

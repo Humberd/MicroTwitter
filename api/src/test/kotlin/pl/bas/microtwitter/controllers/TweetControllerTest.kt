@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import pl.bas.microtwitter.dto.TweetCreateDTO
 import pl.bas.microtwitter.dto.TweetResponseDTO
+import pl.bas.microtwitter.dto.UserResponseDTO
 import pl.bas.microtwitter.helpers.*
 import pl.bas.microtwitter.repositories.TweetLikeRepository
 import pl.bas.microtwitter.repositories.TweetRepository
@@ -39,6 +40,65 @@ internal class TweetControllerTest {
     fun setUpAll() {
         userRepository.deleteAll()
         authHeaders = AuthHelper.signupAndLogin(http)
+    }
+
+    @Nested
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class getWall : EndpointTest("/wall") {
+        lateinit var user1: UserResponseDTO
+        lateinit var user2: UserResponseDTO
+        lateinit var user3: UserResponseDTO
+        lateinit var user4: UserResponseDTO
+
+
+        @BeforeEach
+        fun setUp() {
+            userRepository.deleteAll()
+            //user 1
+            AuthHelper.signUp(http, AuthHelper.user1)
+            user1 = UserHelper.getMe(http, AuthHelper.user1)
+            //user 2
+            AuthHelper.signUp(http, AuthHelper.user2)
+            user2 = UserHelper.getMe(http, AuthHelper.user2)
+            //user 3
+            AuthHelper.signUp(http, AuthHelper.user3)
+            user3 = UserHelper.getMe(http, AuthHelper.user3)
+            //user 4
+            AuthHelper.signUp(http, AuthHelper.user4)
+            user4 = UserHelper.getMe(http, AuthHelper.user4)
+
+
+            TweetHelper.createTweet(http, TweetCreateDTO(content = "newcontent"), AuthHelper.user1)
+            TweetHelper.createTweet(http, TweetCreateDTO(content = "foobar1"), AuthHelper.user2)
+            TweetHelper.createTweet(http, TweetCreateDTO(content = "foobar2"), AuthHelper.user2)
+            TweetHelper.createTweet(http, TweetCreateDTO(content = "foobar3"), AuthHelper.user2)
+            TweetHelper.createTweet(http, TweetCreateDTO(content = "not a game"), AuthHelper.user3)
+            TweetHelper.createTweet(http, TweetCreateDTO(content = "new game is comming"), AuthHelper.user4)
+        }
+
+        @Test
+        fun `should get user wall | user1 follows user2,user4 = 5 tweets`() {
+            UserHelper.followUser(http, user2, AuthHelper.user1)
+            UserHelper.followUser(http, user4, AuthHelper.user1)
+
+            val headers = AuthHelper.signupAndLogin(http, AuthHelper.user1)
+            http.exchange(url, HttpMethod.GET, HttpEntity(null, headers), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(5, body.content.size)
+            }
+        }
+
+        @Test
+        fun `should get user wall | user3 follows user1,user4 = 3 tweets`() {
+            UserHelper.followUser(http, user1, AuthHelper.user3)
+            UserHelper.followUser(http, user4, AuthHelper.user3)
+
+            val headers = AuthHelper.signupAndLogin(http, AuthHelper.user3)
+            http.exchange(url, HttpMethod.GET, HttpEntity(null, headers), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(3, body.content.size)
+            }
+        }
     }
 
     @Nested
@@ -398,7 +458,7 @@ internal class TweetControllerTest {
 
         @Test
         fun `should get 3 comments for a tweet`() {
-            http.exchange(url , HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+            http.exchange(url, HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
                 assertEquals(HttpStatus.OK, statusCode)
                 assertEquals(3, body.content.size)
@@ -407,19 +467,19 @@ internal class TweetControllerTest {
 
         @Test
         fun `should paginate comments`() {
-            http.exchange("$url?size=2&page=0" , HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+            http.exchange("$url?size=2&page=0", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
                 assertEquals(HttpStatus.OK, statusCode)
                 assertEquals(2, body.content.size)
             }
 
-            http.exchange("$url?size=2&page=1" , HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+            http.exchange("$url?size=2&page=1", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
                 assertEquals(HttpStatus.OK, statusCode)
                 assertEquals(1, body.content.size)
             }
 
-            http.exchange("$url?size=2&page=2" , HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+            http.exchange("$url?size=2&page=2", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
                 assertEquals(HttpStatus.OK, statusCode)
                 assertEquals(0, body.content.size)
@@ -428,7 +488,7 @@ internal class TweetControllerTest {
 
         @Test
         fun `should not get comments of a not existing tweet`() {
-            http.exchange("/tweets/243983904203984/comments" , HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+            http.exchange("/tweets/243983904203984/comments", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 assertEquals(HttpStatus.BAD_REQUEST, statusCode)
             }
         }

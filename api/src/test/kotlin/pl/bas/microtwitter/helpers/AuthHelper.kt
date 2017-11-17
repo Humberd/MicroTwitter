@@ -1,10 +1,7 @@
 package pl.bas.microtwitter.helpers
 
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import pl.bas.microtwitter.dto.SignupDTO
 
@@ -32,6 +29,13 @@ object AuthHelper {
                 fullName = "Stefan Batory",
                 password = "password"
         )
+
+    var user4: SignupDTO = SignupDTO("", "", "", "")
+        get() = SignupDTO(
+                username = "HenrykWalezy",
+                email = "henryk@walezy.pl",
+                fullName = "Henryk Walezy",
+                password = "admin12345")
 
     fun signUp(http: TestRestTemplate,
                user: SignupDTO = user1): ResponseEntity<String> {

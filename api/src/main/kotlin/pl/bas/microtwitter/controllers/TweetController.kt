@@ -18,17 +18,28 @@ import pl.bas.microtwitter.repositories.TweetRepository
 import javax.transaction.Transactional
 
 @RestController
-@RequestMapping("/tweets")
+@RequestMapping("/")
 class TweetController(
         val tweetRepository: TweetRepository,
         val tweetLikeRepository: TweetLikeRepository,
         val responseBuilder: ResponseBuilder) {
     companion object : KLogging()
 
+    @GetMapping("/wall")
+    fun getWall(pageable: Pageable,
+                user: UserDAO): ResponseEntity<Page<TweetResponseDTO>> {
+        val page = tweetRepository.findWall(
+                user = user,
+                followedUsersList = user.followedUsers,
+                pageable = pageable)
+
+        return ResponseEntity.ok(page.map { tweet -> responseBuilder.buildTweetResponse(user, tweet) })
+    }
+
     /**
      * Creates a tweet and returns its new instance
      */
-    @PostMapping("/")
+    @PostMapping("/tweets")
     fun createTweet(@RequestBody body: TweetCreateDTO,
                     user: UserDAO): ResponseEntity<TweetResponseDTO> {
         val tweetData = TweetDAO().apply {
@@ -48,7 +59,7 @@ class TweetController(
     /**
      * Gets a paginated list of tweets by given [username]
      */
-    @GetMapping("/")
+    @GetMapping("/tweets")
     fun getTweets(@RequestParam username: String,
                   pageable: Pageable,
                   user: UserDAO): ResponseEntity<Page<TweetResponseDTO>> {
@@ -60,7 +71,7 @@ class TweetController(
     /**
      * Gets a tweet by [tweetId]
      */
-    @GetMapping("/{tweetId}")
+    @GetMapping("/tweets/{tweetId}")
     fun getTweet(@PathVariable tweetId: Long,
                  user: UserDAO): ResponseEntity<TweetResponseDTO> {
         val tweet = tweetRepository.findById(tweetId).let {
@@ -75,7 +86,7 @@ class TweetController(
      * Deletes a tweet by [tweetId] only by a tweet creator
      */
     @Transactional
-    @DeleteMapping("/{tweetId}")
+    @DeleteMapping("/tweets/{tweetId}")
     fun deleteTweet(@PathVariable tweetId: Long): ResponseEntity<Unit> {
         val tweet = tweetRepository.findById(tweetId).let {
             if (!it.isPresent) throw BadRequestException("Cannot find a tweet with id '$tweetId'")
@@ -91,7 +102,7 @@ class TweetController(
      * Likes from user are unique per tweet
      */
     @Transactional
-    @PostMapping("/{tweetId}/like")
+    @PostMapping("/tweets/{tweetId}/like")
     fun likeTweet(@PathVariable tweetId: Long,
                   user: UserDAO): ResponseEntity<TweetResponseDTO> {
         val tweet = tweetRepository.findById(tweetId).let {
@@ -119,7 +130,7 @@ class TweetController(
      * Removes a like from a tweet
      */
     @Transactional
-    @PostMapping("/{tweetId}/unlike")
+    @PostMapping("/tweets/{tweetId}/unlike")
     fun unlikeTweet(@PathVariable tweetId: Long,
                     user: UserDAO): ResponseEntity<TweetResponseDTO> {
         val tweet = tweetRepository.findById(tweetId).let {
@@ -141,7 +152,7 @@ class TweetController(
     /**
      * Gets a comment list of a tweet with [tweetId]
      */
-    @GetMapping("/{tweetId}/comments")
+    @GetMapping("/tweets/{tweetId}/comments")
     fun getComments(@PathVariable tweetId: Long,
                     pageable: Pageable,
                     user: UserDAO): ResponseEntity<Page<TweetResponseDTO>> {
@@ -153,6 +164,6 @@ class TweetController(
         }
         val page = tweetRepository.findAllByInReplyToTweet(baseTweet, pageable)
 
-        return ResponseEntity.ok(page. map { tweet -> responseBuilder.buildTweetResponse(user, tweet) })
+        return ResponseEntity.ok(page.map { tweet -> responseBuilder.buildTweetResponse(user, tweet) })
     }
 }
