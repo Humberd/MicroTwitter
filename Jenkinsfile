@@ -12,7 +12,7 @@ node {
                 disableConcurrentBuilds(),
                 pipelineTriggers([githubPush()])])
 
-    env.NODEJS_HOME = "${tool 'Node 8.9.1'}"
+    env.NODEJS_HOME = "${tool '8.9.1'}"
     env.PATH = "${env.NODEJS_HOME}/bin:${env.PATH}"
 
     stage("Pre Cleanup") {
