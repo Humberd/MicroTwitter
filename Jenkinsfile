@@ -27,7 +27,7 @@ node {
                     dir("api") {
                         sh "docker build -t micro-twitter-api . -f build.Dockerfile"
                         sh "docker create --name micro-twitter-apic micro-twitter-api"
-                        sh "docker cp micro-twitter-apic:/nvm-app/target ./target"
+                        sh "docker cp micro-twitter-apic:/mvn-app/target ./target"
                         sh "docker rm -f micro-twitter-apic"
 //                        withMaven(maven: "Maven") {
 //                            sh "mvn clean install -DskipTests=true"
