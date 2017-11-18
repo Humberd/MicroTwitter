@@ -273,12 +273,12 @@ class UserControllerTest {
                 assertEquals(HttpStatus.OK, statusCode)
             }
             UserHelper.getMe(http, AuthHelper.user1).apply {
-                assertEquals(0, followsCount)
-                assertEquals(1, followedByCount)
+                assertEquals(0, followedUsersCount)
+                assertEquals(1, followedByUsersCount)
             }
             UserHelper.getMe(http, AuthHelper.user2).apply {
-                assertEquals(1, followsCount)
-                assertEquals(0, followedByCount)
+                assertEquals(1, followedUsersCount)
+                assertEquals(0, followedByUsersCount)
             }
             UserHelper.getUser(http, user = AuthHelper.user1, authUser = AuthHelper.user2).apply {
                 assertTrue(this.isFollowing!!)
@@ -294,12 +294,12 @@ class UserControllerTest {
                 assertEquals(HttpStatus.BAD_REQUEST, statusCode)
             }
             UserHelper.getMe(http, AuthHelper.user1).apply {
-                assertEquals(0, followsCount)
-                assertEquals(1, followedByCount)
+                assertEquals(0, followedUsersCount)
+                assertEquals(1, followedByUsersCount)
             }
             UserHelper.getMe(http, AuthHelper.user2).apply {
-                assertEquals(1, followsCount)
-                assertEquals(0, followedByCount)
+                assertEquals(1, followedUsersCount)
+                assertEquals(0, followedByUsersCount)
             }
             UserHelper.getUser(http, user = AuthHelper.user1, authUser = AuthHelper.user2).apply {
                 assertTrue(this.isFollowing!!)
@@ -346,12 +346,12 @@ class UserControllerTest {
                 assertEquals(HttpStatus.OK, statusCode)
             }
             UserHelper.getMe(http, AuthHelper.user1).apply {
-                assertEquals(0, followsCount)
-                assertEquals(1, followedByCount)
+                assertEquals(0, followedUsersCount)
+                assertEquals(1, followedByUsersCount)
             }
             UserHelper.getMe(http, AuthHelper.user2).apply {
-                assertEquals(1, followsCount)
-                assertEquals(0, followedByCount)
+                assertEquals(1, followedUsersCount)
+                assertEquals(0, followedByUsersCount)
             }
             UserHelper.getUser(http, user = AuthHelper.user1, authUser = AuthHelper.user2).apply {
                 assertTrue(this.isFollowing!!)
@@ -361,12 +361,12 @@ class UserControllerTest {
                 assertEquals(HttpStatus.OK, statusCode)
             }
             UserHelper.getMe(http, AuthHelper.user1).apply {
-                assertEquals(0, followsCount)
-                assertEquals(0, followedByCount)
+                assertEquals(0, followedUsersCount)
+                assertEquals(0, followedByUsersCount)
             }
             UserHelper.getMe(http, AuthHelper.user2).apply {
-                assertEquals(0, followsCount)
-                assertEquals(0, followedByCount)
+                assertEquals(0, followedUsersCount)
+                assertEquals(0, followedByUsersCount)
             }
             UserHelper.getUser(http, user = AuthHelper.user1, authUser = AuthHelper.user2).apply {
                 assertFalse(this.isFollowing!!)
@@ -379,12 +379,12 @@ class UserControllerTest {
                 assertEquals(HttpStatus.OK, statusCode)
             }
             UserHelper.getMe(http, AuthHelper.user1).apply {
-                assertEquals(0, followsCount)
-                assertEquals(1, followedByCount)
+                assertEquals(0, followedUsersCount)
+                assertEquals(1, followedByUsersCount)
             }
             UserHelper.getMe(http, AuthHelper.user2).apply {
-                assertEquals(1, followsCount)
-                assertEquals(0, followedByCount)
+                assertEquals(1, followedUsersCount)
+                assertEquals(0, followedByUsersCount)
             }
             UserHelper.getUser(http, user = AuthHelper.user1, authUser = AuthHelper.user2).apply {
                 assertTrue(this.isFollowing!!)
@@ -394,12 +394,12 @@ class UserControllerTest {
                 assertEquals(HttpStatus.OK, statusCode)
             }
             UserHelper.getMe(http, AuthHelper.user1).apply {
-                assertEquals(0, followsCount)
-                assertEquals(0, followedByCount)
+                assertEquals(0, followedUsersCount)
+                assertEquals(0, followedByUsersCount)
             }
             UserHelper.getMe(http, AuthHelper.user2).apply {
-                assertEquals(0, followsCount)
-                assertEquals(0, followedByCount)
+                assertEquals(0, followedUsersCount)
+                assertEquals(0, followedByUsersCount)
             }
             UserHelper.getUser(http, user = AuthHelper.user1, authUser = AuthHelper.user2).apply {
                 assertFalse(this.isFollowing!!)
@@ -409,12 +409,12 @@ class UserControllerTest {
                 assertEquals(HttpStatus.BAD_REQUEST, statusCode)
             }
             UserHelper.getMe(http, AuthHelper.user1).apply {
-                assertEquals(0, followsCount)
-                assertEquals(0, followedByCount)
+                assertEquals(0, followedUsersCount)
+                assertEquals(0, followedByUsersCount)
             }
             UserHelper.getMe(http, AuthHelper.user2).apply {
-                assertEquals(0, followsCount)
-                assertEquals(0, followedByCount)
+                assertEquals(0, followedUsersCount)
+                assertEquals(0, followedByUsersCount)
             }
             UserHelper.getUser(http, user = AuthHelper.user1, authUser = AuthHelper.user2).apply {
                 assertFalse(this.isFollowing!!)

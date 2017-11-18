@@ -11,8 +11,8 @@ data class UserResponseDTO(
         var email: String?,
         var tweetsCount: Int?,
         var likesCount: Int?,
-        var followsCount: Int?,
-        var followedByCount: Int?,
+        var followedUsersCount: Int?,
+        var followedByUsersCount: Int?,
         // does user follow user in this object
         var isFollowing: Boolean?,
         var profile: ProfileResponseDTO?
@@ -44,8 +44,8 @@ fun buildUserResponseDTO(me: UserDAO,
             email = if (privateResponse) user.email else null,
             tweetsCount = userRepository.countByTweets_User(user),
             likesCount = userRepository.countByLikes_User(user),
-            followsCount = userRepository.countByFollowedUsers_FollowedByUsers(user),
-            followedByCount = userRepository.countByFollowedByUsers_FollowedUsers(user),
+            followedUsersCount = userRepository.countByFollowedUsers_FollowedByUsers(user),
+            followedByUsersCount = userRepository.countByFollowedByUsers_FollowedUsers(user),
             isFollowing = if (me.id == user.id) null
             else me.followedUsers.find { followingUser -> followingUser.id == user.id } !== null,
             profile = ProfileResponseDTO(
