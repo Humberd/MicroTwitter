@@ -26,7 +26,7 @@ interface TweetRepository : JpaRepository<TweetDAO, Long> {
      */
     @Language("JPAQL")
     @Query("""
-        select distinct t
+        select t
         from TweetDAO as t
         where t.user = :user
         or t.user in :followedUsersList
