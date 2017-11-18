@@ -18,7 +18,7 @@ class AppController {
     @GetMapping("/status", produces = arrayOf("text/html"))
     fun getStatus(): String {
         return """
-            <h2>Statusfoo</h2>
+            <h2>Status</h2>
             <div>Container Id: ${System.getenv("HOSTNAME")}</div>
             <div>Build number: ${System.getenv("BUILD_NO")}</div>
             <hr>
