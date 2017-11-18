@@ -36,7 +36,7 @@ node {
                         sh "docker create --name micro-twitter-uic micro-twitter-ui"
                         sh "docker cp micro-twitter-uic:/ng-app/dist ./dist"
                         sh "docker rm -f micro-twitter-uic"
-                        sh "ls ui"
+                        sh "ls dist"
                     }
                 }
         )
