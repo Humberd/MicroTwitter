@@ -6,4 +6,4 @@ COPY pom.xml .
 RUN mvn dependency:resolve
 
 COPY . .
-RUN mvn clean install -DskipTests=true
+RUN mvn install -DskipTests=true
