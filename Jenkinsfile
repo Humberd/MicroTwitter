@@ -12,9 +12,6 @@ node {
                 disableConcurrentBuilds(),
                 pipelineTriggers([githubPush()])])
 
-    env.NODEJS_HOME = "${tool '8.9.1'}"
-    env.PATH = "${env.NODEJS_HOME}/bin:${env.PATH}"
-
     stage("Pre Cleanup") {
         deleteDir()
     }
@@ -35,7 +32,9 @@ node {
                 },
                 UI: {
                     dir("ui") {
-                        sh "npm --version"
+                        sh "docker build -t foobar ."
+                        sh "ls"
+                        sh "ls dist"
                     }
                 }
         )
