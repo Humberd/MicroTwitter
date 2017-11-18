@@ -32,9 +32,11 @@ node {
                 },
                 UI: {
                     dir("ui") {
-                        sh "docker build -t foobar ."
-                        sh "ls"
-                        sh "ls dist"
+                        sh "docker build -t micro-twitter-ui . -f build.Dockerfile"
+                        sh "docker create --name micro-twitter-uic micro-twitter-ui"
+                        sh "docker cp micro-twitter-uic:/ng-app/dist ./dist"
+                        sh "docker rm -f micro-twitter-uic"
+                        sh "ls ui"
                     }
                 }
         )
