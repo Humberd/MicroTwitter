@@ -18,9 +18,6 @@ RUN $(npm bin)/ng build --prod --build-optimizer
 #
 #FROM nginx:1.13.3-alpine
 #
-#VOLUME ./dist/ /ng-app/dist/
-#
-#RUN mkdir -p /ng-app/dist && cd /ng-app/dist && touch foo.txt
 ##
 ### Copy our default nginx config
 ##COPY nginx/default.conf /etc/nginx/conf.d/
