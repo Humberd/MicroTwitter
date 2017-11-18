@@ -20,8 +20,8 @@ interface TweetRepository : JpaRepository<TweetDAO, Long> {
 
     /**
     SELECT DISTINCT t.* FROM
-    tweet t,
-    (SELECT * FROM user_follower uf WHERE uf.user_id = 1) myFollower
+        tweet t,
+        (SELECT * FROM user_follower uf WHERE uf.user_id = 1) myFollower
     WHERE t.user_id = 1 OR t.user_id = myFollower.followed_user_id;
      */
     @Language("JPAQL")
