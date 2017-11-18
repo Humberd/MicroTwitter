@@ -1,5 +1,7 @@
 FROM maven:3.5.2-alpine
 
+VOLUME "~/.m2"
+
 WORKDIR /mvn-app
 
 COPY . .
