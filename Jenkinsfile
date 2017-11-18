@@ -56,6 +56,9 @@ node {
                         sh "docker-compose -f ${dockerComposeFile} down --rmi all --remove-orphans"
                         sh "docker-compose -f ${dockerComposeFile} up -d"
 
+                        sh "ls -al"
+                        sh "ls target -al"
+
                         try {
                             withMaven(maven: "Maven") {
                                 sh "mvn test -DargLine='-Dspring.profiles.active=production'"
