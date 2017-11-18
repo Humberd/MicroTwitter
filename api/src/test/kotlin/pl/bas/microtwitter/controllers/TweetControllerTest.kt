@@ -114,6 +114,12 @@ internal class TweetControllerTest {
             http.exchange(url, HttpMethod.POST, HttpEntity(data1, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.OK, this.statusCode)
                 assertEquals("foobar", this.body?.content)
+                assertEquals(AuthHelper.user1.username, this.body?.user?.username)
+                assertEquals(AuthHelper.user1.fullName, this.body?.user?.fullName)
+                assertEquals(null, this.body?.inReplyToTweetId)
+                assertEquals(null, this.body?.inReplyToUser?.id)
+                assertEquals(null, this.body?.inReplyToUser?.username)
+                assertEquals(null, this.body?.inReplyToUser?.fullName)
                 assertEquals(1, tweetRepository.findAll().size)
             }
 
@@ -121,6 +127,12 @@ internal class TweetControllerTest {
             http.exchange(url, HttpMethod.POST, HttpEntity(data2, authHeaders), TweetResponseDTO::class.java).apply {
                 assertEquals(HttpStatus.OK, this.statusCode)
                 assertEquals("hello", this.body?.content)
+                assertEquals(AuthHelper.user1.username, this.body?.user?.username)
+                assertEquals(AuthHelper.user1.fullName, this.body?.user?.fullName)
+                assertEquals(null, this.body?.inReplyToTweetId)
+                assertEquals(null, this.body?.inReplyToUser?.id)
+                assertEquals(null, this.body?.inReplyToUser?.username)
+                assertEquals(null, this.body?.inReplyToUser?.fullName)
                 assertEquals(2, tweetRepository.findAll().size)
             }
         }
@@ -135,10 +147,22 @@ internal class TweetControllerTest {
             val data2 = TweetCreateDTO(content = "hello", inReplyToTweetId = tweet1Id)
             TweetHelper.createTweet(http, data2).apply {
                 assertEquals(0, this.commentsCount)
+                assertEquals(AuthHelper.user1.username, this.user?.username)
+                assertEquals(AuthHelper.user1.fullName, this.user?.fullName)
+                assertEquals(tweet1Id, this.inReplyToTweetId)
+                assert(this.inReplyToUser?.id is Long)
+                assertEquals(AuthHelper.user1.username, this.inReplyToUser?.username)
+                assertEquals(AuthHelper.user1.fullName, this.inReplyToUser?.fullName)
             }
 
             TweetHelper.getTweet(http, tweet1Id!!).apply {
                 assertEquals(1, this.commentsCount)
+                assertEquals(AuthHelper.user1.username, this.user?.username)
+                assertEquals(AuthHelper.user1.fullName, this.user?.fullName)
+                assertEquals(null, this.inReplyToTweetId)
+                assertEquals(null, this.inReplyToUser?.id)
+                assertEquals(null, this.inReplyToUser?.username)
+                assertEquals(null, this.inReplyToUser?.fullName)
             }
         }
 

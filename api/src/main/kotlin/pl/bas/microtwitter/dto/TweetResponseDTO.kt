@@ -13,12 +13,15 @@ data class TweetResponseDTO(
         var likesCount: Int?,
         var commentsCount: Int?,
         var user: TweetUserResponseDTO?,
-        var isLiked: Boolean?
+        var isLiked: Boolean?,
+        var inReplyToTweetId: Long?,
+        var inReplyToUser: TweetUserResponseDTO?
 )
 
 data class TweetUserResponseDTO(
         var id: Long?,
-        var username: String?
+        var username: String?,
+        var fullName: String?
 )
 
 
@@ -34,8 +37,16 @@ fun buildTweetResponseDTO(me: UserDAO,
             commentsCount = tweetRepository.countByInReplyToTweet(tweet),
             user = TweetUserResponseDTO(
                     id = tweet.user?.id,
-                    username = tweet.user?.username
+                    username = tweet.user?.username,
+                    fullName = tweet.user?.profile?.fullName
             ),
-            isLiked = if (tweetLikeRepository.countByTweetAndUser(tweet, me) == 0) false else true
+            isLiked = if (tweetLikeRepository.countByTweetAndUser(tweet, me) == 0) false else true,
+            inReplyToTweetId = tweet.inReplyToTweet?.id,
+            inReplyToUser = TweetUserResponseDTO(
+                    id = tweet.inReplyToUser?.id,
+                    username = tweet.inReplyToUser?.username,
+                    fullName = tweet.inReplyToUser?.profile?.fullName
+            )
+
     )
 }

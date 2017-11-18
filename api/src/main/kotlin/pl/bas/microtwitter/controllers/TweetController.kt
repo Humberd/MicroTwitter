@@ -49,6 +49,7 @@ class TweetController(
             if (body.inReplyToTweetId !== null) {
                 inReplyToTweet = tweetRepository.findById(body.inReplyToTweetId!!)
                         .orElseThrow { throw BadRequestException("inReplyToTweet does not exist") }
+                inReplyToUser = inReplyToTweet?.user
             }
         }
         val tweet = tweetRepository.save(tweetData)
