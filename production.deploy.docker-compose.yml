@@ -3,8 +3,8 @@ version: "3"
 services:
   api:
     build:
-      context: .
-      dockerfile: api/Dockerfile
+      context: api
+      dockerfile: deploy.Dockerfile
     depends_on:
       - postgresprod
     environment:
