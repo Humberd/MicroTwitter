@@ -4,6 +4,6 @@ FROM nginx:1.13.6-alpine
 
 RUN rm -rf /usr/share/nginx/html/*
 
-COPY dist /user/share/nginx/html
+COPY dist /usr/share/nginx/html
 
 CMD ["nginx", "-g", "daemon off;"]
