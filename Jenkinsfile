@@ -25,13 +25,13 @@ node {
         parallel(
                 API: {
                     dir("api") {
-                        sh "docker build -t micro-twitter-api . -f build.Dockerfile"
-                        sh "docker create --name micro-twitter-apic micro-twitter-api"
-                        sh "docker cp micro-twitter-apic:/mvn-app/target ./target"
-                        sh "docker rm -f micro-twitter-apic"
-//                        withMaven(maven: "Maven") {
-//                            sh "mvn clean install -DskipTests=true"
-//                        }
+//                        sh "docker build -t micro-twitter-api . -f build.Dockerfile"
+//                        sh "docker create --name micro-twitter-apic micro-twitter-api"
+//                        sh "docker cp micro-twitter-apic:/mvn-app/target ./target"
+//                        sh "docker rm -f micro-twitter-apic"
+                        withMaven(maven: "Maven") {
+                            sh "mvn clean install -DskipTests=true"
+                        }
                     }
                 },
                 UI: {
@@ -55,9 +55,6 @@ node {
 
                         sh "docker-compose -f ${dockerComposeFile} down --rmi all --remove-orphans"
                         sh "docker-compose -f ${dockerComposeFile} up -d"
-
-                        sh "ls -al"
-                        sh "ls target -al"
 
                         try {
                             withMaven(maven: "Maven") {
