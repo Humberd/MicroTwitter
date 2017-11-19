@@ -26,8 +26,6 @@
         </MarkdownNavigatorCodeStyleSettings>
         <TypeScriptCodeStyleSettings>
           <option name="FORCE_SEMICOLON_STYLE" value="true" />
-          <option name="USE_DOUBLE_QUOTES" value="false" />
-          <option name="FORCE_QUOTE_STYlE" value="true" />
           <option name="SPACES_WITHIN_IMPORTS" value="true" />
           <option name="SPACES_WITHIN_OBJECT_TYPE_BRACES" value="false" />
         </TypeScriptCodeStyleSettings>
@@ -80,6 +78,7 @@
         </codeStyleSettings>
       </value>
     </option>
+    <option name="USE_PER_PROJECT_SETTINGS" value="true" />
     <option name="PREFERRED_PROJECT_CODE_STYLE" value="Humberd Scheme" />
   </component>
 </project>
