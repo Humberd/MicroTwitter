@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 import pl.bas.microtwitter.dao.BirthdateDAO
 import pl.bas.microtwitter.dao.ProfileDAO
 import pl.bas.microtwitter.dao.UserDAO
+import pl.bas.microtwitter.dto.LoginDTO
 import pl.bas.microtwitter.dto.SignupDTO
 import pl.bas.microtwitter.dto.UpdatePasswordDTO
 import pl.bas.microtwitter.exceptions.BadRequestException
@@ -48,7 +49,7 @@ class AuthController(
      * Login is handled by JWT filters in a [pl.bas.microtwitter.security] package
      */
     @PostMapping("login")
-    fun login(): ResponseEntity<Unit> {
+    fun login(@RequestBody body: LoginDTO): ResponseEntity<Unit> {
         return ResponseEntity.ok(Unit)
     }
 
