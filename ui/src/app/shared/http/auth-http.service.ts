@@ -12,7 +12,7 @@ export class AuthHttpService {
   }
 
   public login(body: LoginDTO): Observable<HttpResponse<any>> {
-    return this.http.post("/auth/login", body, {observe: "response"});
+    return this.http.post("/auth/login", body, {observe: "response", responseType: "text"});
   }
 
   public updatePassword(body: UpdatePasswordDTO): Observable<void> {

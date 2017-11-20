@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://api.micro-twitter.quazarus.com"
+  apiUrl: "http://localhost:8080"
 };

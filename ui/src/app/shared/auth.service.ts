@@ -73,6 +73,7 @@ export class AuthService {
         if (!response.ok) {
           throw Error(response.body);
         }
+
         const jwtHeader = response.headers.get(CONSTANTS.AUTH_HEADER_NAME);
         if (!isString(jwtHeader)) {
           throw Error(`Expected a '${CONSTANTS.AUTH_HEADER_NAME}' header in a login response`);
@@ -88,7 +89,7 @@ export class AuthService {
    * @returns {Observable<AppUser>}
    */
   public updateUserData(jwt: string): Observable<AppUser> {
-    return this.userHttpService.getMe()
+    return this.userHttpService.getMe(jwt)
       .map(user => ({
         data: user,
         jwtToken: jwt

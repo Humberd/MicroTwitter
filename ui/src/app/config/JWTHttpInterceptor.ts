@@ -1,24 +1,35 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
+import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
-import { Injectable } from "@angular/core";
+import { Injectable, Injector } from "@angular/core";
 import { AuthService } from "../shared/auth.service";
 import { CONSTANTS } from "./Constants";
 import { Router } from "@angular/router";
 
 @Injectable()
 export class JWTHttpInterceptor implements HttpInterceptor {
+  private authService: AuthService;
 
-  constructor(private authService: AuthService,
+  constructor(private injector: Injector,
               private router: Router) {
-
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const appRequest = req.clone();
+    /* Have to inject AuthService through injector, because otherwise we have a circular dependency*/
+    this.authService = this.authService || this.injector.get(AuthService);
+
+    let newHeaders: HttpHeaders = req.headers;
 
     if (this.authService.isUserLoggedIn()) {
-      appRequest.headers.set(CONSTANTS.AUTH_HEADER_NAME, CONSTANTS.AUTH_TOKEN_PREFIX + this.authService.getUser().jwtToken);
+      /* We add an Authorization header only to those requests that don't have it.
+       * We do not want override every request, because some requests '/me' need a special tratment */
+      if (!req.headers.has(CONSTANTS.AUTH_HEADER_NAME)) {
+        newHeaders = newHeaders.set(CONSTANTS.AUTH_HEADER_NAME, CONSTANTS.AUTH_TOKEN_PREFIX + this.authService.getUser().jwtToken);
+      }
     }
+
+    const appRequest = req.clone({
+      headers: newHeaders
+    });
 
     return next.handle(appRequest)
       .do(response => {

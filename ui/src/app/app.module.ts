@@ -25,11 +25,11 @@ import { URLHttpInterceptor } from "./config/URLHttpInterceptor";
     AuthModule,
   ],
   providers: [
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: JWTHttpInterceptor,
-    //   multi: true
-    // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JWTHttpInterceptor,
+      multi: true
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: URLHttpInterceptor,

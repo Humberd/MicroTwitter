@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 import { UserResponseDTO } from "../../dto/UserResponseDTO";
 import { ProfileUpdateDTO } from "../../dto/ProfileUpdateDTO";
 import { PageDTO } from "../../dto/PageDTO";
+import { CONSTANTS } from "../../config/Constants";
 
 @Injectable()
 export class UserHttpService {
@@ -11,8 +12,18 @@ export class UserHttpService {
   constructor(private http: HttpClient) {
   }
 
-  public getMe(): Observable<UserResponseDTO> {
-    return this.http.get<UserResponseDTO>("/me");
+  /**
+   * In case we did not logout the previous user and we login the next one.
+   * When we try to get a new user data the JWTHttpInterceptor would still take an old user http from AuthService.
+   * To override thie behaviour we need to provide a custom jwt, so that the JWTHttpInterceptor would omit the old one.
+   * @param {string} jwt optional token
+   */
+  public getMe(jwt?: string): Observable<UserResponseDTO> {
+    let headers;
+    if (jwt) {
+      headers = new HttpHeaders({[CONSTANTS.AUTH_HEADER_NAME]: CONSTANTS.AUTH_TOKEN_PREFIX + jwt});
+    }
+    return this.http.get<UserResponseDTO>("/me", {headers: headers || {}});
   }
 
   public updateProfile(body: ProfileUpdateDTO): Observable<UserResponseDTO> {

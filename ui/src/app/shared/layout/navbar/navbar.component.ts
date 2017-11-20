@@ -8,7 +8,8 @@ import { AuthService } from "../../auth.service";
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {
+  }
 
   ngOnInit() {
 
@@ -16,8 +17,8 @@ export class NavbarComponent implements OnInit {
 
   login() {
     this.authService.signup({
-      username: "admin",
-      email: "admin@admin.com",
+      username: this.makeid(),
+      email: this.makeid() + "@google.com",
       fullName: "AdminAdmin",
       password: "admin123"
     })
@@ -26,6 +27,16 @@ export class NavbarComponent implements OnInit {
       }, error => {
         console.error(error);
       });
+  }
+
+  makeid() {
+    let text = "";
+    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (let i = 0; i < 5; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
   }
 
 }
