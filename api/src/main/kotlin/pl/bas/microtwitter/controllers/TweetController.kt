@@ -17,6 +17,7 @@ import pl.bas.microtwitter.repositories.TweetLikeRepository
 import pl.bas.microtwitter.repositories.TweetRepository
 import javax.transaction.Transactional
 
+@CrossOrigin
 @RestController
 @RequestMapping("/")
 class TweetController(

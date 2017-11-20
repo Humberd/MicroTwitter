@@ -13,8 +13,8 @@ import pl.bas.microtwitter.exceptions.BadRequestException
 import pl.bas.microtwitter.repositories.UserRepository
 import javax.transaction.Transactional
 
+@CrossOrigin
 @RestController
-@ControllerAdvice
 @RequestMapping("/")
 class UserController(
         val userRepository: UserRepository,

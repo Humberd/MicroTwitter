@@ -50,7 +50,8 @@ class WebSecurity(private val userDetailsService: UserDetailsService,
     @Bean
     internal fun corsConfigurationSource(): CorsConfigurationSource {
         val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", CorsConfiguration().applyPermitDefaultValues())
+        source.registerCorsConfiguration("/**", CorsConfiguration()
+                .applyPermitDefaultValues())
         return source
     }
 }
