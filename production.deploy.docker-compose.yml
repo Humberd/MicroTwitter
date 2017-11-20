@@ -19,7 +19,7 @@ services:
   postgresprod:
     image: postgres:10-alpine
     ports:
-      - "5435:5432"
+      - "5432:5432"
     volumes:
       - "dbdata:/var/lib/postgresql/data"
     environment:
