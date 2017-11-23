@@ -78,7 +78,13 @@ export class AuthService {
         if (!isString(jwtHeader)) {
           throw Error(`Expected a '${CONSTANTS.AUTH_HEADER_NAME}' header in a login response`);
         }
+
+        console.info("Acquired jwt token from login request");
         return jwtHeader.replace(CONSTANTS.AUTH_TOKEN_PREFIX, "");
+      })
+      .catch(error => {
+        console.error("Cannot acquire jwt token from login request", error);
+        return Observable.throw(error);
       })
       .flatMap(jwt => this.updateUserData(jwt));
   }
@@ -95,8 +101,49 @@ export class AuthService {
         jwtToken: jwt
       } as AppUser))
       .do(appUser => {
+        console.info("Retrieved user data from getMe request");
         this.saveUser(appUser);
+      })
+      .catch(error => {
+        console.error("Cannot retrieve user data from getMe request", error);
+        this.logout();
+        return Observable.throw(error);
       });
+  }
+
+  /**
+   * Removes an appUser from a service and from a permanent storage
+   */
+  public logout() {
+    this.appUser = null;
+    this.appUserObs.next(null);
+    this.storage.removeItem(CONSTANTS.STORAGE_JWT_KEY);
+    console.info("Logged out a user");
+  }
+
+  /**
+   * Sends a signup request and after that logs user in
+   * @param {SignupDTO} signupData
+   * @returns {Observable<AppUser>}
+   */
+  public signup(signupData: SignupDTO): Observable<AppUser> {
+    return this.authHttpService.signup(signupData)
+      .do(() => console.info("Signed up a user"))
+      .flatMap(() => this.login({
+        username: signupData.username,
+        password: signupData.password
+      }));
+  }
+
+  public readFromStorage() {
+    const jwt = this.storage.getItem(CONSTANTS.STORAGE_JWT_KEY);
+    if (isString(jwt) && jwt.length > 0) {
+      console.info("Acquired jwt token from storage");
+      this.updateUserData(jwt)
+        .subscribe();
+    } else {
+      this.logout();
+    }
   }
 
   /**
@@ -107,27 +154,6 @@ export class AuthService {
     this.appUser = appUser;
     this.appUserObs.next(appUser);
     this.storage.setItem(CONSTANTS.STORAGE_JWT_KEY, appUser.jwtToken);
-  }
-
-  /**
-   * Removes an appUser from a service and from a permanent storage
-   */
-  public logout() {
-    this.appUser = null;
-    this.appUserObs.next(null);
-    this.storage.removeItem(CONSTANTS.STORAGE_JWT_KEY);
-  }
-
-  /**
-   * Sends a signup request and after that logs user in
-   * @param {SignupDTO} signupData
-   * @returns {Observable<AppUser>}
-   */
-  public signup(signupData: SignupDTO): Observable<AppUser> {
-    return this.authHttpService.signup(signupData)
-      .flatMap(() => this.login({
-        username: signupData.username,
-        password: signupData.password
-      }));
+    console.info("Saved a user");
   }
 }

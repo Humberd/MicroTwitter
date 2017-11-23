@@ -18,5 +18,5 @@ import { HttpClientModule } from "@angular/common/http";
   ],
   providers: []
 })
-export class AuthModule {
+export class AuthViewsModule {
 }

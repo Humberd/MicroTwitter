@@ -6,11 +6,13 @@ import 'rxjs/Rx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthModule } from "./views/auth/auth.module";
+import { AuthViewsModule } from "./views/auth/auth.module";
 import { SharedModule } from "./shared/_shared.module";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { JWTHttpInterceptor } from "./config/JWTHttpInterceptor";
 import { URLHttpInterceptor } from "./config/URLHttpInterceptor";
+import { TwitterViewsModule } from "./views/twitter/twitter.module";
+import { AuthService } from "./shared/auth.service";
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { URLHttpInterceptor } from "./config/URLHttpInterceptor";
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
-    AuthModule,
+    AuthViewsModule,
+    TwitterViewsModule
   ],
   providers: [
     {
@@ -39,4 +42,8 @@ import { URLHttpInterceptor } from "./config/URLHttpInterceptor";
   bootstrap: [AppComponent]
 })
 export class AppModule {
+
+  constructor(private authService: AuthService) {
+    this.authService.readFromStorage();
+  }
 }
