@@ -20,8 +20,8 @@ export class UnauthorizedGuard implements CanActivate {
       .map(user => !!user)
       .do(isAuthorized => {
         if (isAuthorized) {
-          this.snackBar.open("You need not to be authorized.", "Close");
-          console.info(`Cannot go to the ${state.url}. User must not be authorized`);
+          this.snackBar.open("You need to be unauthorized.", "Close");
+          console.info(`Cannot go to the ${state.url}. User must be unauthorized`);
 
           /* If this is the first route loading */
           if (!this.router.navigated) {
