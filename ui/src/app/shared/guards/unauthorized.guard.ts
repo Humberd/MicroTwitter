@@ -14,7 +14,6 @@ export class UnauthorizedGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    console.log(state);
     return this.authService.getUserObs()
       .filter(user => !isUndefined(user))
       .map(user => !!user)
