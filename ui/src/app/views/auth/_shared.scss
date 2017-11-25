@@ -1,0 +1,34 @@
+@import "../../../styles/colors";
+
+.auth-view {
+  .wrapper {
+    margin: auto;
+
+    $maxWidth: 585px;
+    .form-component-content {
+      max-width: $maxWidth;
+      margin: 0 auto 15px;
+
+      .login-form-wrapper {
+        max-width: 300px;
+      }
+    }
+    .form-component-footer {
+      color: $secondaryTextColor;
+      background-color: $secondatyBackgroundColor;
+      padding: 20px 0;
+
+      p {
+        background-color: inherit;
+        max-width: $maxWidth;
+        margin: auto;
+        margin-bottom: 10px;
+        font-size: 14px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

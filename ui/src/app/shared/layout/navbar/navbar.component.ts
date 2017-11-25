@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from "../../auth.service";
 import { Router } from "@angular/router";
 import { CONSTANTS } from "../../../config/Constants";
@@ -8,14 +8,9 @@ import { CONSTANTS } from "../../../config/Constants";
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
-
+export class NavbarComponent {
   constructor(public authService: AuthService,
               private router: Router) {
-  }
-
-  ngOnInit() {
-
   }
 
   logout() {

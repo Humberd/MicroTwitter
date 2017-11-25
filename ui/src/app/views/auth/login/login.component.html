@@ -1,5 +1,20 @@
-<div class="login-view">
-  <div class="wrapper global-container">
-    <app-login-form></app-login-form>
+<div class="auth-view main-view-content">
+  <div class="wrapper notloggedin-container">
+    <mat-card>
+      <mat-card-content class="form-component-content">
+        <div class="login-form-wrapper">
+          <app-login-form></app-login-form>
+        </div>
+      </mat-card-content>
+      <mat-card-footer class="form-component-footer">
+        <p>
+          New to MicroTwitter?
+          <a class="app-link"
+             [routerLink]="['/signup']">
+            Sign up now »
+          </a>
+        </p>
+      </mat-card-footer>
+    </mat-card>
   </div>
 </div>

@@ -1,6 +1,10 @@
 <nav mat-tab-nav-bar
      class="app-nav-bar">
-  <div class="wrapper global-container">
+  <div class="wrapper loggedin-container"
+       [ngClass]="{
+        'loggedin-container': authService.isUserLoggedIn(),
+        'notloggedin-container': !authService.isUserLoggedIn()
+       }">
     <div class="left">
       <a mat-tab-link
          [routerLink]="['']">
@@ -37,12 +41,12 @@
       </div>
       <ng-template #notLoggedIn>
         <a mat-button
-                [routerLink]="['/signup']">
+           [routerLink]="['/signup']">
           Signup
         </a>
         <a mat-button
-                color="primary"
-                [routerLink]="['/login']">
+           color="primary"
+           [routerLink]="['/login']">
           Login
         </a>
       </ng-template>

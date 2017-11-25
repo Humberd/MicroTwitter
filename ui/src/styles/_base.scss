@@ -1,14 +1,42 @@
+@import "colors";
+
+$loggedinContainer: 1190px;
+$notloggedinContainer: 865px;
+
 html, body {
   font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
   font-size: 16px;
+  background-color: $defaultBackground;
+  color: $primaryTextColor;
+}
+
+a.app-link{
+  color: $defaultTwitterColor;
+  text-decoration: none;
+
+  &:hover, &:focus, &:active {
+    text-decoration: underline;
+  }
+
+  &:active, &:hover {
+    outline: 0;
+  }
 }
 
 .no-select {
   user-select: none;
 }
 
-.global-container {
-  max-width: 1190px;
+.loggedin-container {
+  max-width: $loggedinContainer;
+}
+
+.notloggedin-container {
+  max-width: $notloggedinContainer;
+}
+
+.main-view-content {
+  padding: 10px 15px 0 15px;
 }
 
 .form-buttons {

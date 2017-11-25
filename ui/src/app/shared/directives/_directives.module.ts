@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DynamicColorDirective } from './dynamic-color.directive';
 import { DynamicBackgroundColorDirective } from './dynamic-background-color.directive';
+import { AutofocusDirective } from "./autofocus.directive";
 
 @NgModule({
   imports: [
@@ -9,11 +10,13 @@ import { DynamicBackgroundColorDirective } from './dynamic-background-color.dire
   ],
   declarations: [
     DynamicColorDirective,
-    DynamicBackgroundColorDirective
+    DynamicBackgroundColorDirective,
+    AutofocusDirective,
   ],
   exports: [
     DynamicColorDirective,
-    DynamicBackgroundColorDirective
+    DynamicBackgroundColorDirective,
+    AutofocusDirective,
   ]
 })
 export class DirectivesModule { }

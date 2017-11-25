@@ -1,9 +1,13 @@
+@import "../../../../styles/colors";
+
 .app-nav-bar {
+  background-color: $white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+
   .wrapper {
     display: flex;
     justify-content: space-between;
 
-    width: 100%;
     margin: auto;
 
     & > * {
