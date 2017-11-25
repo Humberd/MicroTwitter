@@ -11,6 +11,11 @@ html, body {
   max-width: 1190px;
 }
 
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
 $userIconSizes: (
   small: 32px,
   medium: 48px,

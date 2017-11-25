@@ -1,0 +1,14 @@
+.login-form-component {
+  width: 100%;
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+}

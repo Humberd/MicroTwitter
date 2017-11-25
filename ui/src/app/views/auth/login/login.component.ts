@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthHttpService } from "../../../shared/http/auth-http.service";
 
 @Component({
   selector: 'app-login',
@@ -8,11 +7,11 @@ import { AuthHttpService } from "../../../shared/http/auth-http.service";
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authHttpService: AuthHttpService) {
+  constructor() {
   }
 
   ngOnInit() {
-    // this.authHttpService.login()
+
   }
 
 }

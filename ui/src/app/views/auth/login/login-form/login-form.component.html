@@ -1,0 +1,25 @@
+<div class="login-form-component">
+  <h1 class="mat-h1">Log into MicroTwitter</h1>
+  <form class="login-form"
+        [formGroup]="loginForm"
+        (ngSubmit)="login()"
+        novalidate>
+    <mat-form-field>
+      <input matInput
+             [formControlName]="'username'"
+             placeholder="Username">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [formControlName]="'password'"
+             type="password"
+             placeholder="Password">
+    </mat-form-field>
+    <div class="form-buttons">
+      <button mat-raised-button
+              color="primary">
+        Login
+      </button>
+    </div>
+  </form>
+</div>
