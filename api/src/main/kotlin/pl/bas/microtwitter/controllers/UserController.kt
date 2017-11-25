@@ -52,16 +52,16 @@ class UserController(
     }
 
     /**
-     * Gets a paginated list of users selected by [username]
+     * Gets a paginated list of users selected by [username] or [profile.fullName]
      */
     @GetMapping("/users")
-    fun getUsers(@RequestParam username: String,
+    fun getUsers(@RequestParam usernameOrfullName: String,
                  pageable: Pageable,
                  user: UserDAO): ResponseEntity<Page<UserResponseDTO>> {
-        if (username.isBlank()) {
-            throw BadRequestException("Username must not by an empty string")
+        if (usernameOrfullName.isBlank()) {
+            throw BadRequestException("Username or FullName must not by an empty string")
         }
-        val page = userRepository.findAllByLcusernameContaining(username.toLowerCase(), pageable)
+        val page = userRepository.findByUsernameOrFullName(usernameOrfullName.toLowerCase(), pageable)
 
         return ResponseEntity.ok(page.map { userDAO -> responseBuilder.buildUserResponse(user, userDAO) })
     }

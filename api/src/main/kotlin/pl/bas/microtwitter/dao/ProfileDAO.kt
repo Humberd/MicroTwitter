@@ -3,34 +3,31 @@ package pl.bas.microtwitter.dao
 import pl.bas.microtwitter.exceptions.InvalidColorException
 import pl.bas.microtwitter.helpers.isHexColor
 import javax.persistence.*
-import javax.validation.constraints.NotNull
 
 @Entity
-@Table(name = "profile")
+@Table(name = "profile",
+        indexes = arrayOf(Index(name = "fullNameIndex", columnList = "lcfullName", unique = false)))
 class ProfileDAO {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
-    @NotNull
-    @Column(name = "fullName")
+    @Column(name = "fullName", nullable = false)
     var fullName: String? = null
+    @Column(nullable = false)
+    var lcfullName: String? = null
 
-    @NotNull
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     var description: String? = null
 
-    @NotNull
-    @Column(name = "location")
+    @Column(name = "location", nullable = false)
     var location: String? = null
 
-    @NotNull
-    @Column(name = "profileLinkColor")
+    @Column(name = "profileLinkColor", nullable = false)
     var profileLinkColor: String? = "#1b95e0"
 
-    @NotNull
-    @Column(name = "url")
+    @Column(name = "url", nullable = false)
     var url: String? = null
 
     @OneToOne(fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL))
@@ -41,6 +38,7 @@ class ProfileDAO {
     @PreUpdate
     protected fun preUpdate() {
         fullName = fullName ?: ""
+        lcfullName = fullName?.toLowerCase()
         description = description ?: ""
         location = location ?: ""
         profileLinkColor = profileLinkColor ?: ""

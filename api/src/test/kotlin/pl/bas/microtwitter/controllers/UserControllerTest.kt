@@ -117,14 +117,15 @@ class UserControllerTest {
     @Nested
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     inner class getUsers : EndpointTest("/users/") {
-        val user1 = AuthHelper.user1.apply { username = "Adam"; email = "other@email.com" }
-        val user2 = AuthHelper.user2.apply { username = "adamNowakowskii322" }
-        val user3 = AuthHelper.user3.apply { username = "AdammBielawieckii" }
+        val user1 = AuthHelper.user1.apply { username = "Adam"; email = "other@email.com"; fullName = "Piotr Wielki" }
+        val user2 = AuthHelper.user2.apply { username = "adamMostowiak22"; fullName = "Anna Wielka" }
+        val user3 = AuthHelper.user3.apply { username = "AdammBielawieckii"; fullName = "Jan Chlewiak" }
 
         lateinit var authHeaders: HttpHeaders
 
         @BeforeAll
         fun setUpAll() {
+            userRepository.deleteAll()
             authHeaders = AuthHelper.signupAndLogin(http)
             AuthHelper.signUp(http, user1)
             AuthHelper.signUp(http, user2)
@@ -132,8 +133,26 @@ class UserControllerTest {
         }
 
         @Test
-        fun `should get 3 users containing 'AdaM' case insensitive`() {
-            http.exchange("/users/?username=AdaM", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+        fun `should get 2 users containing 'WieLk' fullName case insensitive`() {
+            http.exchange("/users/?usernameOrfullName=WieLk", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<UserResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
+                assertEquals(2, body.content.size)
+            }
+        }
+
+        @Test
+        fun `should get 2 users containing 'WIAK' username and fullName case insensitive`() {
+            http.exchange("/users/?usernameOrfullName=WIAK", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<UserResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
+                assertEquals(2, body.content.size)
+            }
+        }
+
+        @Test
+        fun `should get 3 users containing 'AdaM' username case insensitive`() {
+            http.exchange("/users/?usernameOrfullName=AdaM", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<UserResponseDTO>>(this.body!!)
                 assertEquals(HttpStatus.OK, statusCode)
                 assertEquals(3, body.content.size)
@@ -141,20 +160,20 @@ class UserControllerTest {
         }
 
         @Test
-        fun `should paginate 3 users containing 'AdaM' case insensitive`() {
-            http.exchange("/users/?username=AdaM&size=2&page=0", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+        fun `should paginate 3 users containing 'AdaM' username case insensitive`() {
+            http.exchange("/users/?usernameOrfullName=AdaM&size=2&page=0", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<UserResponseDTO>>(this.body!!)
                 assertEquals(HttpStatus.OK, statusCode)
                 assertEquals(2, body.content.size)
             }
 
-            http.exchange("/users/?username=AdaM&size=2&page=1", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+            http.exchange("/users/?usernameOrfullName=AdaM&size=2&page=1", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<UserResponseDTO>>(this.body!!)
                 assertEquals(HttpStatus.OK, statusCode)
                 assertEquals(1, body.content.size)
             }
 
-            http.exchange("/users/?username=AdaM&size=2&page=2", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+            http.exchange("/users/?usernameOrfullName=AdaM&size=2&page=2", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<UserResponseDTO>>(this.body!!)
                 assertEquals(HttpStatus.OK, statusCode)
                 assertEquals(0, body.content.size)
@@ -162,20 +181,20 @@ class UserControllerTest {
         }
 
         @Test
-        fun `should get 2 users containing 'KII' case insensitive`() {
-            http.exchange("/users/?username=KII", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+        fun `should get 1 user containing 'KII' username case insensitive`() {
+            http.exchange("/users/?usernameOrfullName=KII", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<UserResponseDTO>>(this.body!!)
                 assertEquals(HttpStatus.OK, statusCode)
-                assertEquals(2, body.content.size)
+                assertEquals(1, body.content.size)
             }
         }
 
         @Test
-        fun `should get 1 user containing '22' case insensitive`() {
-            http.exchange("/users/?username=ki", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+        fun `should get 1 user containing '22' username case insensitive`() {
+            http.exchange("/users/?usernameOrfullName=22", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<UserResponseDTO>>(this.body!!)
                 assertEquals(HttpStatus.OK, statusCode)
-                assertEquals(3, body.content.size)
+                assertEquals(1, body.content.size)
             }
         }
 
@@ -188,7 +207,7 @@ class UserControllerTest {
 
         @Test
         fun `should not get users when providing providing empty username`() {
-            http.exchange("/users/?username=", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+            http.exchange("/users/?usernameOrfullName=", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 assertEquals(HttpStatus.BAD_REQUEST, statusCode)
             }
         }

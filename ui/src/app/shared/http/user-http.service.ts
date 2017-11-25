@@ -30,8 +30,8 @@ export class UserHttpService {
     return this.http.put<UserResponseDTO>("/me/profile", body);
   }
 
-  public getUsers(username: string): Observable<PageDTO<UserResponseDTO>> {
-    return this.http.get<PageDTO<UserResponseDTO>>("/users", {params: {username}});
+  public getUsers(usernameOrfullName: string): Observable<PageDTO<UserResponseDTO>> {
+    return this.http.get<PageDTO<UserResponseDTO>>("/users", {params: {usernameOrfullName}});
   }
 
   public followUser(userId: number): Observable<void> {

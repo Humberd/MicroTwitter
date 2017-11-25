@@ -1,14 +1,25 @@
 package pl.bas.microtwitter.repositories
 
+import org.intellij.lang.annotations.Language
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 import pl.bas.microtwitter.dao.UserDAO
 
 interface UserRepository : JpaRepository<UserDAO, Long> {
     fun findByLcusername(lcusername: String): UserDAO?
-    fun findAllByLcusernameContaining(lcusername: String,
-                                      pageable: Pageable): Page<UserDAO>
+
+    @Language("JPAQL")
+    @Query("""
+        select u
+        from UserDAO as u
+        where u.lcusername like concat('%',:usernameOrFullName,'%')
+        or u.profile.lcfullName like concat('%',:usernameOrFullName,'%')
+        """)
+    fun findByUsernameOrFullName(@Param("usernameOrFullName") usernameOrFullName: String,
+                                 pageable: Pageable): Page<UserDAO>
 
     fun countByTweets_User(user: UserDAO): Int?
     fun countByLikes_User(user: UserDAO): Int?
