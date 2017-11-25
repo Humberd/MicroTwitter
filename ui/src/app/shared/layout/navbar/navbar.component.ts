@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../auth.service";
+import { Router } from "@angular/router";
+import { CONSTANTS } from "../../../config/Constants";
 
 @Component({
   selector: 'app-navbar',
@@ -8,7 +10,8 @@ import { AuthService } from "../../auth.service";
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private authService: AuthService) {
+  constructor(public authService: AuthService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -24,6 +27,7 @@ export class NavbarComponent implements OnInit {
     })
       .subscribe(response => {
         console.log(response);
+        this.router.navigate(CONSTANTS.DEFAULT_AUTH_ROUTE);
       }, error => {
         console.error(error);
       });
@@ -37,6 +41,11 @@ export class NavbarComponent implements OnInit {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return text;
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(CONSTANTS.DEFAULT_UNAUTH_ROUTE);
   }
 
 }

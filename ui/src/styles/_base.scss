@@ -10,3 +10,17 @@ html, body {
 .global-container {
   max-width: 1190px;
 }
+
+$userIconSizes: (
+  small: 32px,
+  medium: 48px,
+  large: 72px,
+);
+
+@each $name, $size in $userIconSizes {
+  .user-icon-#{$name} {
+    border-radius: 50%;
+    width: $size;
+    height: $size;
+  }
+}

@@ -30,12 +30,12 @@ import { AuthService } from "./shared/auth.service";
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: JWTHttpInterceptor,
+      useClass: URLHttpInterceptor,
       multi: true
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: URLHttpInterceptor,
+      useClass: JWTHttpInterceptor,
       multi: true
     }
   ],

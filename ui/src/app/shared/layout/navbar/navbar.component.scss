@@ -13,7 +13,18 @@
     .center {
       position: absolute;
       margin-left: 50%;
-      left: -24px
+      left: -24px;
+    }
+
+    .right {
+      .content-wrapper {
+        display: flex;
+      }
+    }
+
+    .user-menu-trigger {
+      cursor: pointer;
+      margin: 0 10px;
     }
   }
 }

@@ -6,9 +6,15 @@ import { environment } from "../../environments/environment";
 @Injectable()
 export class URLHttpInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const appRequest = req.clone({
-      url: `${environment.apiUrl}${req.url}`
-    });
+    let appRequest = req;
+
+    /* Only prepend apiUrl to relative paths. Absolute url paths should stay as there are */
+    if (!appRequest.url.startsWith("https://") || !appRequest.url.startsWith("http://")) {
+      appRequest = appRequest.clone({
+        url: `${environment.apiUrl}${req.url}`
+      });
+    }
+
     return next.handle(appRequest);
   }
 

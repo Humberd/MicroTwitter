@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LayoutComponent } from './layout/layout.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from "@angular/router";
-import { MatButtonModule, MatIconModule, MatTabsModule } from "@angular/material";
+import { MatButtonModule, MatIconModule, MatMenuModule, MatTabsModule } from "@angular/material";
 
 @NgModule({
   imports: [
@@ -12,6 +12,7 @@ import { MatButtonModule, MatIconModule, MatTabsModule } from "@angular/material
     MatTabsModule,
     MatIconModule,
     MatButtonModule,
+    MatMenuModule,
   ],
   declarations: [
     LayoutComponent,
