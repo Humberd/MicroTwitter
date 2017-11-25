@@ -10,6 +10,7 @@ import { MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, Mat
 import { RouterModule } from "@angular/router";
 import { SharedModule } from "../../shared/_shared.module";
 import { DirectivesModule } from "../../shared/directives/_directives.module";
+import { SignupFormComponent } from './signup/signup-form/signup-form.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { DirectivesModule } from "../../shared/directives/_directives.module";
     LoginComponent,
     SignupComponent,
     LoginFormComponent,
+    SignupFormComponent,
   ],
   exports: [
     LoginFormComponent

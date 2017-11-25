@@ -1,3 +1,20 @@
-<p>
-  signup works!
-</p>
+<div class="auth-view main-view-content">
+  <div class="wrapper notloggedin-container">
+    <mat-card>
+      <mat-card-content class="form-component-content">
+        <div class="form-wrapper">
+          <app-signup-form></app-signup-form>
+        </div>
+      </mat-card-content>
+      <mat-card-footer class="form-component-footer">
+        <p>
+          Already have an Account?
+          <a class="app-link"
+             [routerLink]="['/signup']">
+            Login Here »
+          </a>
+        </p>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</div>

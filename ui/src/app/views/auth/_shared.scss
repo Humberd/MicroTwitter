@@ -9,7 +9,7 @@
       max-width: $maxWidth;
       margin: 0 auto 15px;
 
-      .login-form-wrapper {
+      .form-wrapper {
         max-width: 300px;
       }
     }
@@ -32,3 +32,19 @@
     }
   }
 }
+
+.form-component {
+  width: 100%;
+
+  .form-component-content {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+}
+

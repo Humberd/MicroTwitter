@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
 import { AuthService } from "../../../../shared/auth.service";
 import { Router } from "@angular/router";
@@ -8,10 +8,14 @@ import { LoginDTO } from "../../../../dto/LoginDTO";
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.scss']
+  styleUrls: [
+    './login-form.component.scss',
+    '../../_shared.scss'
+  ]
 })
 export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
+  @Input() shouldAutofocus: boolean;
 
   constructor(private authService: AuthService,
               private router: Router) {
@@ -28,7 +32,7 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
-  login() {
+  login(): void {
     const requestData = this.prepareData();
 
     this.authService.login(requestData)
