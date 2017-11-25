@@ -1,9 +1,9 @@
 <nav mat-tab-nav-bar
      class="app-nav-bar">
-  <div class="wrapper loggedin-container"
+  <div class="wrapper large-container"
        [ngClass]="{
-        'loggedin-container': authService.isUserLoggedIn(),
-        'notloggedin-container': !authService.isUserLoggedIn()
+        'large-container': authService.isUserLoggedIn(),
+        'medium-container': !authService.isUserLoggedIn()
        }">
     <div class="left">
       <a mat-tab-link
@@ -24,11 +24,13 @@
     <div class="right">
       <div *ngIf="authService.isUserLoggedIn(); else notLoggedIn"
            class="content-wrapper">
+        <app-search-user></app-search-user>
         <img src="https://pbs.twimg.com/profile_images/931968026743918592/PARoJaa5_normal.jpg"
              class="user-menu-trigger user-icon-small"
              [matMenuTriggerFor]="appMenu"/>
-        <mat-menu #appMenu="matMenu"
-                  yPosition="below">
+        <mat-menu #appMenu
+                  yPosition="below"
+                  [overlapTrigger]="false">
           <button mat-menu-item
                   (click)="logout()">
             Logout

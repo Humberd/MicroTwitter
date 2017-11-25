@@ -4,6 +4,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from "@angular/router";
 import { MatButtonModule, MatIconModule, MatMenuModule, MatTabsModule } from "@angular/material";
+import { SharedModule } from "../shared/_shared.module";
 
 @NgModule({
   imports: [
@@ -13,10 +14,11 @@ import { MatButtonModule, MatIconModule, MatMenuModule, MatTabsModule } from "@a
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
+    SharedModule,
   ],
   declarations: [
     LayoutComponent,
-    NavbarComponent
+    NavbarComponent,
   ],
   exports: [
     LayoutComponent

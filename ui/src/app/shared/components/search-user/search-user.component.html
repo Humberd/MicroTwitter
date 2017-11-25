@@ -1,0 +1,19 @@
+<form class="search-user-form"
+      novalidate>
+  <input class="search-input"
+         matInput
+         [formControl]="searchInputControl"
+         [matAutocomplete]="auto"
+         placeholder="Search MicroTwitter"/>
+  <mat-icon class="search-icon">
+    search
+  </mat-icon>
+  <mat-autocomplete #auto
+                    (optionSelected)="goToUserPage($event)">
+    <mat-option *ngFor="let user of results | async"
+                [value]="user">
+      <app-user-list-element-small [user]="user">
+      </app-user-list-element-small>
+    </mat-option>
+  </mat-autocomplete>
+</form>

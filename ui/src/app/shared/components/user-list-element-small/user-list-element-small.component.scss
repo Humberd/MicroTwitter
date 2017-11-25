@@ -1,0 +1,16 @@
+.user-small {
+  display: flex;
+  align-items: center;
+
+  height: 100%;
+
+  & > *:not(:last-child) {
+    margin-right: 3px;
+  }
+
+  .user-avatar {
+    margin-right: 10px;
+  }
+
+}
+

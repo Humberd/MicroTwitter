@@ -1,8 +1,5 @@
 @import "colors";
 
-$loggedinContainer: 1190px;
-$notloggedinContainer: 865px;
-
 html, body {
   font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
   font-size: 16px;
@@ -10,50 +7,7 @@ html, body {
   color: $primaryTextColor;
 }
 
-a.app-link{
-  color: $defaultTwitterColor;
-  text-decoration: none;
-
-  &:hover, &:focus, &:active {
-    text-decoration: underline;
-  }
-
-  &:active, &:hover {
-    outline: 0;
-  }
-}
-
 .no-select {
   user-select: none;
 }
 
-.loggedin-container {
-  max-width: $loggedinContainer;
-}
-
-.notloggedin-container {
-  max-width: $notloggedinContainer;
-}
-
-.main-view-content {
-  padding: 10px 15px 0 15px;
-}
-
-.form-buttons {
-  display: flex;
-  justify-content: flex-end;
-}
-
-$userIconSizes: (
-  small: 32px,
-  medium: 48px,
-  large: 72px,
-);
-
-@each $name, $size in $userIconSizes {
-  .user-icon-#{$name} {
-    border-radius: 50%;
-    width: $size;
-    height: $size;
-  }
-}

@@ -1,0 +1,60 @@
+@import "colors";
+
+.main-view-content {
+  padding: 10px 15px 0 15px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+a.app-link {
+  color: $defaultTwitterColor;
+  text-decoration: none;
+
+  &:hover, &:focus, &:active {
+    color: $defaultTwitterColor;
+    text-decoration: underline;
+  }
+
+  &:active, &:hover {
+    outline: 0;
+  }
+}
+
+//--------------------------------
+$largeContainer: 1190px;
+$mediumContainer: 865px;
+.large-container {
+  max-width: $largeContainer;
+}
+
+.medium-container {
+  max-width: $mediumContainer;
+}
+
+//--------------------------------
+$userIconSizes: (
+  small: 32px,
+  medium: 48px,
+  large: 72px,
+);
+@each $name, $size in $userIconSizes {
+  .user-icon-#{$name} {
+    border-radius: 50%;
+    width: $size;
+    height: $size;
+  }
+}
+
+//--------------------------------
+.user-full-name {
+  font-weight: bold;
+  word-break: break-all;
+  font-size: 14px;
+}
+.user-username {
+  color: $secondaryTextColor;
+  font-size: 14px;
+}

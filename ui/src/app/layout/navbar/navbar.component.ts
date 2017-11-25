@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AuthService } from "../../auth.service";
+import { AuthService } from "../../shared/auth.service";
 import { Router } from "@angular/router";
-import { CONSTANTS } from "../../../config/Constants";
+import { CONSTANTS } from "../../config/Constants";
 
 @Component({
   selector: 'app-navbar',

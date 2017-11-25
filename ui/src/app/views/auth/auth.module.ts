@@ -9,7 +9,6 @@ import { LoginFormComponent } from './login/login-form/login-form.component';
 import { MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatSnackBarModule } from "@angular/material";
 import { RouterModule } from "@angular/router";
 import { SharedModule } from "../../shared/_shared.module";
-import { DirectivesModule } from "../../shared/directives/_directives.module";
 import { SignupFormComponent } from './signup/signup-form/signup-form.component';
 
 @NgModule({
@@ -24,7 +23,7 @@ import { SignupFormComponent } from './signup/signup-form/signup-form.component'
     MatButtonModule,
     MatSnackBarModule,
     MatCardModule,
-    DirectivesModule,
+    SharedModule,
   ],
   declarations: [
     LoginComponent,

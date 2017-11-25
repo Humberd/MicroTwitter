@@ -1,0 +1,42 @@
+@import "../../../../styles/colors";
+
+:host {
+  margin: auto;
+}
+
+.search-user-form {
+  position: relative;
+
+  .search-input {
+    background-color: $secondaryBackgroundColor;
+    border-radius: 21px;
+    border: 1px solid $borderColor;
+    box-sizing: border-box;
+    color: $primaryTextColor;
+    display: block;
+    font-size: 12px;
+    height: 32px;
+    line-height: 16px;
+    padding: 8px 32px 8px 12px;
+    transition: all .2s ease-in-out;
+    width: 100%;
+    outline: none;
+
+    &:focus {
+      background-color: $white;
+      border: 2px solid $defaultTwitterColor;
+      box-shadow: none;
+      color: $primaryTextColor;
+      opacity: 1;
+    }
+  }
+  .search-icon {
+    cursor: pointer;
+    display: block;
+    height: 26px;
+    position: absolute;
+    right: 3px;
+    top: 6px;
+    width: 26px;
+  }
+}
