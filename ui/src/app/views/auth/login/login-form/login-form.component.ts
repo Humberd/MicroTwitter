@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
-import { AuthService } from "../../../../shared/auth.service";
+import { AuthService } from "../../../../shared/services/auth.service";
 import { Router } from "@angular/router";
 import { CONSTANTS } from "../../../../config/Constants";
 import { LoginDTO } from "../../../../dto/LoginDTO";
@@ -10,7 +10,6 @@ import { LoginDTO } from "../../../../dto/LoginDTO";
   templateUrl: './login-form.component.html',
   styleUrls: [
     './login-form.component.scss',
-    '../../_shared.scss'
   ]
 })
 export class LoginFormComponent implements OnInit {

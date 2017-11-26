@@ -1,0 +1,25 @@
+<div class="form-component">
+  <form class="form-component-content"
+        [formGroup]="newTweetForm"
+        (ngSubmit)="newTweetForm.valid && createTweet()"
+        novalidate>
+    <div class="reply-users" *ngIf="inReplyToTweet">
+      Replying to
+      <a class="app-link">@{{inReplyToTweet.user.username}}</a>
+    </div>
+    <textarea class="twitter-textarea"
+              matInput
+              rows="3"
+              [formControlName]="'content'"
+              [appAutofocus]="shouldAutofocus"
+              placeholder="What's happening?">
+    </textarea>
+    <div class="form-buttons">
+      <button mat-raised-button
+              color="primary"
+              [disabled]="newTweetForm.invalid">
+        Tweet
+      </button>
+    </div>
+  </form>
+</div>

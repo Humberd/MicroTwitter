@@ -1,0 +1,11 @@
+@import "../../../../styles/colors";
+
+.form-component {
+  .reply-users {
+    color: $secondaryTextColor;
+    font-size: 14px;
+  }
+  .form-buttons {
+    padding-top: 8px;
+  }
+}

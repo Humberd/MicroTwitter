@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import { Observable } from 'rxjs/Observable';
 import { isUndefined } from "util";
 import { MatSnackBar } from "@angular/material";
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class UnauthorizedGuard implements CanActivate {

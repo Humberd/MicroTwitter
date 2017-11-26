@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { AuthService } from "../../shared/auth.service";
+import { AuthService } from "../../shared/services/auth.service";
 import { Router } from "@angular/router";
 import { CONSTANTS } from "../../config/Constants";
+import { DialogService } from "../../shared/services/dialog.service";
 
 @Component({
   selector: 'app-navbar',
@@ -10,6 +11,7 @@ import { CONSTANTS } from "../../config/Constants";
 })
 export class NavbarComponent {
   constructor(public authService: AuthService,
+              public dialogService: DialogService,
               private router: Router) {
   }
 

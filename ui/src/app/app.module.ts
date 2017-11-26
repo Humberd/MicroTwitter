@@ -12,7 +12,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { JWTHttpInterceptor } from "./config/JWTHttpInterceptor";
 import { URLHttpInterceptor } from "./config/URLHttpInterceptor";
 import { TwitterViewsModule } from "./views/twitter/twitter.module";
-import { AuthService } from "./shared/auth.service";
+import { AuthService } from "./shared/services/auth.service";
 import { LayoutModule } from "./layout/layout.module";
 
 @NgModule({

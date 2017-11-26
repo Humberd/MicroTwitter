@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
-import { AuthService } from "../../../../shared/auth.service";
+import { AuthService } from "../../../../shared/services/auth.service";
 import { Router } from "@angular/router";
 import { SignupDTO } from "../../../../dto/SignupDTO";
 import { CONSTANTS } from "../../../../config/Constants";
@@ -10,7 +10,6 @@ import { CONSTANTS } from "../../../../config/Constants";
   templateUrl: './signup-form.component.html',
   styleUrls: [
     './signup-form.component.scss',
-    '../../_shared.scss'
   ]
 })
 export class SignupFormComponent implements OnInit {

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AppUser } from "../models/AppUser";
+import { AppUser } from "../../models/AppUser";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Observable";
-import { AuthHttpService } from "./http/auth-http.service";
-import { SignupDTO } from "../dto/SignupDTO";
-import { LoginDTO } from "../dto/LoginDTO";
-import { UserHttpService } from "./http/user-http.service";
-import { CONSTANTS } from "../config/Constants";
+import { AuthHttpService } from "../http/auth-http.service";
+import { SignupDTO } from "../../dto/SignupDTO";
+import { LoginDTO } from "../../dto/LoginDTO";
+import { UserHttpService } from "../http/user-http.service";
+import { CONSTANTS } from "../../config/Constants";
 import { isString } from "util";
 
 @Injectable()

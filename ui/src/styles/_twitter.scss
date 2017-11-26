@@ -58,3 +58,23 @@ $userIconSizes: (
   color: $secondaryTextColor;
   font-size: 14px;
 }
+
+.twitter-textarea {
+  background-color: $white;
+  border-radius: 8px;
+  border: 1px solid $lightBlueBorderColor;
+  box-sizing: border-box;
+  color: $primaryTextColor;
+  line-height: 16px;
+  padding: 8px;
+  margin: 2px;
+  width: 100%;
+  outline: none;
+  resize: none;
+
+  &:focus {
+    box-shadow: 0 0 0 1px $blueBorderColor;
+    color: $primaryTextColor;
+    opacity: 1;
+  }
+}
