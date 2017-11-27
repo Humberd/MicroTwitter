@@ -1,0 +1,23 @@
+.tweet-component {
+  display: flex;
+
+  .user-icon {
+    margin-right: 10px;
+  }
+
+  .tweet {
+    line-height: 21px;
+    width: 100%;
+
+    .header {
+      display: flex;
+
+      & > *:not(:last-child) {
+        padding-right: 4px;
+      }
+    }
+    .content {
+      margin-bottom: 8px;
+    }
+  }
+}

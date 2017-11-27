@@ -1,0 +1,14 @@
+<div class="dialog-header">
+  <div class="dialog-title">
+    Reply to {{inReplyToTweet.user.fullName}}
+  </div>
+</div>
+<div class="medium-content-section">
+  <app-tweet [tweet]="inReplyToTweet"></app-tweet>
+</div>
+<div class="new-tweet-form-wrapper small-content-section">
+  <app-new-tweet-form class="tweet-form"
+                      (tweetCreated)="closeDialog()"
+                      [inReplyToTweet]="inReplyToTweet">
+  </app-new-tweet-form>
+</div>

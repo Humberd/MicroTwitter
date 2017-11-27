@@ -1,0 +1,22 @@
+<div class="tweet-component">
+  <img class="user-icon user-icon-medium"
+       src="https://pbs.twimg.com/profile_images/931968026743918592/PARoJaa5_normal.jpg"/>
+  <div class="tweet">
+    <div class="header">
+      <a class="user-full-name"
+         [routerLink]="['/u',tweet.user.username]">
+        {{tweet.user.fullName}}
+      </a>
+      <div class="user-username">
+        @{{tweet.user.username}}
+      </div>
+      <a class="tweet-date"
+         [routerLink]="['/u',tweet.user.username,'tweet',tweet.id]">
+        {{tweet.createdAt | date}}
+      </a>
+    </div>
+    <p class="content">
+      {{tweet.content}}
+    </p>
+  </div>
+</div>

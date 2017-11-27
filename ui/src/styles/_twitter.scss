@@ -12,6 +12,7 @@
 a.app-link {
   color: $defaultTwitterColor;
   text-decoration: none;
+  cursor: pointer;
 
   &:hover, &:focus, &:active {
     color: $defaultTwitterColor;
@@ -50,13 +51,25 @@ $userIconSizes: (
 
 //--------------------------------
 .user-full-name {
+  @extend a.app-link;
+  color: $primaryTextColor;
   font-weight: bold;
   word-break: break-all;
   font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
 .user-username {
   color: $secondaryTextColor;
   font-size: 14px;
+}
+
+.tweet-date {
+  @extend a.app-link;
+  @extend .user-username;
+  white-space: nowrap;
 }
 
 .twitter-textarea {
@@ -67,7 +80,6 @@ $userIconSizes: (
   color: $primaryTextColor;
   line-height: 16px;
   padding: 8px;
-  margin: 2px;
   width: 100%;
   outline: none;
   resize: none;

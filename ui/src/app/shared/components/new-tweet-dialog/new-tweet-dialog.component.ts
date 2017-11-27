@@ -4,7 +4,10 @@ import { MatDialogRef } from "@angular/material";
 @Component({
   selector: 'app-new-tweet-dialog',
   templateUrl: './new-tweet-dialog.component.html',
-  styleUrls: ['./new-tweet-dialog.component.scss']
+  styleUrls: [
+    './new-tweet-dialog.component.scss',
+    '../_dialog.scss'
+  ]
 })
 export class NewTweetDialogComponent {
 

@@ -23,11 +23,14 @@ import { UserListElementSmallComponent } from './components/user-list-element-sm
 import { NewTweetFormComponent } from './components/new-tweet-form/new-tweet-form.component';
 import { NewTweetDialogComponent } from './components/new-tweet-dialog/new-tweet-dialog.component';
 import { DialogService } from "./services/dialog.service";
+import { TweetComponent } from './components/tweet/tweet.component';
+import { ReplyNewTweetDialogComponent } from './components/reply-new-tweet-dialog/reply-new-tweet-dialog.component';
+import { RouterModule } from "@angular/router";
 
 @NgModule({
   imports: [
     CommonModule,
-    MatSnackBarModule,
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
@@ -38,6 +41,7 @@ import { DialogService } from "./services/dialog.service";
     MatMenuModule,
     MatDialogModule,
     MatButtonModule,
+    MatSnackBarModule,
   ],
   declarations: [
     DynamicColorDirective,
@@ -48,6 +52,8 @@ import { DialogService } from "./services/dialog.service";
     UserListElementSmallComponent,
     NewTweetFormComponent,
     NewTweetDialogComponent,
+    TweetComponent,
+    ReplyNewTweetDialogComponent,
   ],
   exports: [
     DynamicColorDirective,
@@ -58,9 +64,11 @@ import { DialogService } from "./services/dialog.service";
     NewTweetFormComponent,
     NewTweetDialogComponent,
     UserListElementSmallComponent,
+    ReplyNewTweetDialogComponent
   ],
   entryComponents: [
     NewTweetDialogComponent,
+    ReplyNewTweetDialogComponent
   ],
   providers: [
     AuthHttpService,

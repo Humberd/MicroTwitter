@@ -12,7 +12,7 @@
               rows="3"
               [formControlName]="'content'"
               [appAutofocus]="shouldAutofocus"
-              placeholder="What's happening?">
+              [placeholder]="inReplyToTweet ? 'Tweet your reply' : 'What\'s happening?'">
     </textarea>
     <div class="form-buttons">
       <button mat-raised-button
