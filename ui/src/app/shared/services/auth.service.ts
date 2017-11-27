@@ -15,6 +15,11 @@ export class AuthService {
   private storage: Storage;
 
   /**
+   * When user data has not yet been acquired from the server, but we already have a jwt from storage.
+   */
+  initialJWT: string;
+
+  /**
    * It has 3 states:
    *  * undefined - when the app has already started and getting auth user requests hasn't completed yet
    *  * null - user not logged in
@@ -139,6 +144,7 @@ export class AuthService {
     const jwt = this.storage.getItem(CONSTANTS.STORAGE_JWT_KEY);
     if (isString(jwt) && jwt.length > 0) {
       console.info("Acquired jwt token from storage");
+      this.initialJWT = jwt;
       this.updateUserData(jwt)
         .subscribe();
     } else {

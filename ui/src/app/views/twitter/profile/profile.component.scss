@@ -1,0 +1,50 @@
+@import "../../../../styles/colors";
+
+.profile-view {
+  .profile-banner {
+    width: 100%;
+    max-height: 500px;
+  }
+  .profile-navbar {
+    height: 60px;
+    background-color: $white;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
+
+    .navbar-container {
+      display: flex;
+      justify-content: space-between;
+
+      margin: auto;
+      height: 100%;
+
+      .profile-avatar-space-holder {
+        position: relative;
+
+        .profile-avatar-wrapper {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          position: absolute;
+          bottom: -31px;
+          width: 210px;
+          height: 210px;
+          background-color: $white;
+          border-radius: 50%;
+
+          .profile-avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+          }
+        }
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
 @import "colors";
+@import "sizing";
 
 .main-view-content {
   padding: 10px 15px 0 15px;
@@ -25,8 +26,6 @@ a.app-link {
 }
 
 //--------------------------------
-$largeContainer: 1190px;
-$mediumContainer: 865px;
 .large-container {
   max-width: $largeContainer;
 }
@@ -36,11 +35,14 @@ $mediumContainer: 865px;
 }
 
 //--------------------------------
-$userIconSizes: (
-  small: 32px,
-  medium: 48px,
-  large: 72px,
-);
+.side-panel {
+  width: $sidePanel;
+}
+.center-panel {
+  width: $centerPanel;
+}
+
+//--------------------------------
 @each $name, $size in $userIconSizes {
   .user-icon-#{$name} {
     border-radius: 50%;

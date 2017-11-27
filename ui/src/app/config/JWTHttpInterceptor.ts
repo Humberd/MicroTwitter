@@ -4,6 +4,7 @@ import { Injectable, Injector } from "@angular/core";
 import { AuthService } from "../shared/services/auth.service";
 import { CONSTANTS } from "./Constants";
 import { Router } from "@angular/router";
+import { isString } from "util";
 
 @Injectable()
 export class JWTHttpInterceptor implements HttpInterceptor {
@@ -19,13 +20,20 @@ export class JWTHttpInterceptor implements HttpInterceptor {
 
     let newHeaders: HttpHeaders = req.headers;
 
-    if (this.authService.isUserLoggedIn()) {
-      /* We add an Authorization header only to those requests that don't have it.
-       * We do not want override every request, because some requests '/me' need a special tratment */
-      if (!req.headers.has(CONSTANTS.AUTH_HEADER_NAME)) {
+    /* We add an Authorization header only to those requests that don't have it.
+     * We do not want override every request, because some requests '/me' need a special tratment */
+    if (!req.headers.has(CONSTANTS.AUTH_HEADER_NAME)) {
+      if (this.authService.isUserLoggedIn()) {
         newHeaders = newHeaders.set(CONSTANTS.AUTH_HEADER_NAME, CONSTANTS.AUTH_TOKEN_PREFIX + this.authService.getUser().jwtToken);
       }
+      /* If the logged user has not yet been confirmed, but we already have his jwt from storage lets add it to those requests */
+      // tslint:disable-next-line one-line
+      else if (isString(this.authService.initialJWT)) {
+        newHeaders = newHeaders.set(CONSTANTS.AUTH_HEADER_NAME, CONSTANTS.AUTH_TOKEN_PREFIX + this.authService.initialJWT);
+      }
+
     }
+
 
     const appRequest = req.clone({
       headers: newHeaders
