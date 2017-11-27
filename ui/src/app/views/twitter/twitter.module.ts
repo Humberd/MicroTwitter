@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { WallComponent } from './wall/wall.component';
 import { ProfileComponent } from './profile/profile.component';
 import { MatButtonModule } from "@angular/material";
+import { TabsComponent } from './profile/tabs/tabs.component';
 
 @NgModule({
   imports: [
@@ -11,7 +12,8 @@ import { MatButtonModule } from "@angular/material";
   ],
   declarations: [
     WallComponent,
-    ProfileComponent
+    ProfileComponent,
+    TabsComponent
   ]
 })
 export class TwitterViewsModule {
