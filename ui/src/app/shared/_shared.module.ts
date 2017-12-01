@@ -26,6 +26,7 @@ import { DialogService } from "./services/dialog.service";
 import { TweetComponent } from './components/tweet/tweet.component';
 import { ReplyNewTweetDialogComponent } from './components/reply-new-tweet-dialog/reply-new-tweet-dialog.component';
 import { RouterModule } from "@angular/router";
+import { TweetListComponent } from './components/tweet-list/tweet-list.component';
 
 @NgModule({
   imports: [
@@ -54,6 +55,7 @@ import { RouterModule } from "@angular/router";
     NewTweetDialogComponent,
     TweetComponent,
     ReplyNewTweetDialogComponent,
+    TweetListComponent,
   ],
   exports: [
     DynamicColorDirective,
@@ -64,7 +66,8 @@ import { RouterModule } from "@angular/router";
     NewTweetFormComponent,
     NewTweetDialogComponent,
     UserListElementSmallComponent,
-    ReplyNewTweetDialogComponent
+    ReplyNewTweetDialogComponent,
+    TweetListComponent
   ],
   entryComponents: [
     NewTweetDialogComponent,

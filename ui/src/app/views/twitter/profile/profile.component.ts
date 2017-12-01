@@ -6,7 +6,6 @@ import { UserResponseDTO } from "../../../dto/UserResponseDTO";
 import { Observable } from "rxjs/Observable";
 import { Title } from "@angular/platform-browser";
 import { CONSTANTS } from "../../../config/Constants";
-import { AuthService } from "../../../shared/services/auth.service";
 
 @Component({
   selector: 'app-profile',
@@ -18,8 +17,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   user: UserResponseDTO;
 
-  constructor(public authService: AuthService,
-              private activatedRoute: ActivatedRoute,
+  constructor(private activatedRoute: ActivatedRoute,
               private userHttpService: UserHttpService,
               private title: Title) {
   }

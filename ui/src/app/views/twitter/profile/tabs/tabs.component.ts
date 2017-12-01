@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UserResponseDTO } from "../../../../dto/UserResponseDTO";
 
 @Component({
@@ -6,12 +6,9 @@ import { UserResponseDTO } from "../../../../dto/UserResponseDTO";
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.scss']
 })
-export class TabsComponent implements OnInit {
+export class TabsComponent {
   @Input() user: UserResponseDTO;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor() {
   }
-
 }

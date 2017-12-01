@@ -12,13 +12,24 @@
         </div>
       </div>
       <div class="tabs center-panel">
-        <app-tabs [user]="authService.getUser()?.data"></app-tabs>
+        <app-tabs [user]="user"></app-tabs>
       </div>
       <div class="actions side-panel">
         <button mat-raised-button>
           Edit Profile
         </button>
       </div>
+    </div>
+  </div>
+  <div class="profile-container large-container">
+    <div class="side-panel">
+      left panel
+    </div>
+    <div class="center-panel">
+      <router-outlet></router-outlet>
+    </div>
+    <div class="side-panel">
+      right panel
     </div>
   </div>
 </div>

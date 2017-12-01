@@ -1,36 +1,75 @@
 <div class="profile-tabs-component">
-  <mat-tab-group>
+  <div mat-tab-nav-bar>
+    <a mat-tab-link
+       routerLinkActive #rla1="routerLinkActive"
+       [routerLinkActiveOptions]="{exact: true}"
+       [active]="rla1.isActive"
+       [routerLink]="['.']">
+      <div class="tab">
+        <div class="name"> Tweets</div>
+        <div class="count"> {{user?.tweetsCount}}</div>
+      </div>
+    </a>
+    <a mat-tab-link
+       routerLinkActive #rla2="routerLinkActive"
+       [active]="rla2.isActive"
+       [routerLink]="['following']">
+      <div class="tab">
+        <div class="name"> Following</div>
+        <div class="count"> {{user?.followedUsersCount}}</div>
+      </div>
+    </a>
+    <a mat-tab-link
+       routerLinkActive #rla3="routerLinkActive"
+       [active]="rla3.isActive"
+       [routerLink]="['followers']">
+      <div class="tab">
+        <div class="name"> Followers</div>
+        <div class="count"> {{user?.followedByUsersCount}}</div>
+      </div>
+    </a>
+    <a mat-tab-link
+       routerLinkActive #rla4="routerLinkActive"
+       [active]="rla4.isActive"
+       [routerLink]="['likes']">
+      <div class="tab">
+        <div class="name"> Likes</div>
+        <div class="count"> {{user?.likesCount}}</div>
+      </div>
+    </a>
+  </div>
+  <!--<mat-tab-group>
     <mat-tab>
       <ng-template mat-tab-label>
         <div class="tab">
-          <div class="name"> Tweets </div>
-          <div class="count"> {{user?.tweetsCount}} </div>
+          <div class="name"> Tweets</div>
+          <div class="count"> {{user?.tweetsCount}}</div>
         </div>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
         <div class="tab">
-          <div class="name"> Following </div>
-          <div class="count"> {{user?.followedUsersCount}} </div>
+          <div class="name"> Following</div>
+          <div class="count"> {{user?.followedUsersCount}}</div>
         </div>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
         <div class="tab">
-          <div class="name"> Followers </div>
-          <div class="count"> {{user?.followedByUsersCount}} </div>
+          <div class="name"> Followers</div>
+          <div class="count"> {{user?.followedByUsersCount}}</div>
         </div>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
         <div class="tab">
-          <div class="name"> Likes </div>
-          <div class="count"> {{user?.likesCount}} </div>
+          <div class="name"> Likes</div>
+          <div class="count"> {{user?.likesCount}}</div>
         </div>
       </ng-template>
     </mat-tab>
-  </mat-tab-group>
+  </mat-tab-group>-->
 </div>
