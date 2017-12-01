@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="tabs center-panel">
-        tabs
+        <app-tabs [user]="authService.getUser()?.data"></app-tabs>
       </div>
       <div class="actions side-panel">
         <button mat-raised-button>
