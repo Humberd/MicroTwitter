@@ -32,3 +32,21 @@
     }
   }
 }
+
+/deep/ #user-menu-profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  height: 52px;
+  line-height: 20px;
+  border-bottom: 1px solid $lightBorderColor;
+
+  .user-full-name {
+    font-size: 18px;
+  }
+}
+
+/deep/ .user-menu {
+  min-width: 192px !important;
+}

@@ -28,9 +28,21 @@
         <img src="https://pbs.twimg.com/profile_images/931968026743918592/PARoJaa5_normal.jpg"
              class="user-menu-trigger user-icon-small"
              [matMenuTriggerFor]="appMenu"/>
-        <mat-menu #appMenu
+        <mat-menu class="user-menu"
+                  #appMenu
                   yPosition="below"
+                  xPosition="before"
                   [overlapTrigger]="false">
+          <a id="user-menu-profile"
+             mat-menu-item
+             [routerLink]="['/u', authService.getUser().data.username]">
+            <div class="user-full-name">
+              {{authService.getUser().data.profile.fullName}}
+            </div>
+            <div class="user-username">
+              @{{authService.getUser().data.username}}
+            </div>
+          </a>
           <button mat-menu-item
                   (click)="logout()">
             Logout
