@@ -68,6 +68,14 @@ export class TweetsComponent implements OnInit, OnDestroy {
     return this.tweetHttpService.getTweets(username, pageable)
       .do(page => {
         this.currentPage = page;
+
+        if (this.itemsList.length > 0) {
+          // makes sure that the tweet is not displayed twice
+          const lastElement = this.itemsList[this.itemsList.length - 1];
+          while (page.content.length > 0 && lastElement.id <= page.content[0].id) {
+            page.content.splice(0, 1);
+          }
+        }
         this.itemsList.push(...page.content);
         console.info(`Received page number ${page.number}`);
       });

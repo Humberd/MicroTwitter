@@ -97,6 +97,12 @@ class TweetController(
             if (!it.isPresent) throw BadRequestException("Cannot find a tweet with id '$tweetId'")
             it.get()
         }
+
+        tweet.comments
+                .forEach { t: TweetDAO? ->
+                    t?.inReplyToTweet = null
+                }
+
         tweetRepository.delete(tweet)
 
         return ResponseEntity.ok(Unit)
