@@ -14,7 +14,6 @@ export class URLHttpInterceptor implements HttpInterceptor {
         url: `${environment.apiUrl}${req.url.replace("/api", "")}`
       });
     }
-    console.log(appRequest);
 
     return next.handle(appRequest);
   }

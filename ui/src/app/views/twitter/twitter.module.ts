@@ -10,6 +10,7 @@ import { SharedModule } from "../../shared/_shared.module";
 import { FollowingComponent } from './profile/following/following.component';
 import { FollowersComponent } from './profile/followers/followers.component';
 import { LikesComponent } from './profile/likes/likes.component';
+import { InfiniteScrollModule } from "ngx-infinite-scroll";
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { LikesComponent } from './profile/likes/likes.component';
     MatMenuModule,
     RouterModule,
     SharedModule,
+    InfiniteScrollModule,
   ],
   declarations: [
     WallComponent,

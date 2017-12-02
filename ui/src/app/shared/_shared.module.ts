@@ -30,6 +30,7 @@ import { TweetListComponent } from './components/tweet-list/tweet-list.component
 import { TweetBlockComponent } from './components/tweet-block/tweet-block.component';
 import { TweetActionsComponent } from './components/tweet-actions/tweet-actions.component';
 import { TweetOptionsComponent } from './components/tweet-options/tweet-options.component';
+import { InfiniteScrollModule } from "ngx-infinite-scroll";
 
 @NgModule({
   imports: [
@@ -46,6 +47,7 @@ import { TweetOptionsComponent } from './components/tweet-options/tweet-options.
     MatDialogModule,
     MatButtonModule,
     MatSnackBarModule,
+    InfiniteScrollModule,
   ],
   declarations: [
     DynamicColorDirective,
