@@ -27,7 +27,7 @@ class UserController(
      */
     @GetMapping("/me")
     fun getMe(user: UserDAO): ResponseEntity<UserResponseDTO> {
-        return ResponseEntity.ok(responseBuilder.buildUserResponse(user, user, privateResponse = true))
+        return ResponseEntity.ok(responseBuilder.buildUserResponse(user, user))
     }
 
     /**
@@ -50,7 +50,7 @@ class UserController(
             }
         }
 
-        return ResponseEntity.ok(responseBuilder.buildUserResponse(user, user, privateResponse = true))
+        return ResponseEntity.ok(responseBuilder.buildUserResponse(user, user))
     }
 
     /**
@@ -84,8 +84,7 @@ class UserController(
 
         return ResponseEntity.ok(responseBuilder.buildUserResponse(
                 me = user,
-                user = selectedUser,
-                privateResponse = selectedUser === user))
+                user = selectedUser))
     }
 
     /**
@@ -95,7 +94,7 @@ class UserController(
     @Transactional
     @PostMapping("/users/{userId}/follow")
     fun followUser(@PathVariable userId: Long,
-                   user: UserDAO): ResponseEntity<Unit> {
+                   user: UserDAO): ResponseEntity<UserResponseDTO> {
         if (userId == user.id) throw BadRequestException("Cannot follow myself")
 
         if (user.followedUsers.find { userDAO -> userDAO.id == userId } !== null) {
@@ -109,7 +108,7 @@ class UserController(
 
         (user.followedUsers as PersistentBag).add(userToFollow)
 
-        return ResponseEntity.ok(Unit)
+        return ResponseEntity.ok(responseBuilder.buildUserResponse(user, userToFollow))
     }
 
     /**
@@ -119,7 +118,7 @@ class UserController(
     @Transactional
     @PostMapping("/users/{userId}/unfollow")
     fun unfollowUser(@PathVariable userId: Long,
-                     user: UserDAO): ResponseEntity<Unit> {
+                     user: UserDAO): ResponseEntity<UserResponseDTO> {
         if (userId == user.id) throw BadRequestException("Cannot unfollow myself")
 
         if (user.followedUsers.find { userDAO -> userDAO.id == userId } === null) {
@@ -133,7 +132,7 @@ class UserController(
 
         (user.followedUsers as PersistentBag).removeIf { userDAO -> (userDAO as UserDAO).id == userToUnfollow.id }
 
-        return ResponseEntity.ok(Unit)
+        return ResponseEntity.ok(responseBuilder.buildUserResponse(user, userToUnfollow))
     }
 
 }

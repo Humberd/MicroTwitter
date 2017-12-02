@@ -35,13 +35,12 @@ data class BirthdateResponseDTO(
 
 fun buildUserResponseDTO(me: UserDAO,
                          user: UserDAO,
-                         userRepository: UserRepository,
-                         privateResponse: Boolean = false): UserResponseDTO {
+                         userRepository: UserRepository): UserResponseDTO {
     return UserResponseDTO(
             id = user.id,
-            createdAt = if (privateResponse) user.createdAt else null,
+            createdAt = if (me.id == user.id) user.createdAt else null,
             username = user.username,
-            email = if (privateResponse) user.email else null,
+            email = if (me.id == user.id) user.email else null,
             tweetsCount = userRepository.countByTweets_User(user),
             likesCount = userRepository.countByLikes_User(user),
             followedUsersCount = userRepository.countByFollowedUsers_FollowedByUsers(user),

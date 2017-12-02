@@ -6,6 +6,7 @@ import { UserResponseDTO } from "../../../dto/UserResponseDTO";
 import { Observable } from "rxjs/Observable";
 import { Title } from "@angular/platform-browser";
 import { CONSTANTS } from "../../../config/Constants";
+import { AuthService } from "../../../shared/services/auth.service";
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +20,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   constructor(private activatedRoute: ActivatedRoute,
               private userHttpService: UserHttpService,
+              private authService: AuthService,
               private title: Title) {
   }
 
@@ -40,6 +42,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
     return this.userHttpService.getUser(username)
       .do(user => this.user = user)
       .do(user => this.title.setTitle(`${user.profile.fullName} (@${user.username}) on ${CONSTANTS.APP_NAME}`));
+  }
+
+  triggerFollowUserAction(): void {
+    this.userHttpService.followUser(this.user.id)
+      .subscribe(newUserData => {
+        Object.assign(this.user, newUserData);
+      });
+  }
+
+  triggerUnfollowUserAction(): void {
+    this.userHttpService.unfollowUser(this.user.id)
+      .subscribe(newUserData => {
+        Object.assign(this.user, newUserData);
+      })
   }
 
 }

@@ -8,7 +8,7 @@ export interface UserResponseDTO {
   followedUsersCount?: number;
   followedByUsersCount?: number;
   // does user follow user in this object
-  isFollowing?: boolean;
+  following?: boolean;
   profile?: ProfileResponseDTO;
 }
 

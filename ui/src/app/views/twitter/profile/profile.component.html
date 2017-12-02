@@ -15,9 +15,23 @@
         <app-tabs [user]="user"></app-tabs>
       </div>
       <div class="actions side-panel">
-        <button mat-raised-button>
+        <button mat-raised-button
+                *ngIf="authService.isUserLoggedIn() && user?.id === authService.getUser()?.data.id">
           Edit Profile
         </button>
+        <div *ngIf="authService.isUserLoggedIn()">
+          <button mat-raised-button
+                  *ngIf="!user?.following"
+                  (click)="triggerFollowUserAction()">
+            Follow
+          </button>
+          <button mat-raised-button
+                  color="primary"
+                  *ngIf="user?.following"
+                  (click)="triggerUnfollowUserAction()">
+            Following
+          </button>
+        </div>
       </div>
     </div>
   </div>
