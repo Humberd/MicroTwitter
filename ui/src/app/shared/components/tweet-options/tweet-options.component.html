@@ -12,6 +12,7 @@
       Copy Link to Tweet
     </button>
     <button mat-menu-item
+            *ngIf="authService.getUser()?.data.id === tweet.user.id"
             (click)="showDeleteTweetDialog()">
       Delete Tweet
     </button>

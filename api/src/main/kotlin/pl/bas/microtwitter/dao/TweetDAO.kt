@@ -1,6 +1,5 @@
 package pl.bas.microtwitter.dao
 
-import org.springframework.lang.Nullable
 import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.NotNull

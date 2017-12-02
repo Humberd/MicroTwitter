@@ -3,6 +3,7 @@ import { TweetResponseDTO } from "../../../dto/TweetResponseDTO";
 import { MatSnackBar } from "@angular/material";
 import * as copy from 'copy-to-clipboard';
 import { DialogService } from "../../services/dialog.service";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: 'app-tweet-options',
@@ -14,7 +15,8 @@ export class TweetOptionsComponent {
   @Output() tweetDeleted = new EventEmitter<TweetResponseDTO>();
 
   constructor(private snackBar: MatSnackBar,
-              public dialogService: DialogService) {
+              public dialogService: DialogService,
+              public authService: AuthService) {
   }
 
   copyLinkToClipboard(): void {
