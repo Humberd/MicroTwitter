@@ -247,6 +247,58 @@ internal class TweetControllerTest {
 
     @Nested
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class GetUserLikedTweets: EndpointTest("/liked-tweets") {
+        lateinit var authHeaders1: HttpHeaders
+        lateinit var authHeaders2: HttpHeaders
+        lateinit var user1LikedTweetsUrl: String
+        lateinit var user2LikedTweetsUrl: String
+
+        @BeforeAll
+        fun setUp() {
+            userRepository.deleteAll()
+            tweetLikeRepository.deleteAll()
+            tweetRepository.deleteAll()
+
+            authHeaders1 = AuthHelper.signupAndLogin(http, AuthHelper.user1)
+            UserHelper.getMe(http, AuthHelper.user1).apply {
+                user1LikedTweetsUrl = "/liked-tweets?username=$username"
+            }
+            authHeaders2 = AuthHelper.signupAndLogin(http, AuthHelper.user2)
+            UserHelper.getMe(http, AuthHelper.user2).apply {
+                user2LikedTweetsUrl = "/liked-tweets?username=$username"
+            }
+
+            val tweet1 = TweetHelper.createTweet(http, TweetCreateDTO("its ok"), AuthHelper.user1)
+            val tweet2 = TweetHelper.createTweet(http, TweetCreateDTO("foobar 2"), AuthHelper.user1)
+            val tweet3 = TweetHelper.createTweet(http, TweetCreateDTO("foobar 3"), AuthHelper.user1)
+
+            TweetHelper.likeTweet(http, tweet1.id!!, AuthHelper.user1)
+            TweetHelper.likeTweet(http, tweet1.id!!, AuthHelper.user2)
+            TweetHelper.likeTweet(http, tweet2.id!!, AuthHelper.user2)
+            TweetHelper.likeTweet(http, tweet3.id!!, AuthHelper.user2)
+        }
+
+        @Test
+        fun `should get list of 1 tweets liked by user 1`() {
+            http.exchange(user1LikedTweetsUrl, HttpMethod.GET, HttpEntity(null, authHeaders1), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
+                println(this.body)
+                assertEquals(1, body.content.size)
+            }
+        }
+
+        @Test
+        fun `should get list of 3 tweets liked by user 2`() {
+            http.exchange(user2LikedTweetsUrl, HttpMethod.GET, HttpEntity(null, authHeaders2), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
+                assertEquals(3, body.content.size)
+            }
+        }
+    }
+    @Nested
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     inner class getTweet : EndpointTest("/tweets/") {
         var tweetId: Long = 0
 

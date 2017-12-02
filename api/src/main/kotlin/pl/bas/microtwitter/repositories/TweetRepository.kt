@@ -17,6 +17,8 @@ interface TweetRepository : JpaRepository<TweetDAO, Long> {
     fun findAllByInReplyToTweet(inReplyToTweet: TweetDAO,
                                 pageable: Pageable): Page<TweetDAO>
 
+    fun findAllByLikes_UserLcusername(username: String,
+                                      pageable: Pageable): Page<TweetDAO>
 
     /**
     SELECT DISTINCT t.* FROM

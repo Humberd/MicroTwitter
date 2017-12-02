@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.*
 import pl.bas.microtwitter.builders.ResponseBuilder
 import pl.bas.microtwitter.dao.UserDAO
 import pl.bas.microtwitter.dto.ProfileUpdateDTO
+import pl.bas.microtwitter.dto.TweetResponseDTO
 import pl.bas.microtwitter.dto.UserResponseDTO
 import pl.bas.microtwitter.exceptions.BadRequestException
+import pl.bas.microtwitter.repositories.TweetRepository
 import pl.bas.microtwitter.repositories.UserRepository
 import javax.transaction.Transactional
 

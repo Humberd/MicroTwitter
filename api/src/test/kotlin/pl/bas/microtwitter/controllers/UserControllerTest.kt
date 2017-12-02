@@ -14,13 +14,10 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.junit.jupiter.SpringExtension
-import pl.bas.microtwitter.dto.BirthdateDTO
-import pl.bas.microtwitter.dto.ProfileUpdateDTO
-import pl.bas.microtwitter.dto.UserResponseDTO
-import pl.bas.microtwitter.helpers.AuthHelper
-import pl.bas.microtwitter.helpers.CustomPageImpl
-import pl.bas.microtwitter.helpers.EndpointTest
-import pl.bas.microtwitter.helpers.UserHelper
+import pl.bas.microtwitter.dto.*
+import pl.bas.microtwitter.helpers.*
+import pl.bas.microtwitter.repositories.TweetLikeRepository
+import pl.bas.microtwitter.repositories.TweetRepository
 import pl.bas.microtwitter.repositories.UserRepository
 import java.util.*
 

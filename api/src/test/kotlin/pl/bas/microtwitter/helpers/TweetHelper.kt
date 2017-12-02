@@ -34,8 +34,9 @@ object TweetHelper {
     }
 
     fun likeTweet(http: TestRestTemplate,
-                  tweetId: Long): TweetResponseDTO {
-        val authHeaders = AuthHelper.signupAndLogin(http)
+                  tweetId: Long,
+                  authUser: SignupDTO = AuthHelper.user1): TweetResponseDTO {
+        val authHeaders = AuthHelper.signupAndLogin(http, authUser)
 
         http.exchange("/tweets/${tweetId}/like", HttpMethod.POST, HttpEntity(null, authHeaders), TweetResponseDTO::class.java).let {
             assertEquals(HttpStatus.OK, it.statusCode, it.body?.toString())

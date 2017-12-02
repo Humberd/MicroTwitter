@@ -74,6 +74,21 @@ class TweetController(
     }
 
     /**
+     * Gets a page of user liked tweets
+     */
+    @GetMapping("/liked-tweets")
+    fun getUserLikedTweets(@RequestParam username: String?,
+                           pageable: Pageable,
+                           user: UserDAO): ResponseEntity<Page<TweetResponseDTO>> {
+        if (username.isNullOrBlank()) {
+            throw BadRequestException("Username must be a not empty string")
+        }
+        val page = tweetRepository.findAllByLikes_UserLcusername(username!!.toLowerCase(), pageable)
+
+        return ResponseEntity.ok(page.map { tweet -> responseBuilder.buildTweetResponse(user, tweet) })
+    }
+
+    /**
      * Gets a tweet by [tweetId]
      */
     @GetMapping("/tweets/{tweetId}")
