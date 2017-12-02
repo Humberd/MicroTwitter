@@ -23,10 +23,13 @@ import { UserListElementSmallComponent } from './components/user-list-element-sm
 import { NewTweetFormComponent } from './components/new-tweet-form/new-tweet-form.component';
 import { NewTweetDialogComponent } from './components/new-tweet-dialog/new-tweet-dialog.component';
 import { DialogService } from "./services/dialog.service";
-import { TweetComponent } from './components/tweet/tweet.component';
+import { TweetContentComponent } from './components/tweet-content/tweet-content.component';
 import { ReplyNewTweetDialogComponent } from './components/reply-new-tweet-dialog/reply-new-tweet-dialog.component';
 import { RouterModule } from "@angular/router";
 import { TweetListComponent } from './components/tweet-list/tweet-list.component';
+import { TweetBlockComponent } from './components/tweet-block/tweet-block.component';
+import { TweetActionsComponent } from './components/tweet-actions/tweet-actions.component';
+import { TweetOptionsComponent } from './components/tweet-options/tweet-options.component';
 
 @NgModule({
   imports: [
@@ -53,9 +56,12 @@ import { TweetListComponent } from './components/tweet-list/tweet-list.component
     UserListElementSmallComponent,
     NewTweetFormComponent,
     NewTweetDialogComponent,
-    TweetComponent,
+    TweetContentComponent,
     ReplyNewTweetDialogComponent,
     TweetListComponent,
+    TweetBlockComponent,
+    TweetActionsComponent,
+    TweetOptionsComponent,
   ],
   exports: [
     DynamicColorDirective,
@@ -67,7 +73,10 @@ import { TweetListComponent } from './components/tweet-list/tweet-list.component
     NewTweetDialogComponent,
     UserListElementSmallComponent,
     ReplyNewTweetDialogComponent,
-    TweetListComponent
+    TweetListComponent,
+    TweetBlockComponent,
+    TweetActionsComponent,
+    TweetOptionsComponent,
   ],
   entryComponents: [
     NewTweetDialogComponent,

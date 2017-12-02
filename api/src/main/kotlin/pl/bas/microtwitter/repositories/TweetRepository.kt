@@ -10,8 +10,8 @@ import pl.bas.microtwitter.dao.TweetDAO
 import pl.bas.microtwitter.dao.UserDAO
 
 interface TweetRepository : JpaRepository<TweetDAO, Long> {
-    fun findAllByUserLcusername(lcusername: String,
-                                pageable: Pageable): Page<TweetDAO>
+    fun findAllByUserLcusernameOrderByIdDesc(lcusername: String,
+                                             pageable: Pageable): Page<TweetDAO>
 
     fun countByInReplyToTweet(inReplyToTweet: TweetDAO): Int
     fun findAllByInReplyToTweet(inReplyToTweet: TweetDAO,
@@ -30,7 +30,7 @@ interface TweetRepository : JpaRepository<TweetDAO, Long> {
         from TweetDAO as t
         where t.user = :user
         or t.user in :followedUsersList
-
+        order by t.id desc
     """)
     fun findWall(@Param("user") user: UserDAO,
                  @Param("followedUsersList") followedUsersList: List<UserDAO>,

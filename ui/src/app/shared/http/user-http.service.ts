@@ -23,26 +23,26 @@ export class UserHttpService {
     if (jwt) {
       headers = new HttpHeaders({[CONSTANTS.AUTH_HEADER_NAME]: CONSTANTS.AUTH_TOKEN_PREFIX + jwt});
     }
-    return this.http.get<UserResponseDTO>("/me", {headers: headers || {}});
+    return this.http.get<UserResponseDTO>("/api/me", {headers: headers || {}});
   }
 
   public updateProfile(body: ProfileUpdateDTO): Observable<UserResponseDTO> {
-    return this.http.put<UserResponseDTO>("/me/profile", body);
+    return this.http.put<UserResponseDTO>("/api/me/profile", body);
   }
 
   public getUsers(usernameOrfullName: string): Observable<PageDTO<UserResponseDTO>> {
-    return this.http.get<PageDTO<UserResponseDTO>>("/users", {params: {usernameOrfullName}});
+    return this.http.get<PageDTO<UserResponseDTO>>("/api/users", {params: {usernameOrfullName}});
   }
 
   public followUser(userId: number): Observable<void> {
-    return this.http.post<void>(`/users/${userId}/follow`, null);
+    return this.http.post<void>(`/api/users/${userId}/follow`, null);
   }
 
   public unfollowUser(userId: number): Observable<void> {
-    return this.http.post<void>(`/users/${userId}/unfollow`, null);
+    return this.http.post<void>(`/api/users/${userId}/unfollow`, null);
   }
 
   public getUser(username: string): Observable<UserResponseDTO> {
-    return this.http.get<UserResponseDTO>(`/users/${username}`);
+    return this.http.get<UserResponseDTO>(`/api/users/${username}`);
   }
 }

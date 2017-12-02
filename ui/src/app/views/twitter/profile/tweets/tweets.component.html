@@ -1,4 +1,6 @@
-<p>
-  tweets works!
-  <app-tweet-list></app-tweet-list>
-</p>
+<div class="tweet-list">
+  <div class="header">
+    Tweets
+  </div>
+  <app-tweet-list [tweetList]="currentPage?.content"></app-tweet-list>
+</div>

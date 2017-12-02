@@ -1,0 +1,10 @@
+.tweet-block {
+  .top {
+    display: flex;
+    align-items: flex-start;
+
+    .tweet-content {
+      flex: 1;
+    }
+  }
+}

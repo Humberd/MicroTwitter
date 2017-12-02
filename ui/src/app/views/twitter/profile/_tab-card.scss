@@ -1,0 +1,11 @@
+@import "../../../../styles/colors";
+
+.tweet-list {
+  background-color: $white;
+  .header {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 15px 15px 12px;
+    border: 1px solid $lightBorderColor;
+  }
+}

@@ -1,0 +1,24 @@
+<div class="tweet-actions">
+  <div class="action-item comment-action"
+       (click)="triggerReplyCommentAction()">
+    <mat-icon class="action-icon">chat_bubble_outline</mat-icon>
+    <div class="count"
+         *ngIf="tweet?.commentsCount > 0">
+      {{tweet?.commentsCount}}
+    </div>
+  </div>
+  <div class="action-item like-action"
+       [ngClass]="{liked: tweet?.liked}"
+       (click)="toggleLikeAction()">
+    <mat-icon class="action-icon"
+              [svgIcon]="'heart-outline'"
+              *ngIf="!tweet?.liked"></mat-icon>
+    <mat-icon class="action-icon"
+              [svgIcon]="'heart'"
+              *ngIf="tweet?.liked"></mat-icon>
+    <div class="count"
+         *ngIf="tweet?.likesCount > 0">
+      {{tweet?.likesCount}}
+    </div>
+  </div>
+</div>

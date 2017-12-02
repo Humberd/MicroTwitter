@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import 'rxjs/Rx';
@@ -14,6 +14,7 @@ import { URLHttpInterceptor } from "./config/URLHttpInterceptor";
 import { TwitterViewsModule } from "./views/twitter/twitter.module";
 import { AuthService } from "./shared/services/auth.service";
 import { LayoutModule } from "./layout/layout.module";
+import { MatIconModule, MatIconRegistry } from "@angular/material";
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { LayoutModule } from "./layout/layout.module";
     AuthViewsModule,
     TwitterViewsModule,
     LayoutModule,
+    MatIconModule,
   ],
   providers: [
     {
@@ -45,7 +47,11 @@ import { LayoutModule } from "./layout/layout.module";
 })
 export class AppModule {
 
-  constructor(private authService: AuthService) {
-    this.authService.readFromStorage();
+  constructor(authService: AuthService,
+              matIconRegistry: MatIconRegistry,
+              domSanitizer: DomSanitizer) {
+    authService.readFromStorage();
+
+    matIconRegistry.addSvgIconSet(domSanitizer.bypassSecurityTrustResourceUrl('/assets/mdi.svg'));
   }
 }

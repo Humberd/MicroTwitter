@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { TweetResponseDTO } from "../../../dto/TweetResponseDTO";
 
 @Component({
   selector: 'app-tweet-list',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tweet-list.component.scss']
 })
 export class TweetListComponent implements OnInit {
+  @Input() tweetList: TweetResponseDTO[];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+    console.log(this.tweetList);
   }
 
 }

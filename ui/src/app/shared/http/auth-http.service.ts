@@ -12,14 +12,14 @@ export class AuthHttpService {
   }
 
   public login(body: LoginDTO): Observable<HttpResponse<any>> {
-    return this.http.post("/auth/login", body, {observe: "response", responseType: "text"});
+    return this.http.post("/api/auth/login", body, {observe: "response", responseType: "text"});
   }
 
   public updatePassword(body: UpdatePasswordDTO): Observable<void> {
-    return this.http.post<void>("/auth/password", body);
+    return this.http.post<void>("/api/auth/password", body);
   }
 
   public signup(body: SignupDTO): Observable<void> {
-    return this.http.post<void>("/auth/signup", body);
+    return this.http.post<void>("/api/auth/signup", body);
   }
 }

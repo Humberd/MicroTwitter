@@ -9,11 +9,12 @@ export class URLHttpInterceptor implements HttpInterceptor {
     let appRequest = req;
 
     /* Only prepend apiUrl to relative paths. Absolute url paths should stay as there are */
-    if (!appRequest.url.startsWith("https://") || !appRequest.url.startsWith("http://")) {
+    if (appRequest.url.startsWith("/api")) {
       appRequest = appRequest.clone({
-        url: `${environment.apiUrl}${req.url}`
+        url: `${environment.apiUrl}${req.url.replace("/api", "")}`
       });
     }
+    console.log(appRequest);
 
     return next.handle(appRequest);
   }

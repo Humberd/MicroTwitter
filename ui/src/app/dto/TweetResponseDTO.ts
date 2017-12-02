@@ -5,7 +5,7 @@ export interface TweetResponseDTO {
   likesCount?: number;
   commentsCount?: number;
   user?: TweetUserResponseDTO;
-  isLiked?: boolean;
+  liked?: boolean;
   inReplyToTweetId?: number;
   inReplyToUser?: TweetUserResponseDTO;
 }

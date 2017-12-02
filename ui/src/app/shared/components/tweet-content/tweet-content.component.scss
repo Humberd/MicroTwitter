@@ -1,8 +1,12 @@
 .tweet-component {
   display: flex;
+  margin-left: 58px;
 
   .user-icon {
-    margin-right: 10px;
+    float: left;
+    margin-top: 3px;
+    margin-left: -58px;
+    position: absolute;
   }
 
   .tweet {

@@ -62,10 +62,13 @@ class TweetController(
      * Gets a paginated list of tweets by given [username]
      */
     @GetMapping("/tweets")
-    fun getTweets(@RequestParam username: String,
+    fun getTweets(@RequestParam username: String?,
                   pageable: Pageable,
                   user: UserDAO): ResponseEntity<Page<TweetResponseDTO>> {
-        val page = tweetRepository.findAllByUserLcusername(username.toLowerCase(), pageable)
+        if (username.isNullOrBlank()) {
+            throw BadRequestException("Username must be a not empty string")
+        }
+        val page = tweetRepository.findAllByUserLcusernameOrderByIdDesc(username!!.toLowerCase(), pageable)
 
         return ResponseEntity.ok(page.map { tweet -> responseBuilder.buildTweetResponse(user, tweet) })
     }

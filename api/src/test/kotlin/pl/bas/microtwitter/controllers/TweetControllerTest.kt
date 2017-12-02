@@ -236,6 +236,13 @@ internal class TweetControllerTest {
                 assertEquals(0, body.content.size)
             }
         }
+
+        @Test
+        fun `should not get tweets when the user name is not provided`() {
+            http.exchange(url, HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
+                assertEquals(HttpStatus.BAD_REQUEST, statusCode)
+            }
+        }
     }
 
     @Nested
