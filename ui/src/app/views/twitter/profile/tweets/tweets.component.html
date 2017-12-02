@@ -9,4 +9,8 @@
        (scrolled)="requestNextPage()">
     <app-tweet-list [tweetList]="itemsList"></app-tweet-list>
   </div>
+  <div class="empty-list"
+       *ngIf="!loadingNextPage && itemsList.length === 0">
+    You haven't Tweeted yet.
+  </div>
 </div>
