@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.*
 import pl.bas.microtwitter.builders.ResponseBuilder
 import pl.bas.microtwitter.dao.UserDAO
 import pl.bas.microtwitter.dto.ProfileUpdateDTO
-import pl.bas.microtwitter.dto.TweetResponseDTO
 import pl.bas.microtwitter.dto.UserResponseDTO
 import pl.bas.microtwitter.exceptions.BadRequestException
-import pl.bas.microtwitter.repositories.TweetRepository
 import pl.bas.microtwitter.repositories.UserRepository
 import javax.transaction.Transactional
 
@@ -61,9 +59,33 @@ class UserController(
                  pageable: Pageable,
                  user: UserDAO): ResponseEntity<Page<UserResponseDTO>> {
         if (usernameOrfullName.isBlank()) {
-            throw BadRequestException("Username or FullName must not by an empty string")
+            throw BadRequestException("Username or FullName must be a not empty string")
         }
         val page = userRepository.findByUsernameOrFullName(usernameOrfullName.toLowerCase(), pageable)
+
+        return ResponseEntity.ok(page.map { userDAO -> responseBuilder.buildUserResponse(user, userDAO) })
+    }
+
+    @GetMapping("/users/{username}/following-users")
+    fun getFollowingUsers(@PathVariable username: String?,
+                          pageable: Pageable,
+                          user: UserDAO): ResponseEntity<Page<UserResponseDTO>> {
+        if (username.isNullOrBlank()) {
+            throw BadRequestException("Username must be a not empty string")
+        }
+        val page = userRepository.findFollowedUsers(username!!.toLowerCase(), pageable)
+
+        return ResponseEntity.ok(page.map { userDAO -> responseBuilder.buildUserResponse(user, userDAO) })
+    }
+
+    @GetMapping("/users/{username}/followers")
+    fun getFollowers(@PathVariable username: String?,
+                          pageable: Pageable,
+                          user: UserDAO): ResponseEntity<Page<UserResponseDTO>> {
+        if (username.isNullOrBlank()) {
+            throw BadRequestException("Username must be a not empty string")
+        }
+        val page = userRepository.findFollowers(username!!.toLowerCase(), pageable)
 
         return ResponseEntity.ok(page.map { userDAO -> responseBuilder.buildUserResponse(user, userDAO) })
     }
@@ -82,9 +104,7 @@ class UserController(
             }!!
         }
 
-        return ResponseEntity.ok(responseBuilder.buildUserResponse(
-                me = user,
-                user = selectedUser))
+        return ResponseEntity.ok(responseBuilder.buildUserResponse(user, selectedUser))
     }
 
     /**

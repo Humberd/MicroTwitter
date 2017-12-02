@@ -14,10 +14,13 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.junit.jupiter.SpringExtension
-import pl.bas.microtwitter.dto.*
-import pl.bas.microtwitter.helpers.*
-import pl.bas.microtwitter.repositories.TweetLikeRepository
-import pl.bas.microtwitter.repositories.TweetRepository
+import pl.bas.microtwitter.dto.BirthdateDTO
+import pl.bas.microtwitter.dto.ProfileUpdateDTO
+import pl.bas.microtwitter.dto.UserResponseDTO
+import pl.bas.microtwitter.helpers.AuthHelper
+import pl.bas.microtwitter.helpers.CustomPageImpl
+import pl.bas.microtwitter.helpers.EndpointTest
+import pl.bas.microtwitter.helpers.UserHelper
 import pl.bas.microtwitter.repositories.UserRepository
 import java.util.*
 
@@ -206,6 +209,114 @@ class UserControllerTest {
         fun `should not get users when providing providing empty username`() {
             http.exchange("/users/?usernameOrfullName=", HttpMethod.GET, HttpEntity(null, authHeaders), String::class.java).apply {
                 assertEquals(HttpStatus.BAD_REQUEST, statusCode)
+            }
+        }
+    }
+
+    @Nested
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class getFollowingUsers : EndpointTest("/users/{username}/following-users") {
+        lateinit var authHeaders1: HttpHeaders
+        lateinit var authHeaders2: HttpHeaders
+        lateinit var authHeaders3: HttpHeaders
+        lateinit var user1: UserResponseDTO
+        lateinit var user2: UserResponseDTO
+        lateinit var user3: UserResponseDTO
+
+        @BeforeAll
+        fun setUp() {
+            userRepository.deleteAll();
+
+            authHeaders1 = AuthHelper.signupAndLogin(http, AuthHelper.user1)
+            user1 = UserHelper.getMe(http, AuthHelper.user1)
+            authHeaders2 = AuthHelper.signupAndLogin(http, AuthHelper.user2)
+            user2 = UserHelper.getMe(http, AuthHelper.user2)
+            authHeaders3 = AuthHelper.signupAndLogin(http, AuthHelper.user3)
+            user3 = UserHelper.getMe(http, AuthHelper.user3)
+
+            UserHelper.followUser(http, user1, AuthHelper.user2)
+            UserHelper.followUser(http, user3, AuthHelper.user2)
+            UserHelper.followUser(http, user1, AuthHelper.user3)
+        }
+
+        @Test
+        fun `should get a list of 0 following users for user1`() {
+            http.exchange("/users/${user1.username}/following-users", HttpMethod.GET, HttpEntity(null, authHeaders1), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<UserResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
+                assertEquals(0, body.content.size)
+            }
+        }
+
+        @Test
+        fun `should get a list of 2 following users for user2`() {
+            http.exchange("/users/${user2.username}/following-users", HttpMethod.GET, HttpEntity(null, authHeaders1), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<UserResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
+                assertEquals(2, body.content.size)
+            }
+        }
+
+        @Test
+        fun `should get a list of 1 following users for user3`() {
+            http.exchange("/users/${user3.username}/following-users", HttpMethod.GET, HttpEntity(null, authHeaders1), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<UserResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
+                assertEquals(1, body.content.size)
+            }
+        }
+    }
+
+    @Nested
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class getFollowers : EndpointTest("/users/{username}/followers") {
+        lateinit var authHeaders1: HttpHeaders
+        lateinit var authHeaders2: HttpHeaders
+        lateinit var authHeaders3: HttpHeaders
+        lateinit var user1: UserResponseDTO
+        lateinit var user2: UserResponseDTO
+        lateinit var user3: UserResponseDTO
+
+        @BeforeAll
+        fun setUp() {
+            userRepository.deleteAll();
+
+            authHeaders1 = AuthHelper.signupAndLogin(http, AuthHelper.user1)
+            user1 = UserHelper.getMe(http, AuthHelper.user1)
+            authHeaders2 = AuthHelper.signupAndLogin(http, AuthHelper.user2)
+            user2 = UserHelper.getMe(http, AuthHelper.user2)
+            authHeaders3 = AuthHelper.signupAndLogin(http, AuthHelper.user3)
+            user3 = UserHelper.getMe(http, AuthHelper.user3)
+
+            UserHelper.followUser(http, user1, AuthHelper.user2)
+            UserHelper.followUser(http, user3, AuthHelper.user2)
+            UserHelper.followUser(http, user1, AuthHelper.user3)
+        }
+
+        @Test
+        fun `should get a list of 2 followers for user1`() {
+            http.exchange("/users/${user1.username}/followers", HttpMethod.GET, HttpEntity(null, authHeaders1), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<UserResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
+                assertEquals(2, body.content.size)
+            }
+        }
+
+        @Test
+        fun `should get a list of 0 followers for user2`() {
+            http.exchange("/users/${user2.username}/followers", HttpMethod.GET, HttpEntity(null, authHeaders1), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<UserResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
+                assertEquals(0, body.content.size)
+            }
+        }
+
+        @Test
+        fun `should get a list of 1 followers for user3`() {
+            http.exchange("/users/${user3.username}/followers", HttpMethod.GET, HttpEntity(null, authHeaders1), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<UserResponseDTO>>(this.body!!)
+                assertEquals(HttpStatus.OK, statusCode)
+                assertEquals(1, body.content.size)
             }
         }
     }
