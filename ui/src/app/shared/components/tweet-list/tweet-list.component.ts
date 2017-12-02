@@ -11,4 +11,8 @@ export class TweetListComponent {
 
   constructor() {
   }
+
+  removeTweetFromList(index: number): void {
+    this.tweetList.splice(index, 1);
+  }
 }

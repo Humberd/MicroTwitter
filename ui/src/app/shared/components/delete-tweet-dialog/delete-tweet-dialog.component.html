@@ -1,0 +1,23 @@
+<div class="dialog-header">
+  <div class="dialog-title">
+    Are you sure you want to delete this Tweet?
+  </div>
+</div>
+<div class="medium-content-section">
+  <app-tweet-content [tweet]="tweet"></app-tweet-content>
+</div>
+<div class="dialog-footer">
+  <div class="dialog-buttons">
+    <button class="dialog-button"
+            mat-button
+            (click)="dialogRef.close()">
+      Cancel
+    </button>
+    <button class="dialog-button"
+            mat-raised-button
+            color="warn"
+            (click)="triggerDeleteTweetAction()">
+      Delete
+    </button>
+  </div>
+</div>

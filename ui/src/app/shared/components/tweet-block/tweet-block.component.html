@@ -2,7 +2,8 @@
   <div class="top">
     <app-tweet-content class="tweet-content"
                        [tweet]="tweet"></app-tweet-content>
-    <app-tweet-options [tweet]="tweet"></app-tweet-options>
+    <app-tweet-options [tweet]="tweet"
+                       (tweetDeleted)="tweetDeleted.next($event)"></app-tweet-options>
   </div>
   <div class="bottom">
     <app-tweet-actions [tweet]="tweet"></app-tweet-actions>

@@ -27,7 +27,12 @@ export class TweetActionsComponent implements OnInit {
   }
 
   triggerReplyCommentAction(): void {
-    this.dialogService.showReplyToTweetDialog(this.tweet);
+    const dialog = this.dialogService.showReplyToTweetDialog(this.tweet);
+    dialog.afterClosed()
+      .filter(newTweet => !!newTweet)
+      .subscribe(() => {
+        this.tweet.commentsCount++;
+      });
   }
 
   private triggerLikeAction(): void {

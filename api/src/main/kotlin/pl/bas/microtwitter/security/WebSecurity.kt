@@ -54,6 +54,12 @@ class WebSecurity(private val userDetailsService: UserDetailsService,
                 .applyPermitDefaultValues().apply {
             addAllowedHeader(SecurityConstants.HEADER_STRING)
             addExposedHeader(SecurityConstants.HEADER_STRING)
+            addAllowedMethod(HttpMethod.GET)
+            addAllowedMethod(HttpMethod.POST)
+            addAllowedMethod(HttpMethod.PUT)
+            addAllowedMethod(HttpMethod.DELETE)
+            addAllowedMethod(HttpMethod.HEAD)
+            addAllowedMethod(HttpMethod.OPTIONS)
         }
 
         source.registerCorsConfiguration("/**", corsConfig)

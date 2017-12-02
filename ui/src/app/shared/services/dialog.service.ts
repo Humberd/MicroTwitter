@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material";
 import { NewTweetDialogComponent } from "../components/new-tweet-dialog/new-tweet-dialog.component";
 import { TweetResponseDTO } from "../../dto/TweetResponseDTO";
 import { ReplyNewTweetDialogComponent } from "../components/reply-new-tweet-dialog/reply-new-tweet-dialog.component";
+import { DeleteTweetDialogComponent } from "../components/delete-tweet-dialog/delete-tweet-dialog.component";
 
 @Injectable()
 export class DialogService {
@@ -25,6 +26,15 @@ export class DialogService {
     return this.matDialog.open(ReplyNewTweetDialogComponent, {
       ...this.config,
       data: {inReplyToTweet}
+    });
+  }
+
+  public showDeleteTweetDialog(tweet: TweetResponseDTO): MatDialogRef<DeleteTweetDialogComponent> {
+    return this.matDialog.open(DeleteTweetDialogComponent, {
+      ...this.config,
+      width: '520px',
+      position: {},
+      data: {tweet}
     });
   }
 }

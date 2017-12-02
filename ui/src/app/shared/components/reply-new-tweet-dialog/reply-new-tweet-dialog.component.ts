@@ -18,7 +18,7 @@ export class ReplyNewTweetDialogComponent {
     this.inReplyToTweet = data.inReplyToTweet;
   }
 
-  closeDialog() {
-    this.dialogRef.close();
+  tweetCreated(newTweet: TweetResponseDTO) {
+    this.dialogRef.close(newTweet);
   }
 }

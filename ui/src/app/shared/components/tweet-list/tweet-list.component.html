@@ -1,6 +1,7 @@
 <div>
   <div class="tweet-block"
-       *ngFor="let tweet of tweetList">
-    <app-tweet-block [tweet]="tweet"></app-tweet-block>
+       *ngFor="let tweet of tweetList; let idx = index">
+    <app-tweet-block [tweet]="tweet"
+                     (tweetDeleted)="removeTweetFromList(idx)"></app-tweet-block>
   </div>
 </div>

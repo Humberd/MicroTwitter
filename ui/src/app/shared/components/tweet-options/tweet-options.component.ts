@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TweetResponseDTO } from "../../../dto/TweetResponseDTO";
 import { MatSnackBar } from "@angular/material";
 import * as copy from 'copy-to-clipboard';
+import { DialogService } from "../../services/dialog.service";
 
 @Component({
   selector: 'app-tweet-options',
@@ -10,8 +11,10 @@ import * as copy from 'copy-to-clipboard';
 })
 export class TweetOptionsComponent {
   @Input() tweet: TweetResponseDTO;
+  @Output() tweetDeleted = new EventEmitter<TweetResponseDTO>();
 
-  constructor(private snackBar: MatSnackBar) {
+  constructor(private snackBar: MatSnackBar,
+              public dialogService: DialogService) {
   }
 
   copyLinkToClipboard(): void {
@@ -24,6 +27,16 @@ export class TweetOptionsComponent {
       {
         verticalPosition: 'top',
         duration: 2000,
+      });
+  }
+
+  showDeleteTweetDialog(): void {
+    const dialog = this.dialogService.showDeleteTweetDialog(this.tweet);
+    dialog.afterClosed()
+      .filter(result => !!result)
+      .subscribe(() => {
+        console.log("Dialog deleted");
+        this.tweetDeleted.next(this.tweet);
       });
   }
 }

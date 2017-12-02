@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TweetResponseDTO } from "../../../dto/TweetResponseDTO";
 
 @Component({
@@ -8,8 +8,8 @@ import { TweetResponseDTO } from "../../../dto/TweetResponseDTO";
 })
 export class TweetBlockComponent {
   @Input() tweet: TweetResponseDTO;
+  @Output() tweetDeleted = new EventEmitter<TweetResponseDTO>();
 
   constructor() {
   }
-
 }

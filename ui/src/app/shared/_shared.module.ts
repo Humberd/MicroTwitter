@@ -7,10 +7,13 @@ import { UserHttpService } from "./http/user-http.service";
 import { AuthorizedGuard } from "./guards/authorized.guard";
 import { UnauthorizedGuard } from "./guards/unauthorized.guard";
 import {
-  MatAutocompleteModule, MatButtonModule, MatDialogModule,
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule, MatMenuModule,
+  MatInputModule,
+  MatMenuModule,
   MatOptionModule,
   MatSnackBarModule
 } from "@angular/material";
@@ -31,6 +34,7 @@ import { TweetBlockComponent } from './components/tweet-block/tweet-block.compon
 import { TweetActionsComponent } from './components/tweet-actions/tweet-actions.component';
 import { TweetOptionsComponent } from './components/tweet-options/tweet-options.component';
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
+import { DeleteTweetDialogComponent } from './components/delete-tweet-dialog/delete-tweet-dialog.component';
 
 @NgModule({
   imports: [
@@ -64,6 +68,7 @@ import { InfiniteScrollModule } from "ngx-infinite-scroll";
     TweetBlockComponent,
     TweetActionsComponent,
     TweetOptionsComponent,
+    DeleteTweetDialogComponent,
   ],
   exports: [
     DynamicColorDirective,
@@ -79,10 +84,12 @@ import { InfiniteScrollModule } from "ngx-infinite-scroll";
     TweetBlockComponent,
     TweetActionsComponent,
     TweetOptionsComponent,
+    DeleteTweetDialogComponent,
   ],
   entryComponents: [
     NewTweetDialogComponent,
-    ReplyNewTweetDialogComponent
+    ReplyNewTweetDialogComponent,
+    DeleteTweetDialogComponent,
   ],
   providers: [
     AuthHttpService,
