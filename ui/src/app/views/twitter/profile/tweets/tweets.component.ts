@@ -6,6 +6,7 @@ import { TweetResponseDTO } from "../../../../dto/TweetResponseDTO";
 import { Pageable } from "../../../../models/Pageable";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
+import { AbstractScrollPageableComponent } from "../../../../shared/AbstractScrollPageableComponent";
 
 @Component({
   selector: 'app-tweets',
@@ -15,16 +16,14 @@ import { Subscription } from "rxjs/Subscription";
     '../_tab-card.scss'
   ]
 })
-export class TweetsComponent implements OnInit, OnDestroy {
-  itemsList: TweetResponseDTO[];
-  currentPage: PageDTO<TweetResponseDTO>;
-  loadingNextPage = false;
+export class TweetsComponent extends AbstractScrollPageableComponent<TweetResponseDTO> implements OnInit, OnDestroy {
   username: string;
 
   private routeParamsSub: Subscription;
 
   constructor(private activatedRoute: ActivatedRoute,
               private tweetHttpService: TweetHttpService) {
+    super();
   }
 
   ngOnInit() {
@@ -33,11 +32,9 @@ export class TweetsComponent implements OnInit, OnDestroy {
       .map(params => params.username)
       .do(username => {
         this.username = username;
-        this.loadingNextPage = true;
         this.itemsList = [];
       })
       .flatMap(username => this.getPage(username))
-      .do(() => this.loadingNextPage = false)
       .subscribe();
   }
 
@@ -47,38 +44,11 @@ export class TweetsComponent implements OnInit, OnDestroy {
     }
   }
 
-  requestNextPage(): void {
-    this.loadingNextPage = true;
-    if (this.currentPage.last) {
-      console.info("Current page is the last page. Cannot get more.");
-      this.loadingNextPage = false;
-      return;
-    }
-
-    const nextPageNumber = this.currentPage.number + 1;
-    console.info(`Requesting page number ${nextPageNumber}`);
-
-    this.getPage(this.username, {page: nextPageNumber})
-      .subscribe(() => {
-        this.loadingNextPage = false;
-      });
+  invokeGetPageMethod(...params: any[]): Observable<PageDTO<TweetResponseDTO>> {
+    return this.tweetHttpService.getTweets(...params);
   }
 
-  private getPage(username: string, pageable?: Pageable): Observable<PageDTO<TweetResponseDTO>> {
-    return this.tweetHttpService.getTweets(username, pageable)
-      .do(page => {
-        this.currentPage = page;
-
-        if (this.itemsList.length > 0) {
-          // makes sure that the tweet is not displayed twice
-          const lastElement = this.itemsList[this.itemsList.length - 1];
-          while (page.content.length > 0 && lastElement.id <= page.content[0].id) {
-            page.content.splice(0, 1);
-          }
-        }
-        this.itemsList.push(...page.content);
-        console.info(`Received page number ${page.number}`);
-      });
+  public requestNextPage(): void {
+    super.requestNextPage(this.username);
   }
-
 }

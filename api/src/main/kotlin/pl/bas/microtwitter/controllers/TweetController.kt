@@ -38,27 +38,6 @@ class TweetController(
     }
 
     /**
-     * Creates a tweet and returns its new instance
-     */
-    @PostMapping("/tweets")
-    fun createTweet(@RequestBody body: TweetCreateDTO,
-                    user: UserDAO): ResponseEntity<TweetResponseDTO> {
-        val tweetData = TweetDAO().apply {
-            content = body.content
-            this.user = user
-
-            if (body.inReplyToTweetId !== null) {
-                inReplyToTweet = tweetRepository.findById(body.inReplyToTweetId!!)
-                        .orElseThrow { throw BadRequestException("inReplyToTweet does not exist") }
-                inReplyToUser = inReplyToTweet?.user
-            }
-        }
-        val tweet = tweetRepository.save(tweetData)
-
-        return ResponseEntity.ok(responseBuilder.buildTweetResponse(user, tweet))
-    }
-
-    /**
      * Gets a paginated list of tweets by given [username]
      */
     @GetMapping("/tweets")
@@ -86,6 +65,27 @@ class TweetController(
         val page = tweetRepository.findAllByLikes_UserLcusername(username!!.toLowerCase(), pageable)
 
         return ResponseEntity.ok(page.map { tweet -> responseBuilder.buildTweetResponse(user, tweet) })
+    }
+
+    /**
+     * Creates a tweet and returns its new instance
+     */
+    @PostMapping("/tweets")
+    fun createTweet(@RequestBody body: TweetCreateDTO,
+                    user: UserDAO): ResponseEntity<TweetResponseDTO> {
+        val tweetData = TweetDAO().apply {
+            content = body.content
+            this.user = user
+
+            if (body.inReplyToTweetId !== null) {
+                inReplyToTweet = tweetRepository.findById(body.inReplyToTweetId!!)
+                        .orElseThrow { throw BadRequestException("inReplyToTweet does not exist") }
+                inReplyToUser = inReplyToTweet?.user
+            }
+        }
+        val tweet = tweetRepository.save(tweetData)
+
+        return ResponseEntity.ok(responseBuilder.buildTweetResponse(user, tweet))
     }
 
     /**

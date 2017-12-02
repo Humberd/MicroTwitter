@@ -13,9 +13,18 @@ export class TweetHttpService {
   constructor(private http: HttpClient) {
   }
 
-  public getTweets(username: string, pageable: Pageable = {}): Observable<PageDTO<TweetResponseDTO>> {
+  public getTweets(username?: string, pageable: Pageable = {}): Observable<PageDTO<TweetResponseDTO>> {
     return this.http.get<PageDTO<TweetResponseDTO>>("/api/tweets",
       {params: {username, ...PageHelper.convertToPageableStr(pageable)}});
+  }
+
+  public getLikedTweets(username?: string, pageable: Pageable = {}): Observable<PageDTO<TweetResponseDTO>> {
+    return this.http.get<PageDTO<TweetResponseDTO>>("/api/liked-tweets",
+      {params: {username, ...PageHelper.convertToPageableStr(pageable)}});
+  }
+
+  public getTweet(tweetId: number): Observable<TweetResponseDTO> {
+    return this.http.get<TweetResponseDTO>(`/api/tweets/${tweetId}`);
   }
 
   public createTweet(body: TweetCreateDTO): Observable<TweetResponseDTO> {
@@ -24,10 +33,6 @@ export class TweetHttpService {
 
   public deleteTweet(tweetId: number): Observable<void> {
     return this.http.delete<void>(`/api/tweets/${tweetId}`);
-  }
-
-  public getTweet(tweetId: number): Observable<TweetResponseDTO> {
-    return this.http.get<TweetResponseDTO>(`/api/tweets/${tweetId}`);
   }
 
   public getComments(tweetId: number, pageable: Pageable = {}): Observable<PageDTO<TweetResponseDTO>> {
