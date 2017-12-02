@@ -59,7 +59,7 @@ export class TweetsComponent implements OnInit, OnDestroy {
     console.info(`Requesting page number ${nextPageNumber}`);
 
     this.getPage(this.username, {page: nextPageNumber})
-      .subscribe(page => {
+      .subscribe(() => {
         this.loadingNextPage = false;
       });
   }

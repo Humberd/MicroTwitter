@@ -1,3 +1,18 @@
-<p>
-  tweet-options works!
-</p>
+<div>
+  <mat-icon class="tweet-options"
+            [matMenuTriggerFor]="tweetOptionsMenu">
+    keyboard_arrow_down
+  </mat-icon>
+  <mat-menu #tweetOptionsMenu
+            yPosition="below"
+            xPosition="before"
+            [overlapTrigger]="true">
+    <button mat-menu-item
+            (click)="copyLinkToClipboard()">
+      Copy Link to Tweet
+    </button>
+    <button mat-menu-item>
+      Delete Tweet
+    </button>
+  </mat-menu>
+</div>

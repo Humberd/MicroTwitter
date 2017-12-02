@@ -7,6 +7,10 @@ html, body, textarea {
   color: $primaryTextColor;
 }
 
+body {
+  overflow-y: scroll;
+}
+
 .no-select {
   user-select: none;
 }

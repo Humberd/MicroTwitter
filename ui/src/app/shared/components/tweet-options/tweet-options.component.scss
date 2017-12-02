@@ -1,0 +1,11 @@
+@import "../../../../styles/colors";
+
+.tweet-options {
+  color: $secondaryTextColor;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    color: $defaultTwitterColor;
+  }
+}

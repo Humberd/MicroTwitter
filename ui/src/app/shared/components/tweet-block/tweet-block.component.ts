@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TweetResponseDTO } from "../../../dto/TweetResponseDTO";
 
 @Component({
@@ -6,12 +6,10 @@ import { TweetResponseDTO } from "../../../dto/TweetResponseDTO";
   templateUrl: './tweet-block.component.html',
   styleUrls: ['./tweet-block.component.scss']
 })
-export class TweetBlockComponent implements OnInit {
+export class TweetBlockComponent {
   @Input() tweet: TweetResponseDTO;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor() {
   }
 
 }
