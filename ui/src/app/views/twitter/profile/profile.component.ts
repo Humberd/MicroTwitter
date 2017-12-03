@@ -14,8 +14,8 @@ import { AuthService } from "../../../shared/services/auth.service";
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-  private paramSub: Subscription;
   user: UserResponseDTO;
+  private paramSub: Subscription;
 
   constructor(private activatedRoute: ActivatedRoute,
               private userHttpService: UserHttpService,

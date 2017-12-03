@@ -8,6 +8,7 @@ export abstract class AbstractScrollPageableComponent<T> {
   loadingNextPage = false;
 
   protected itemIdKey = "id";
+
   abstract invokeGetPageMethod(...params: any[]): Observable<PageDTO<T>>;
 
   public requestNextPage(...params: any[]): void {

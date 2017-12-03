@@ -25,6 +25,7 @@ export class FollowingComponent extends AbstractScrollPageableComponent<UserResp
               public authService: AuthService) {
     super();
   }
+
   ngOnInit() {
     // when username path variable changes we want a brand new state
     this.routeParamsSub = this.activatedRoute.parent.params

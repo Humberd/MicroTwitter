@@ -24,13 +24,6 @@ export class LoginFormComponent implements OnInit {
     this.initForm();
   }
 
-  private initForm(): void {
-    this.loginForm = new FormGroup({
-      username: new FormControl(""),
-      password: new FormControl("")
-    });
-  }
-
   login(): void {
     const requestData = this.prepareData();
 
@@ -41,12 +34,6 @@ export class LoginFormComponent implements OnInit {
         error => {
           console.log("error login", error);
         });
-  }
-
-  private prepareData(): LoginDTO {
-    return {
-      ...this.loginForm.value
-    };
   }
 
   mocklogin() {
@@ -72,5 +59,18 @@ export class LoginFormComponent implements OnInit {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return text;
+  }
+
+  private initForm(): void {
+    this.loginForm = new FormGroup({
+      username: new FormControl(""),
+      password: new FormControl("")
+    });
+  }
+
+  private prepareData(): LoginDTO {
+    return {
+      ...this.loginForm.value
+    };
   }
 }

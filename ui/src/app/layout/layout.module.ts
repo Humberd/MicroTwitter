@@ -24,4 +24,5 @@ import { SharedModule } from "../shared/_shared.module";
     LayoutComponent
   ]
 })
-export class LayoutModule { }
+export class LayoutModule {
+}

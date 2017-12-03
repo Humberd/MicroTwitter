@@ -12,14 +12,12 @@ import { UserResponseDTO } from "../../dto/UserResponseDTO";
 
 @Injectable()
 export class AuthService {
-  private appUser: AppUser;
-  private storage: Storage;
-
   /**
    * When user data has not yet been acquired from the server, but we already have a jwt from storage.
    */
   initialJWT: string;
-
+  private appUser: AppUser;
+  private storage: Storage;
   /**
    * It has 3 states:
    *  * undefined - when the app has already started and getting auth user requests hasn't completed yet

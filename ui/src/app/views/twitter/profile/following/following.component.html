@@ -8,6 +8,6 @@
   </div>
   <div class="empty-list"
        *ngIf="!loadingNextPage && itemsList.length === 0">
-    {{authService.isMe(username)? 'You aren\'t': '@' + username +' isn\'t'}}  following anyone yet.
+    {{authService.isMe(username)? 'You aren\'t': '@' + username +' isn\'t'}} following anyone yet.
   </div>
 </div>

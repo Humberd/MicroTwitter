@@ -4,7 +4,6 @@ import { PageDTO } from "../../../../dto/PageDTO";
 import { Subscription } from "rxjs/Subscription";
 import { ActivatedRoute } from "@angular/router";
 import { TweetHttpService } from "../../../../shared/http/tweet-http.service";
-import { Pageable } from "../../../../models/Pageable";
 import { Observable } from "rxjs/Observable";
 import { AbstractScrollPageableComponent } from "../../../../shared/AbstractScrollPageableComponent";
 import { AuthService } from "../../../../shared/services/auth.service";

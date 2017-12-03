@@ -24,15 +24,6 @@ export class SignupFormComponent implements OnInit {
     this.initForm();
   }
 
-  private initForm(): void {
-    this.signupForm = new FormGroup({
-      username: new FormControl(""),
-      email: new FormControl(""),
-      fullName: new FormControl(""),
-      password: new FormControl("")
-    });
-  }
-
   signup(): void {
     const requestData = this.prepareData();
 
@@ -43,6 +34,15 @@ export class SignupFormComponent implements OnInit {
         error => {
           console.log("error signup", error);
         });
+  }
+
+  private initForm(): void {
+    this.signupForm = new FormGroup({
+      username: new FormControl(""),
+      email: new FormControl(""),
+      fullName: new FormControl(""),
+      password: new FormControl("")
+    });
   }
 
   private prepareData(): SignupDTO {

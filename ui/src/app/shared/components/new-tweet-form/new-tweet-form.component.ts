@@ -28,12 +28,6 @@ export class NewTweetFormComponent implements OnInit {
     this.initForm();
   }
 
-  private initForm(): void {
-    this.newTweetForm = new FormGroup({
-      content: new FormControl("", [Validators.required]),
-    });
-  }
-
   createTweet(): void {
     const requestData = this.prepareData();
 
@@ -43,6 +37,12 @@ export class NewTweetFormComponent implements OnInit {
       .do(newTweet => this.showSnackBar(newTweet))
       .do(() => this.authService.getUser().data.tweetsCount++)
       .subscribe();
+  }
+
+  private initForm(): void {
+    this.newTweetForm = new FormGroup({
+      content: new FormControl("", [Validators.required]),
+    });
   }
 
   private showSnackBar(newTweet: TweetResponseDTO): void {

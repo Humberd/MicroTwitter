@@ -9,15 +9,15 @@ export class AutofocusDirective implements OnInit {
   constructor(private el: ElementRef) {
   }
 
+  @Input()
+  set appAutofocus(condition: boolean) {
+    this._autofocus = condition !== false;
+  }
+
   ngOnInit() {
     if (this._autofocus || typeof this._autofocus === "undefined") {
       // For SSR (server side rendering) this is not safe. Use: https://github.com/angular/angular/issues/15008#issuecomment-285141070)
       this.el.nativeElement.focus();
     }
-  }
-
-  @Input()
-  set appAutofocus(condition: boolean) {
-    this._autofocus = condition !== false;
   }
 }

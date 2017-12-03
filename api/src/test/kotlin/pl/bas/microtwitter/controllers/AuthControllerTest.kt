@@ -28,7 +28,6 @@ internal class AuthControllerTest {
     @Autowired lateinit var http: TestRestTemplate
     @Autowired lateinit var userRepository: UserRepository
 
-
     companion object : KLogging()
 
     @Nested

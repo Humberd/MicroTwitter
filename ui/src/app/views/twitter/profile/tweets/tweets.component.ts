@@ -3,7 +3,6 @@ import { ActivatedRoute } from "@angular/router";
 import { TweetHttpService } from "../../../../shared/http/tweet-http.service";
 import { PageDTO } from "../../../../dto/PageDTO";
 import { TweetResponseDTO } from "../../../../dto/TweetResponseDTO";
-import { Pageable } from "../../../../models/Pageable";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 import { AbstractScrollPageableComponent } from "../../../../shared/AbstractScrollPageableComponent";
