@@ -43,8 +43,8 @@ fun buildUserResponseDTO(me: UserDAO,
             email = if (me.id == user.id) user.email else null,
             tweetsCount = userRepository.countByTweets_User(user),
             likesCount = userRepository.countByLikes_User(user),
-            followedUsersCount = userRepository.countByFollowedUsers_FollowedByUsers(user),
-            followedByUsersCount = userRepository.countByFollowedByUsers_FollowedUsers(user),
+            followedUsersCount = userRepository.countFollowedUsers(user),
+            followedByUsersCount = userRepository.countFollowers(user),
             isFollowing = if (me.id == user.id) null
             else me.followedUsers.find { followingUser -> followingUser.id == user.id } !== null,
             profile = ProfileResponseDTO(

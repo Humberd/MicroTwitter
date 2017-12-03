@@ -23,8 +23,24 @@ interface UserRepository : JpaRepository<UserDAO, Long> {
 
     fun countByTweets_User(user: UserDAO): Int?
     fun countByLikes_User(user: UserDAO): Int?
-    fun countByFollowedUsers_FollowedByUsers(user: UserDAO): Int?
-    fun countByFollowedByUsers_FollowedUsers(user: UserDAO): Int?
+
+    @Language("JPAQL")
+    @Query("""
+        select count(fu.id)
+        from UserDAO u
+        join u.followedUsers fu
+        where u = :user
+        """)
+    fun countFollowedUsers(@Param("user")user: UserDAO): Int?
+
+    @Language("JPAQL")
+    @Query("""
+        select count(fbu.id)
+        from UserDAO u
+        join u.followedByUsers fbu
+        where u = :user
+        """)
+    fun countFollowers(@Param("user") user: UserDAO): Int?
 
     /**
      * Gets a list of users that a given user is following
