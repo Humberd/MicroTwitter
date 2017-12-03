@@ -31,7 +31,6 @@ class TweetController(
                 user: UserDAO): ResponseEntity<Page<TweetResponseDTO>> {
         val page = tweetRepository.findWall(
                 user = user,
-                followedUsersList = user.followedUsers,
                 pageable = pageable)
 
         return ResponseEntity.ok(page.map { tweet -> responseBuilder.buildTweetResponse(user, tweet) })

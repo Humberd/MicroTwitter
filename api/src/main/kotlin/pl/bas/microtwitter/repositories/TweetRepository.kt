@@ -28,13 +28,14 @@ interface TweetRepository : JpaRepository<TweetDAO, Long> {
      */
     @Language("JPAQL")
     @Query("""
-        select t
-        from TweetDAO as t
-        where t.user = :user
-        or t.user in :followedUsersList
+        select distinct t
+        from TweetDAO t, UserDAO u
+        join u.followedUsers fu
+        where u = :user
+        and (t.user = :user
+        or t.user = fu)
         order by t.id desc
     """)
     fun findWall(@Param("user") user: UserDAO,
-                 @Param("followedUsersList") followedUsersList: List<UserDAO>,
                  pageable: Pageable): Page<TweetDAO>
 }
