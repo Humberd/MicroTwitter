@@ -1,5 +1,5 @@
 <div class="follow-button-component"
-     *ngIf="authService.isUserLoggedIn()">
+     *ngIf="!authService.isMe(user)">
   <button mat-raised-button
           *ngIf="!user?.following"
           (click)="triggerFollowUserAction()">

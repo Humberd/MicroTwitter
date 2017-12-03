@@ -12,8 +12,7 @@
   <div class="profile-container">
     <div class="profile-navbar">
       <div class="options-panel">
-        <app-follow-button [user]="user"
-                           *ngIf="!authService.isMe(user)"></app-follow-button>
+        <app-follow-button [user]="user"></app-follow-button>
       </div>
     </div>
     <div class="profile-content">
