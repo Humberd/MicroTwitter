@@ -38,6 +38,7 @@ import { DeleteTweetDialogComponent } from './components/delete-tweet-dialog/del
 import { UserCardComponent } from './components/user-card/user-card.component';
 import { FollowButtonComponent } from './components/follow-button/follow-button.component';
 import { UserCardListComponent } from './components/user-card-list/user-card-list.component';
+import { UserBasicBigComponent } from './components/user-basic-big/user-basic-big.component';
 
 @NgModule({
   imports: [
@@ -75,6 +76,7 @@ import { UserCardListComponent } from './components/user-card-list/user-card-lis
     UserCardComponent,
     FollowButtonComponent,
     UserCardListComponent,
+    UserBasicBigComponent,
   ],
   exports: [
     DynamicColorDirective,
@@ -94,6 +96,7 @@ import { UserCardListComponent } from './components/user-card-list/user-card-lis
     UserCardComponent,
     FollowButtonComponent,
     UserCardListComponent,
+    UserBasicBigComponent,
   ],
   entryComponents: [
     NewTweetDialogComponent,

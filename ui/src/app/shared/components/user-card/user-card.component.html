@@ -16,12 +16,7 @@
       </div>
     </div>
     <div class="profile-content">
-      <div class="user-full-name">
-        {{user.profile.fullName}}
-      </div>
-      <div class="user-username">
-        @{{user.username}}
-      </div>
+      <app-user-basic-big [user]="user"></app-user-basic-big>
       <div class="user-description">
         {{user.profile.description}}
       </div>
