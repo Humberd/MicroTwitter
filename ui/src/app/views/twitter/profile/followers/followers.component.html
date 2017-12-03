@@ -6,4 +6,8 @@
        (scrolled)="requestNextPage()">
     <app-user-card-list [userList]="itemsList"></app-user-card-list>
   </div>
+  <div class="empty-list"
+       *ngIf="!loadingNextPage && itemsList.length === 0">
+    {{authService.isMe(username)? 'You don\'t': '@' + username +' doesn\'t'}} have any followers yet.
+  </div>
 </div>

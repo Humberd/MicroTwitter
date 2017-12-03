@@ -6,6 +6,7 @@ import { ActivatedRoute } from "@angular/router";
 import { UserHttpService } from "../../../../shared/http/user-http.service";
 import { Observable } from "rxjs/Observable";
 import { PageDTO } from "../../../../dto/PageDTO";
+import { AuthService } from "../../../../shared/services/auth.service";
 
 @Component({
   selector: 'app-followers',
@@ -20,7 +21,8 @@ export class FollowersComponent extends AbstractScrollPageableComponent<UserResp
   private routeParamsSub: Subscription;
 
   constructor(private activatedRoute: ActivatedRoute,
-              private userHttpService: UserHttpService) {
+              private userHttpService: UserHttpService,
+              public authService: AuthService) {
     super();
   }
 
@@ -49,5 +51,4 @@ export class FollowersComponent extends AbstractScrollPageableComponent<UserResp
   public requestNextPage(): void {
     super.requestNextPage(this.username);
   }
-
 }

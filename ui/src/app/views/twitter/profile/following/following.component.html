@@ -1,3 +1,13 @@
-<p>
-  following works!
-</p>
+<div class="user-list">
+  <div infiniteScroll
+       [infiniteScrollDistance]="2"
+       [infiniteScrollDisabled]="loadingNextPage"
+       [infiniteScrollThrottle]="1000"
+       (scrolled)="requestNextPage()">
+    <app-user-card-list [userList]="itemsList"></app-user-card-list>
+  </div>
+  <div class="empty-list"
+       *ngIf="!loadingNextPage && itemsList.length === 0">
+    {{authService.isMe(username)? 'You aren\'t': '@' + username +' isn\'t'}}  following anyone yet.
+  </div>
+</div>
