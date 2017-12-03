@@ -10,12 +10,8 @@
   <div class="action-item like-action"
        [ngClass]="{liked: tweet?.liked}"
        (click)="toggleLikeAction()">
-    <mat-icon class="action-icon"
-              [svgIcon]="'heart-outline'"
-              *ngIf="!tweet?.liked"></mat-icon>
-    <mat-icon class="action-icon"
-              [svgIcon]="'heart'"
-              *ngIf="tweet?.liked"></mat-icon>
+    <mat-icon class="action-icon" *ngIf="!tweet?.liked">favorite_border</mat-icon>
+    <mat-icon class="action-icon" *ngIf="tweet?.liked">favorite</mat-icon>
     <div class="count"
          *ngIf="tweet?.likesCount > 0">
       {{tweet?.likesCount}}

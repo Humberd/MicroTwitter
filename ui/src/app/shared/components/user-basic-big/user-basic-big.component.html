@@ -1,8 +1,10 @@
 <div class="user-basic-big-component">
-  <div class="user-full-name">
+  <a class="user-full-name"
+     [routerLink]="['/u',user?.username || '']">
     {{user?.profile.fullName}}
-  </div>
-  <div class="user-username">
+  </a>
+  <a class="user-username"
+     [routerLink]="['/u',user?.username || '']">
     @{{user?.username}}
-  </div>
+  </a>
 </div>

@@ -15,6 +15,10 @@
         {{tweet.createdAt | date}}
       </a>
     </div>
+    <div class="reply-users" *ngIf="tweet.inReplyToUser?.username">
+      Replying to
+      <a class="app-link">@{{tweet.inReplyToUser.username}}</a>
+    </div>
     <p class="content">
       {{tweet.content}}
     </p>

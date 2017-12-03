@@ -1,8 +1,26 @@
+@import "../../../../styles/colors";
+@import "../../../../styles/twitter";
+
 .user-basic-big-component {
+  display: flex;
+  flex-direction: column;
+
   .user-full-name {
     font-size: 18px;
+
+    &:hover, &:focus, &:active {
+      color: $primaryTextColor;
+      text-decoration: underline;
+    }
   }
   .user-username {
+    @extend a.app-link;
+    color: $secondaryTextColor;
     line-height: 24px;
+
+    &:hover, &:focus, &:active {
+      color: $secondaryTextColor;
+      text-decoration: underline;
+    }
   }
 }
