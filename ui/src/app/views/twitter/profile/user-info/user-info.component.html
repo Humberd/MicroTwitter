@@ -1,0 +1,39 @@
+<div class="user-info-component">
+  <div class="basic-info">
+    <app-user-basic-big [user]="user"></app-user-basic-big>
+  </div>
+  <div class="description"
+       *ngIf="user?.profile.description">
+    {{user?.profile.description}}
+  </div>
+  <div class="item"
+       *ngIf="user?.profile.location">
+    <mat-icon class="icon">location_on</mat-icon>
+    <div class="data">
+      {{user?.profile.location}}
+    </div>
+  </div>
+  <div class="item"
+       *ngIf="user?.profile.url">
+    <mat-icon class="icon">link</mat-icon>
+    <div class="data">
+      <a [href]="'//'+ user?.profile.url" class="app-link">
+        {{user?.profile.url}}
+      </a>
+    </div>
+  </div>
+  <div class="item"
+       *ngIf="user?.createdAt">
+    <mat-icon class="icon">perm_contact_calendar</mat-icon>
+    <div class="data">
+      Joined {{user?.createdAt | date}}
+    </div>
+  </div>
+  <div class="item"
+       *ngIf="user?.profile.birthdate">
+    <mat-icon class="icon">face</mat-icon>
+    <div class="data">
+      {{user?.profile.birthdate | birthdate | date}}
+    </div>
+  </div>
+</div>

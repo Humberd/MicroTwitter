@@ -54,10 +54,15 @@
     padding-top: 10px;
 
     .left-panel {
-      margin-top: 35px;
+      margin-top: 25px;
     }
 
-    & > *:not(.center-panel) {
+    .module {
+      padding: 0 15px;
+      margin: 10px 0;
+    }
+
+    & > *:not(.center-panel):not(.left-panel) {
       background-color: yellow;
     }
   }

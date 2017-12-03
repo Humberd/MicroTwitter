@@ -338,7 +338,7 @@ class UserControllerTest {
 
             UserHelper.getUser(http, AuthHelper.user2).apply {
                 assert(this.id is Long)
-                assert(this.createdAt === null)
+                assert(this.email === null)
                 assertNotEquals(AuthHelper.user2.email, this.email)
                 assertEquals(AuthHelper.user2.username, this.username)
                 assertEquals(AuthHelper.user2.fullName, this.profile?.fullName)
@@ -351,7 +351,7 @@ class UserControllerTest {
 
             UserHelper.getUser(http, AuthHelper.user2.apply { username = username.toUpperCase() }).apply {
                 assert(this.id is Long)
-                assert(this.createdAt === null)
+                assert(this.email === null)
                 assertNotEquals(AuthHelper.user2.email, this.email)
                 assertEquals(AuthHelper.user2.username, this.username)
                 assertEquals(AuthHelper.user2.fullName, this.profile?.fullName)

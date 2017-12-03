@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WallComponent } from './wall/wall.component';
 import { ProfileComponent } from './profile/profile.component';
-import { MatButtonModule, MatMenuModule, MatTabsModule } from "@angular/material";
+import { MatButtonModule, MatIconModule, MatMenuModule, MatTabsModule } from "@angular/material";
 import { TabsComponent } from './profile/tabs/tabs.component';
 import { RouterModule } from "@angular/router";
 import { TweetsComponent } from './profile/tweets/tweets.component';
@@ -11,6 +11,7 @@ import { FollowingComponent } from './profile/following/following.component';
 import { FollowersComponent } from './profile/followers/followers.component';
 import { LikesComponent } from './profile/likes/likes.component';
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
+import { UserInfoComponent } from './profile/user-info/user-info.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { InfiniteScrollModule } from "ngx-infinite-scroll";
     MatButtonModule,
     MatTabsModule,
     MatMenuModule,
+    MatIconModule,
     RouterModule,
     SharedModule,
     InfiniteScrollModule,
@@ -29,7 +31,8 @@ import { InfiniteScrollModule } from "ngx-infinite-scroll";
     TweetsComponent,
     FollowingComponent,
     FollowersComponent,
-    LikesComponent
+    LikesComponent,
+    UserInfoComponent,
   ]
 })
 export class TwitterViewsModule {

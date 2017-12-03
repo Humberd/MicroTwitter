@@ -1,0 +1,27 @@
+@import "../../../../../styles/colors";
+
+.user-info-component {
+  .basic-info {
+    margin-bottom: 12px;
+  }
+  .description {
+    margin-bottom: 12px;
+  }
+  .item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 8px;
+    color: $secondaryTextColor;
+
+    .icon {
+      font-size: 21px;
+      width: 21px;
+      height: 21px;
+      user-select: none;
+    }
+    .data {
+      margin-left: 5px;
+    }
+  }
+}

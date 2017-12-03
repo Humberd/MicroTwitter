@@ -38,7 +38,7 @@ fun buildUserResponseDTO(me: UserDAO,
                          userRepository: UserRepository): UserResponseDTO {
     return UserResponseDTO(
             id = user.id,
-            createdAt = if (me.id == user.id) user.createdAt else null,
+            createdAt = user.createdAt,
             username = user.username,
             email = if (me.id == user.id) user.email else null,
             tweetsCount = userRepository.countByTweets_User(user),

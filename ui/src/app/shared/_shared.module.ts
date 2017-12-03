@@ -39,6 +39,7 @@ import { UserCardComponent } from './components/user-card/user-card.component';
 import { FollowButtonComponent } from './components/follow-button/follow-button.component';
 import { UserCardListComponent } from './components/user-card-list/user-card-list.component';
 import { UserBasicBigComponent } from './components/user-basic-big/user-basic-big.component';
+import { BirthdatePipe } from './pipes/birthdate.pipe';
 
 @NgModule({
   imports: [
@@ -77,6 +78,7 @@ import { UserBasicBigComponent } from './components/user-basic-big/user-basic-bi
     FollowButtonComponent,
     UserCardListComponent,
     UserBasicBigComponent,
+    BirthdatePipe,
   ],
   exports: [
     DynamicColorDirective,
@@ -97,6 +99,7 @@ import { UserBasicBigComponent } from './components/user-basic-big/user-basic-bi
     FollowButtonComponent,
     UserCardListComponent,
     UserBasicBigComponent,
+    BirthdatePipe,
   ],
   entryComponents: [
     NewTweetDialogComponent,

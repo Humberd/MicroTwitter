@@ -25,7 +25,9 @@
   </div>
   <div class="profile-container large-container">
     <div class="left-panel side-panel">
-      left panel
+      <div class="module">
+        <app-user-info [user]="user"></app-user-info>
+      </div>
     </div>
     <div class="center-panel">
       <router-outlet></router-outlet>
