@@ -1,0 +1,15 @@
+@import "../../../../styles/colors";
+
+.wall-view {
+  .wall-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: auto;
+    padding-top: 10px;
+
+    & > * {
+      background-color: yellow;
+    }
+  }
+}

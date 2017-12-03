@@ -1,0 +1,9 @@
+<div class="tweet-list">
+  <div infiniteScroll
+       [infiniteScrollDistance]="2"
+       [infiniteScrollDisabled]="loadingNextPage"
+       [infiniteScrollThrottle]="1000"
+       (scrolled)="requestNextPage()">
+    <app-tweet-list [tweetList]="itemsList"></app-tweet-list>
+  </div>
+</div>

@@ -34,6 +34,7 @@ interface TweetRepository : JpaRepository<TweetDAO, Long> {
         where u = :user
         and (t.user = :user
         or t.user = fu)
+        group by t.id
         order by t.id desc
     """)
     fun findWall(@Param("user") user: UserDAO,

@@ -3,7 +3,7 @@ import { Pageable } from "../models/Pageable";
 import { Observable } from "rxjs/Observable";
 
 export abstract class AbstractScrollPageableComponent<T> {
-  itemsList: T[];
+  itemsList: T[] = [];
   currentPage: PageDTO<T>;
   loadingNextPage = false;
 
@@ -44,7 +44,7 @@ export abstract class AbstractScrollPageableComponent<T> {
       })
       .catch((err, caught) => {
         this.loadingNextPage = false;
-        return caught;
+        throw err;
       });
   }
 }

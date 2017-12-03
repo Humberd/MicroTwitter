@@ -22,7 +22,7 @@ export class TweetsComponent extends AbstractScrollPageableComponent<TweetRespon
 
   constructor(private activatedRoute: ActivatedRoute,
               private tweetHttpService: TweetHttpService,
-              private authService: AuthService) {
+              public authService: AuthService) {
     super();
   }
 

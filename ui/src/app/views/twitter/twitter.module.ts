@@ -12,6 +12,7 @@ import { FollowersComponent } from './profile/followers/followers.component';
 import { LikesComponent } from './profile/likes/likes.component';
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
 import { UserInfoComponent } from './profile/user-info/user-info.component';
+import { WallTweetsComponent } from './wall/wall-tweets/wall-tweets.component';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { UserInfoComponent } from './profile/user-info/user-info.component';
     FollowersComponent,
     LikesComponent,
     UserInfoComponent,
+    WallTweetsComponent,
   ]
 })
 export class TwitterViewsModule {
