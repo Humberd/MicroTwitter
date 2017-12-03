@@ -11,6 +11,6 @@
   </div>
   <div class="empty-list"
        *ngIf="!loadingNextPage && itemsList.length === 0">
-    You haven't Tweeted yet.
+    {{authService.isMe(username)? 'You': '@' + username}} haven't Tweeted yet.
   </div>
 </div>

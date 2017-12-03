@@ -7,6 +7,7 @@ import { TweetHttpService } from "../../../../shared/http/tweet-http.service";
 import { Pageable } from "../../../../models/Pageable";
 import { Observable } from "rxjs/Observable";
 import { AbstractScrollPageableComponent } from "../../../../shared/AbstractScrollPageableComponent";
+import { AuthService } from "../../../../shared/services/auth.service";
 
 @Component({
   selector: 'app-likes',
@@ -17,12 +18,12 @@ import { AbstractScrollPageableComponent } from "../../../../shared/AbstractScro
   ]
 })
 export class LikesComponent extends AbstractScrollPageableComponent<TweetResponseDTO> implements OnInit, OnDestroy {
-  username: string;
-
+  private username: string;
   private routeParamsSub: Subscription;
 
   constructor(private activatedRoute: ActivatedRoute,
-              private tweetHttpService: TweetHttpService) {
+              private tweetHttpService: TweetHttpService,
+              public authService: AuthService) {
     super();
   }
 

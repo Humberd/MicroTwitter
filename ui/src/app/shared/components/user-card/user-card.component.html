@@ -1,0 +1,31 @@
+<div class="user-card-component">
+  <div class="profile-banner-wrapper">
+    <img class="profile-banner"
+         src="https://pbs.twimg.com/profile_banners/2182752278/1511033434/1500x500">
+  </div>
+  <div class="profile-avatar-space-holder">
+    <div class="profile-avatar-wrapper">
+      <img class="profile-avatar"
+           src="https://pbs.twimg.com/profile_images/931968026743918592/PARoJaa5_400x400.jpg">
+    </div>
+  </div>
+  <div class="profile-container">
+    <div class="profile-navbar">
+      <div class="options-panel">
+        <app-follow-button [user]="user"
+                           *ngIf="!authService.isMe(user)"></app-follow-button>
+      </div>
+    </div>
+    <div class="profile-content">
+      <div class="user-full-name">
+        {{user.profile.fullName}}
+      </div>
+      <div class="user-username">
+        @{{user.username}}
+      </div>
+      <div class="user-description">
+        {{user.profile.description}}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,9 @@
-<p>
-  followers works!
-</p>
+<div class="user-list">
+  <div infiniteScroll
+       [infiniteScrollDistance]="2"
+       [infiniteScrollDisabled]="loadingNextPage"
+       [infiniteScrollThrottle]="1000"
+       (scrolled)="requestNextPage()">
+    <app-user-card-list [userList]="itemsList"></app-user-card-list>
+  </div>
+</div>

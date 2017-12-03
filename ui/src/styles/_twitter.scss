@@ -56,7 +56,6 @@ a.app-link {
   @extend a.app-link;
   color: $primaryTextColor;
   font-weight: bold;
-  word-break: break-all;
   font-size: 14px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -66,6 +65,12 @@ a.app-link {
 .user-username {
   color: $secondaryTextColor;
   font-size: 14px;
+}
+
+.user-description {
+  font-size: 14px;
+  color: $primaryTextColor;
+  line-height: 1.3;
 }
 
 .tweet-date {

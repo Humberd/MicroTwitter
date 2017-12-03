@@ -19,19 +19,7 @@
                 *ngIf="authService.isUserLoggedIn() && user?.id === authService.getUser()?.data.id">
           Edit Profile
         </button>
-        <div *ngIf="authService.isUserLoggedIn()">
-          <button mat-raised-button
-                  *ngIf="!user?.following"
-                  (click)="triggerFollowUserAction()">
-            Follow
-          </button>
-          <button mat-raised-button
-                  color="primary"
-                  *ngIf="user?.following"
-                  (click)="triggerUnfollowUserAction()">
-            Following
-          </button>
-        </div>
+        <app-follow-button [user]="user"></app-follow-button>
       </div>
     </div>
   </div>

@@ -7,7 +7,8 @@ import { SignupDTO } from "../../dto/SignupDTO";
 import { LoginDTO } from "../../dto/LoginDTO";
 import { UserHttpService } from "../http/user-http.service";
 import { CONSTANTS } from "../../config/Constants";
-import { isString } from "util";
+import { isObject, isString } from "util";
+import { UserResponseDTO } from "../../dto/UserResponseDTO";
 
 @Injectable()
 export class AuthService {
@@ -55,6 +56,19 @@ export class AuthService {
    */
   public isUserLoggedIn(): boolean {
     return !!this.appUser;
+  }
+
+  /**
+   * Checks if given userOrUsername is the same as logged user
+   * @param {UserResponseDTO} userOrUsername
+   * @returns {boolean}
+   */
+  public isMe(userOrUsername: UserResponseDTO | string): boolean {
+    if (isString(userOrUsername)) {
+      return this.isUserLoggedIn() && this.appUser.data.username.toLowerCase() === userOrUsername;
+    } else if (isObject(userOrUsername)) {
+      return this.isUserLoggedIn() && this.appUser.data.id === (userOrUsername as UserResponseDTO).id;
+    }
   }
 
   /**

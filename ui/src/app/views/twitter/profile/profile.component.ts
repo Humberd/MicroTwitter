@@ -15,12 +15,11 @@ import { AuthService } from "../../../shared/services/auth.service";
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   private paramSub: Subscription;
-
   user: UserResponseDTO;
 
   constructor(private activatedRoute: ActivatedRoute,
               private userHttpService: UserHttpService,
-              private authService: AuthService,
+              public authService: AuthService,
               private title: Title) {
   }
 
@@ -42,20 +41,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     return this.userHttpService.getUser(username)
       .do(user => this.user = user)
       .do(user => this.title.setTitle(`${user.profile.fullName} (@${user.username}) on ${CONSTANTS.APP_NAME}`));
-  }
-
-  triggerFollowUserAction(): void {
-    this.userHttpService.followUser(this.user.id)
-      .subscribe(newUserData => {
-        Object.assign(this.user, newUserData);
-      });
-  }
-
-  triggerUnfollowUserAction(): void {
-    this.userHttpService.unfollowUser(this.user.id)
-      .subscribe(newUserData => {
-        Object.assign(this.user, newUserData);
-      })
   }
 
 }

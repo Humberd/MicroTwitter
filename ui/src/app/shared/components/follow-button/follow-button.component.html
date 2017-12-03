@@ -1,0 +1,17 @@
+<div class="follow-button-component"
+     *ngIf="authService.isUserLoggedIn()">
+  <button mat-raised-button
+          *ngIf="!user?.following"
+          (click)="triggerFollowUserAction()">
+    Follow
+  </button>
+  <button class="unfollow-button"
+          mat-raised-button
+          *ngIf="user?.following"
+          [color]="isUnfollowButtonHovered? 'warn': 'primary'"
+          (mouseenter)="isUnfollowButtonHovered = true"
+          (mouseleave)="isUnfollowButtonHovered = false"
+          (click)="triggerUnfollowUserAction()">
+    {{isUnfollowButtonHovered? 'Unfollow': 'Following'}}
+  </button>
+</div>

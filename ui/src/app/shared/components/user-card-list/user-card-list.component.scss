@@ -1,0 +1,18 @@
+.user-card-list-component {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+
+  &:after {
+    content: "";
+    flex: auto;
+  }
+
+  .user-card {
+    width: 49%;
+    height: 281px;
+    margin-bottom: 10px;
+  }
+}
+

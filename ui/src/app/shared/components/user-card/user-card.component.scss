@@ -1,0 +1,70 @@
+@import "../../../../styles/colors";
+@import "../../../../styles/sizing";
+
+.user-card-component {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid $lightBorderColor;
+  background-color: $white;
+  height: 100%;
+  overflow: hidden;
+
+  .profile-banner {
+    width: 100%;
+    height: 90px;
+  }
+
+  .profile-avatar-space-holder {
+    position: relative;
+
+    .profile-avatar-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      position: absolute;
+      top: -40px;
+      left: 15px;
+      width: 76px;
+      height: 76px;
+      background-color: $white;
+      border-radius: 50%;
+
+      .profile-avatar {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .profile-container {
+    flex: 1;
+    margin: 13px 15px;
+    overflow-y: hidden;
+
+    .profile-navbar {
+      display: flex;
+      justify-content: flex-end;
+      height: 36px;
+
+      .options-panel {
+        align-self: center;
+      }
+    }
+
+    .profile-content {
+      margin-top: 5px;
+
+      .user-full-name {
+        font-size: 18px;
+      }
+      .user-username {
+        line-height: 24px;
+      }
+      .user-description {
+        margin-top: 5px;
+      }
+    }
+  }
+}

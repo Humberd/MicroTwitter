@@ -35,6 +35,9 @@ import { TweetActionsComponent } from './components/tweet-actions/tweet-actions.
 import { TweetOptionsComponent } from './components/tweet-options/tweet-options.component';
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
 import { DeleteTweetDialogComponent } from './components/delete-tweet-dialog/delete-tweet-dialog.component';
+import { UserCardComponent } from './components/user-card/user-card.component';
+import { FollowButtonComponent } from './components/follow-button/follow-button.component';
+import { UserCardListComponent } from './components/user-card-list/user-card-list.component';
 
 @NgModule({
   imports: [
@@ -69,6 +72,9 @@ import { DeleteTweetDialogComponent } from './components/delete-tweet-dialog/del
     TweetActionsComponent,
     TweetOptionsComponent,
     DeleteTweetDialogComponent,
+    UserCardComponent,
+    FollowButtonComponent,
+    UserCardListComponent,
   ],
   exports: [
     DynamicColorDirective,
@@ -85,6 +91,9 @@ import { DeleteTweetDialogComponent } from './components/delete-tweet-dialog/del
     TweetActionsComponent,
     TweetOptionsComponent,
     DeleteTweetDialogComponent,
+    UserCardComponent,
+    FollowButtonComponent,
+    UserCardListComponent,
   ],
   entryComponents: [
     NewTweetDialogComponent,
