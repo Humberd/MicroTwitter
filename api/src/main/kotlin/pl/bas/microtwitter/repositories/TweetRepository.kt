@@ -30,7 +30,7 @@ interface TweetRepository : JpaRepository<TweetDAO, Long> {
     @Query("""
         select distinct t
         from TweetDAO t, UserDAO u
-        join u.followedUsers fu
+        left join u.followedUsers fu
         where u = :user
         and (t.user = :user
         or t.user = fu)

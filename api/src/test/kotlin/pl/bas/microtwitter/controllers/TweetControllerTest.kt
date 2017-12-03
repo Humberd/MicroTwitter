@@ -85,6 +85,11 @@ internal class TweetControllerTest {
             http.exchange(url, HttpMethod.GET, HttpEntity(null, headers), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
                 assertEquals(5, body.content.size)
+                assertEquals("new game is comming", body.content[0].content)
+                assertEquals("foobar3", body.content[1].content)
+                assertEquals("foobar2", body.content[2].content)
+                assertEquals("foobar1", body.content[3].content)
+                assertEquals("newcontent", body.content[4].content)
             }
         }
 
@@ -94,6 +99,26 @@ internal class TweetControllerTest {
             UserHelper.followUser(http, user4, AuthHelper.user3)
 
             val headers = AuthHelper.signupAndLogin(http, AuthHelper.user3)
+            http.exchange(url, HttpMethod.GET, HttpEntity(null, headers), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(3, body.content.size)
+            }
+        }
+
+        @Test
+        fun `should get user wall | user2 follows user1 = 4 tweets`() {
+            UserHelper.followUser(http, user1, AuthHelper.user2)
+
+            val headers = AuthHelper.signupAndLogin(http, AuthHelper.user2)
+            http.exchange(url, HttpMethod.GET, HttpEntity(null, headers), String::class.java).apply {
+                val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
+                assertEquals(4, body.content.size)
+            }
+        }
+
+        @Test
+        fun `should get user wall | user2 follows noone = 3 tweets`() {
+            val headers = AuthHelper.signupAndLogin(http, AuthHelper.user2)
             http.exchange(url, HttpMethod.GET, HttpEntity(null, headers), String::class.java).apply {
                 val body = gson.fromJson<CustomPageImpl<TweetResponseDTO>>(this.body!!)
                 assertEquals(3, body.content.size)
