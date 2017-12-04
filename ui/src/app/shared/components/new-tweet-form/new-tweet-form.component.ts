@@ -5,7 +5,6 @@ import { TweetCreateDTO } from "../../../dto/TweetCreateDTO";
 import { TweetResponseDTO } from "../../../dto/TweetResponseDTO";
 import { MatSnackBar } from "@angular/material";
 import { isNumber } from "util";
-import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: 'app-new-tweet-form',
@@ -19,8 +18,7 @@ export class NewTweetFormComponent implements OnInit {
 
   newTweetForm: FormGroup;
 
-  constructor(private authService: AuthService,
-              private tweetHttpService: TweetHttpService,
+  constructor(private tweetHttpService: TweetHttpService,
               private matSnackbar: MatSnackBar) {
   }
 
@@ -32,10 +30,12 @@ export class NewTweetFormComponent implements OnInit {
     const requestData = this.prepareData();
 
     this.tweetHttpService.createTweet(requestData)
-      .do(() => console.info("Tweet created"))
-      .do(newTweet => this.tweetCreated.emit(newTweet))
-      .do(newTweet => this.showSnackBar(newTweet))
-      .do(() => this.authService.getUser().data.tweetsCount++)
+      .do(newTweet => {
+        console.info("Tweet created");
+        this.tweetCreated.emit(newTweet);
+        this.showSnackBar(newTweet);
+        this.newTweetForm.reset();
+      })
       .subscribe();
   }
 

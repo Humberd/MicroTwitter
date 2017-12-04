@@ -17,8 +17,7 @@ export class WallTweetsComponent extends AbstractScrollPageableComponent<TweetRe
 
   ngOnInit() {
     super.getPage()
-      .subscribe(() => {},
-        error2 => console.log(error2));
+      .subscribe();
   }
 
   invokeGetPageMethod(...params: any[]): Observable<PageDTO<TweetResponseDTO>> {

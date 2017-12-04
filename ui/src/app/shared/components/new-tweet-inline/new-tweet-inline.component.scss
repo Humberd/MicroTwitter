@@ -1,0 +1,18 @@
+@import "../../../../styles/colors";
+@import "../../../../styles/sizing";
+
+.new-tweet-inline {
+  display: flex;
+  background-color: $lightBlueBackgroundColor;
+  padding: 10px 12px;
+  border: 1px solid $lightBorderColor;
+
+  .avatar {
+    margin-left: 16px;
+    margin-right: 10px;
+  }
+
+  .new-tweet-form-wrapper {
+    flex: 1;
+  }
+}

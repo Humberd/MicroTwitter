@@ -4,7 +4,8 @@
       <app-wall-user-card [user]="authService.getUser()?.data"></app-wall-user-card>
     </div>
     <div class="center-panel">
-      <app-wall-tweets></app-wall-tweets>
+      <app-new-tweet-inline (tweetCreated)="wallTweets.prependItem($event)"></app-new-tweet-inline>
+      <app-wall-tweets #wallTweets></app-wall-tweets>
     </div>
     <div class="right-panel side-panel">
       <!--right panel-->

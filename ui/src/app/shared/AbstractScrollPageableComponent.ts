@@ -42,9 +42,13 @@ export abstract class AbstractScrollPageableComponent<T> {
         console.info(`Received page number ${page.number}`);
         this.loadingNextPage = false;
       })
-      .catch((err, caught) => {
+      .catch(err => {
         this.loadingNextPage = false;
         throw err;
       });
+  }
+
+  public prependItem(item: T) {
+    this.itemsList.unshift(item);
   }
 }

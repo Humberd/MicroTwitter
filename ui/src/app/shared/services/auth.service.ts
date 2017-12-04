@@ -129,6 +129,14 @@ export class AuthService {
   }
 
   /**
+   * Method that can be called from within the code to ask to send a request to update user data
+   */
+  public requestUserDataUpdate(): void {
+    this.updateUserData(this.appUser.jwtToken)
+      .subscribe();
+  }
+
+  /**
    * Removes an appUser from a service and from a permanent storage
    */
   public logout() {
