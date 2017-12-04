@@ -4,6 +4,7 @@ import { UserResponseDTO } from "../../../dto/UserResponseDTO";
 import { Observable } from "rxjs/Observable";
 import { UserHttpService } from "../../http/user-http.service";
 import { Router } from "@angular/router";
+import { CONSTANTS } from "../../../config/Constants";
 
 @Component({
   selector: 'app-search-user',
@@ -13,6 +14,7 @@ import { Router } from "@angular/router";
 export class SearchUserComponent implements OnInit {
   searchInputControl: FormControl;
   results: Observable<UserResponseDTO[]>;
+  CONSTANTS = CONSTANTS;
 
   constructor(private userHttpService: UserHttpService,
               private router: Router) {

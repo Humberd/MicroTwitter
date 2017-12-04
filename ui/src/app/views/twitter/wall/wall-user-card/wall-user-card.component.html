@@ -1,0 +1,39 @@
+<div class="wall-user-card-component">
+  <div class="banner-wrapper">
+    <img class="banner"
+         src="https://pbs.twimg.com/profile_banners/2182752278/1511033434/1500x500">
+  </div>
+  <div class="container">
+    <div class="top-row">
+      <div class="avatar-wrapper">
+        <img class="avatar"
+             src="https://pbs.twimg.com/profile_images/931968026743918592/PARoJaa5_400x400.jpg">
+      </div>
+      <app-user-basic-big class="user-basic"
+                          [user]="user"></app-user-basic-big>
+    </div>
+    <div class="bottom-row">
+      <a class="item"
+          [routerLink]="['/u',user?.username]">
+        <div class="label">Tweets</div>
+        <div class="value">
+          {{user?.tweetsCount}}
+        </div>
+      </a>
+      <a class="item"
+         [routerLink]="['/u',user?.username,'following']">
+        <div class="label">Following</div>
+        <div class="value">
+          {{user?.followedUsersCount}}
+        </div>
+      </a>
+      <a class="item"
+         [routerLink]="['/u',user?.username, 'followers']">
+        <div class="label">Followers</div>
+        <div class="value">
+          {{user?.followedByUsersCount}}
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

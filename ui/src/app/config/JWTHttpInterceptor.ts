@@ -21,7 +21,7 @@ export class JWTHttpInterceptor implements HttpInterceptor {
     let newHeaders: HttpHeaders = req.headers;
 
     /* We add an Authorization header only to those requests that don't have it.
-     * We do not want override every request, because some requests '/me' need a special tratment */
+     * We do not want override every request, because some requests '/me' need a special treatment */
     if (!req.headers.has(CONSTANTS.AUTH_HEADER_NAME)) {
       if (this.authService.isUserLoggedIn()) {
         newHeaders = newHeaders.set(CONSTANTS.AUTH_HEADER_NAME, CONSTANTS.AUTH_TOKEN_PREFIX + this.authService.getUser().jwtToken);
@@ -31,9 +31,7 @@ export class JWTHttpInterceptor implements HttpInterceptor {
       else if (isString(this.authService.initialJWT)) {
         newHeaders = newHeaders.set(CONSTANTS.AUTH_HEADER_NAME, CONSTANTS.AUTH_TOKEN_PREFIX + this.authService.initialJWT);
       }
-
     }
-
 
     const appRequest = req.clone({
       headers: newHeaders
