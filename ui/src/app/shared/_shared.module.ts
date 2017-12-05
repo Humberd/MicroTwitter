@@ -41,6 +41,8 @@ import { UserCardListComponent } from './components/user-card-list/user-card-lis
 import { UserBasicBigComponent } from './components/user-basic-big/user-basic-big.component';
 import { BirthdatePipe } from './pipes/birthdate.pipe';
 import { NewTweetInlineComponent } from './components/new-tweet-inline/new-tweet-inline.component';
+import { TweetInfoBlockComponent } from './components/tweet-info-block/tweet-info-block.component';
+import { TweetInfoDialogComponent } from './components/tweet-info-dialog/tweet-info-dialog.component';
 
 @NgModule({
   imports: [
@@ -82,6 +84,8 @@ import { NewTweetInlineComponent } from './components/new-tweet-inline/new-tweet
     UserCardListComponent,
     UserBasicBigComponent,
     NewTweetInlineComponent,
+    TweetInfoBlockComponent,
+    TweetInfoDialogComponent,
   ],
   exports: [
     DynamicColorDirective,
@@ -110,6 +114,7 @@ import { NewTweetInlineComponent } from './components/new-tweet-inline/new-tweet
     NewTweetDialogComponent,
     ReplyNewTweetDialogComponent,
     DeleteTweetDialogComponent,
+    TweetInfoDialogComponent,
   ],
   providers: [
     AuthHttpService,

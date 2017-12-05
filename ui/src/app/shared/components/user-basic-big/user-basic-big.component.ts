@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { UserResponseDTO } from "../../../dto/UserResponseDTO";
+import { TweetUserResponseDTO } from "../../../dto/TweetResponseDTO";
 
 @Component({
   selector: 'app-user-basic-big',

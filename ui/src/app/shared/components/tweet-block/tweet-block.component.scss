@@ -1,10 +1,17 @@
 .tweet-block {
+  cursor: pointer;
+
   .top {
     display: flex;
     align-items: flex-start;
 
     .tweet-content {
       flex: 1;
+    }
+  }
+  .bottom {
+    .tweet-actions {
+      margin-left: 58px;
     }
   }
 }

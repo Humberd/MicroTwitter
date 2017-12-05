@@ -15,6 +15,8 @@ import { TwitterViewsModule } from "./views/twitter/twitter.module";
 import { AuthService } from "./shared/services/auth.service";
 import { LayoutModule } from "./layout/layout.module";
 import { MatIconModule, MatIconRegistry } from "@angular/material";
+import { RouterState } from "@angular/router";
+import { RouterInitializer } from "@angular/router/src/router_module";
 
 @NgModule({
   declarations: [

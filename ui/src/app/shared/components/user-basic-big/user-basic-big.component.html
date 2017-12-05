@@ -1,7 +1,7 @@
 <div class="user-basic-big-component">
   <a class="user-full-name"
      [routerLink]="['/u',user?.username || '']">
-    {{user?.profile.fullName}}
+    {{user?.profile?.fullName || user?.fullName}}
   </a>
   <a class="user-username"
      [routerLink]="['/u',user?.username || '']">

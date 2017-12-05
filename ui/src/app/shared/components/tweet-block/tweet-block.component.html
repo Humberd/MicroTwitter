@@ -6,6 +6,8 @@
                        (tweetDeleted)="tweetDeleted.next($event)"></app-tweet-options>
   </div>
   <div class="bottom">
-    <app-tweet-actions [tweet]="tweet"></app-tweet-actions>
+    <div class="tweet-actions">
+      <app-tweet-actions [tweet]="tweet"></app-tweet-actions>
+    </div>
   </div>
 </div>

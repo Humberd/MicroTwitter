@@ -5,6 +5,7 @@
   </div>
   <div class="new-tweet-form-wrapper">
     <app-new-tweet-form [shouldAutofocus]="false"
+                        [inReplyToTweet]="inReplyToTweet"
                         (tweetCreated)="tweetCreated.emit($event)"></app-new-tweet-form>
   </div>
 </div>

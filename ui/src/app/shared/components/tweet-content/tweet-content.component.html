@@ -10,8 +10,7 @@
       <div class="user-username">
         @{{tweet.user.username}}
       </div>
-      <a class="tweet-date"
-         [routerLink]="['/u',tweet.user.username,'tweet',tweet.id]">
+      <a class="tweet-date">
         {{tweet.createdAt | date}}
       </a>
     </div>

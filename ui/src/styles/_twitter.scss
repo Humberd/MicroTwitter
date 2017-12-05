@@ -60,6 +60,10 @@ a.app-link {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  &:active, &:hover, &:focus {
+    outline: 0;
+  }
 }
 
 .user-username {

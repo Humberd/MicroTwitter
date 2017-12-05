@@ -1,7 +1,6 @@
 @import "colors";
 
-.app-custom-dialog {
-
+*[class*="app-custom-dialog"] {
   .mat-dialog-container {
     padding: 0;
     border-radius: 5px;

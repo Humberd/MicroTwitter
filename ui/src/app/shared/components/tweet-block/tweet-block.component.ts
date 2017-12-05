@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { TweetResponseDTO } from "../../../dto/TweetResponseDTO";
+import { DialogService } from "../../services/dialog.service";
+import { isFunction } from "util";
 
 @Component({
   selector: 'app-tweet-block',
@@ -8,8 +10,19 @@ import { TweetResponseDTO } from "../../../dto/TweetResponseDTO";
 })
 export class TweetBlockComponent {
   @Input() tweet: TweetResponseDTO;
+  @Input() tweetClickAction: (tweet: TweetResponseDTO) => any;
   @Output() tweetDeleted = new EventEmitter<TweetResponseDTO>();
 
-  constructor() {
+  constructor(public dialogService: DialogService) {
+  }
+
+  @HostListener("click")
+  showTweetInfoDialog(): void {
+    if (isFunction(this.tweetClickAction)) {
+      this.tweetClickAction(this.tweet);
+      return;
+    }
+
+    this.dialogService.showTweetInfoDialog(this.tweet);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TweetResponseDTO } from "../../../dto/TweetResponseDTO";
 
 @Component({
@@ -7,6 +7,7 @@ import { TweetResponseDTO } from "../../../dto/TweetResponseDTO";
   styleUrls: ['./new-tweet-inline.component.scss']
 })
 export class NewTweetInlineComponent {
+  @Input() inReplyToTweet: TweetResponseDTO;
   @Output() tweetCreated = new EventEmitter<TweetResponseDTO>();
 
   constructor() {

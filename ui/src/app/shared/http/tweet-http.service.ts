@@ -35,8 +35,8 @@ export class TweetHttpService {
     return this.http.delete<void>(`/api/tweets/${tweetId}`);
   }
 
-  public getComments(tweetId: number, pageable: Pageable = {}): Observable<PageDTO<TweetResponseDTO>> {
-    return this.http.get<PageDTO<TweetResponseDTO>>(`/api/tweets/${tweetId}`,
+  public getComments(tweetId?: number, pageable: Pageable = {}): Observable<PageDTO<TweetResponseDTO>> {
+    return this.http.get<PageDTO<TweetResponseDTO>>(`/api/tweets/${tweetId}/comments`,
       {params: {...PageHelper.convertToPageableStr(pageable)}});
   }
 

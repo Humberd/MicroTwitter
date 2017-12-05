@@ -14,6 +14,7 @@ import { InfiniteScrollModule } from "ngx-infinite-scroll";
 import { UserInfoComponent } from './profile/user-info/user-info.component';
 import { WallTweetsComponent } from './wall/wall-tweets/wall-tweets.component';
 import { WallUserCardComponent } from './wall/wall-user-card/wall-user-card.component';
+import { TweetComponent } from './tweet/tweet.component';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { WallUserCardComponent } from './wall/wall-user-card/wall-user-card.comp
     UserInfoComponent,
     WallTweetsComponent,
     WallUserCardComponent,
+    TweetComponent,
   ]
 })
 export class TwitterViewsModule {

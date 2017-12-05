@@ -1,0 +1,20 @@
+<div class="tweet-info-dialog-component">
+  <div class="base-tweet">
+    <app-tweet-info-block [tweet]="tweet"
+                          [user]="user"></app-tweet-info-block>
+  </div>
+  <div class="reply-form">
+    <app-new-tweet-inline [inReplyToTweet]="tweet"
+                          (tweetCreated)="prependItem($event)"></app-new-tweet-inline>
+  </div>
+  <div class="comments-list"
+       infiniteScroll
+       [infiniteScrollDistance]="2"
+       [infiniteScrollDisabled]="loadingNextPage"
+       [infiniteScrollThrottle]="1000"
+       [infiniteScrollContainer]="'.app-custom-dialog-tweet-info .mat-dialog-container'"
+       [fromRoot]="true"
+       (scrolled)="requestNextPage()">
+    <app-tweet-list [tweetList]="itemsList"></app-tweet-list>
+  </div>
+</div>

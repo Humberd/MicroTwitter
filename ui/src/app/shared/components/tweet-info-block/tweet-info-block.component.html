@@ -1,0 +1,25 @@
+<div class="tweet-info-block-component">
+  <div class="top-bar">
+    <img class="avatar user-icon-medium"
+         src="https://pbs.twimg.com/profile_images/931968026743918592/PARoJaa5_400x400.jpg">
+    <div class="user-info">
+      <app-user-basic-big [user]="tweet?.user || user"></app-user-basic-big>
+    </div>
+    <div class="follow-button">
+      <app-follow-button [user]="user"></app-follow-button>
+    </div>
+    <div class="options">
+      <app-tweet-options [tweet]="tweet"></app-tweet-options>
+    </div>
+  </div>
+  <div class="tweet-content">
+    {{tweet.content}}
+  </div>
+  <div class="date">
+    {{tweet.createdAt | date:'medium'}}
+  </div>
+  <div class="actions">
+    <app-tweet-actions [tweet]="tweet"
+                       [replyCommentAction]="replyCommentAction"></app-tweet-actions>
+  </div>
+</div>

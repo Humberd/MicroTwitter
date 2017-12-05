@@ -1,5 +1,6 @@
 <div>
   <mat-icon class="tweet-options"
+            (click)="$event.stopPropagation()"
             [matMenuTriggerFor]="tweetOptionsMenu">
     keyboard_arrow_down
   </mat-icon>

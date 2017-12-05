@@ -33,7 +33,7 @@ export const twitterRoutes: Route[] = [
       {
         path: "likes",
         component: LikesComponent,
-      }
+      },
     ]
   }
 ];

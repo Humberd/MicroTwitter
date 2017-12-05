@@ -7,8 +7,6 @@ export abstract class AbstractScrollPageableComponent<T> {
   currentPage: PageDTO<T>;
   loadingNextPage = false;
 
-  protected itemIdKey = "id";
-
   abstract invokeGetPageMethod(...params: any[]): Observable<PageDTO<T>>;
 
   public requestNextPage(...params: any[]): void {
@@ -34,7 +32,7 @@ export abstract class AbstractScrollPageableComponent<T> {
         if (this.itemsList.length > 0) {
           // makes sure that the tweet is not displayed twice
           const lastElement = this.itemsList[this.itemsList.length - 1];
-          while (page.content.length > 0 && lastElement[this.itemIdKey] <= page.content[0][this.itemIdKey]) {
+          while (page.content.length > 0 && this.shouldRemoveNewPageItem(lastElement, page.content[0])) {
             page.content.splice(0, 1);
           }
         }
@@ -46,6 +44,22 @@ export abstract class AbstractScrollPageableComponent<T> {
         this.loadingNextPage = false;
         throw err;
       });
+  }
+
+  /**
+   * In case in the new page there is an item already in the list we want to make sure its not being displayed twice
+   *
+   * This method would be invoked until it returns {false}
+   * When it returns {true} it removes [newPageFirstItem], which is at the beginning of the new page from it.
+   *
+   * The default compare key is "id" and the itemsList is treated as descending
+   *
+   * @param lastListItem
+   * @param newPageFirstItem
+   * @returns {boolean} should [newPageFirstItem] be removed from the new page
+   */
+  protected shouldRemoveNewPageItem(lastListItem, newPageFirstItem): boolean {
+    return lastListItem["id"] <= newPageFirstItem["id"];
   }
 
   public prependItem(item: T) {

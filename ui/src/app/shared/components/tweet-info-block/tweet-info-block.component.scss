@@ -1,0 +1,37 @@
+@import "../../../../styles/colors";
+
+.tweet-info-block-component {
+  .top-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+
+    .avatar {
+      margin-right: 10px;
+    }
+
+    .user-info {
+      /* I don't know why, but without setting ANY width (even 0, but not auto) the username inside won't have ellipsis*/
+      width: 100px;
+      flex: 1;
+    }
+
+    .follow-button {
+      margin-right: 15px;
+    }
+  }
+  .tweet-content {
+    font-size: 27px;
+    line-height: 32px;
+    letter-spacing: .01em;
+  }
+  .date {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 24px;
+    color: $secondaryTextColor;
+  }
+  .actions {
+    margin-top: 10px;
+  }
+}

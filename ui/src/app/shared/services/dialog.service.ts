@@ -4,6 +4,7 @@ import { NewTweetDialogComponent } from "../components/new-tweet-dialog/new-twee
 import { TweetResponseDTO } from "../../dto/TweetResponseDTO";
 import { ReplyNewTweetDialogComponent } from "../components/reply-new-tweet-dialog/reply-new-tweet-dialog.component";
 import { DeleteTweetDialogComponent } from "../components/delete-tweet-dialog/delete-tweet-dialog.component";
+import { TweetInfoDialogComponent } from "../components/tweet-info-dialog/tweet-info-dialog.component";
 
 @Injectable()
 export class DialogService {
@@ -34,6 +35,18 @@ export class DialogService {
       ...this.config,
       width: '520px',
       position: {},
+      data: {tweet}
+    });
+  }
+
+  public showTweetInfoDialog(tweet: TweetResponseDTO): MatDialogRef<TweetInfoDialogComponent> {
+    return this.matDialog.open(TweetInfoDialogComponent, {
+      ...this.config,
+      panelClass: "app-custom-dialog-tweet-info",
+      position: {
+        top: '5%'
+      },
+      width: '640px',
       data: {tweet}
     });
   }
