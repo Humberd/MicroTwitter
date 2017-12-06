@@ -1,7 +1,8 @@
 <div class="tweet-info-dialog-component">
   <div class="base-tweet">
     <app-tweet-info-block [tweet]="tweet"
-                          [user]="user"></app-tweet-info-block>
+                          [user]="user"
+                          [replyCommentAction]="replyCommentAction.bind(this)"></app-tweet-info-block>
   </div>
   <div class="reply-form">
     <app-new-tweet-inline [inReplyToTweet]="tweet"
@@ -15,6 +16,14 @@
        [infiniteScrollContainer]="'.app-custom-dialog-tweet-info .mat-dialog-container'"
        [fromRoot]="true"
        (scrolled)="requestNextPage()">
-    <app-tweet-list [tweetList]="itemsList"></app-tweet-list>
+    <app-tweet-list [tweetList]="itemsList"
+                    [tweetClickAction]="tweetClickAction.bind(this)"></app-tweet-list>
+  </div>
+  <div class="footer" *ngIf="itemsList?.length > 0">
+    <div class="icon-wrapper no-select">
+      <mat-icon class="icon">
+        accessible
+      </mat-icon>
+    </div>
   </div>
 </div>

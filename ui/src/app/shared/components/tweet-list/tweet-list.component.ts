@@ -8,6 +8,7 @@ import { TweetResponseDTO } from "../../../dto/TweetResponseDTO";
 })
 export class TweetListComponent {
   @Input() tweetList: TweetResponseDTO[];
+  @Input() tweetClickAction: (tweet: TweetResponseDTO) => any;
 
   constructor() {
   }

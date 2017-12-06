@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { TweetHttpService } from "../../http/tweet-http.service";
 import { TweetCreateDTO } from "../../../dto/TweetCreateDTO";
@@ -15,6 +15,7 @@ export class NewTweetFormComponent implements OnInit {
   @Input() shouldAutofocus: boolean;
   @Input() inReplyToTweet: TweetResponseDTO;
   @Output() tweetCreated = new EventEmitter<TweetResponseDTO>();
+  @ViewChild("tweetInput") tweetInputElement: ElementRef;
 
   newTweetForm: FormGroup;
 
@@ -63,6 +64,14 @@ export class NewTweetFormComponent implements OnInit {
       ...this.newTweetForm.value,
       inReplyToTweetId: this.inReplyToTweet ? this.inReplyToTweet.id : null
     };
+  }
+
+  public focusTweetInput(): void {
+    if (!this.tweetInputElement) {
+      console.warn("There is no TweetInputElement");
+      return;
+    }
+    this.tweetInputElement.nativeElement.focus();
   }
 
 }

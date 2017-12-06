@@ -7,7 +7,8 @@
       Replying to
       <a class="app-link">@{{inReplyToTweet.user.username}}</a>
     </div>
-    <textarea class="twitter-textarea"
+    <textarea #tweetInput
+              class="twitter-textarea"
               matInput
               rows="3"
               [formControlName]="'content'"

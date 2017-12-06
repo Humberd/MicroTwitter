@@ -13,6 +13,9 @@ export class DialogService {
     panelClass: 'app-custom-dialog',
     position: {
       top: '10%'
+    },
+    data: {
+      dialogService: this
     }
   };
 
@@ -26,7 +29,10 @@ export class DialogService {
   public showReplyToTweetDialog(inReplyToTweet: TweetResponseDTO): MatDialogRef<ReplyNewTweetDialogComponent> {
     return this.matDialog.open(ReplyNewTweetDialogComponent, {
       ...this.config,
-      data: {inReplyToTweet}
+      data: {
+        ...this.config.data,
+        inReplyToTweet
+      }
     });
   }
 
@@ -35,7 +41,10 @@ export class DialogService {
       ...this.config,
       width: '520px',
       position: {},
-      data: {tweet}
+      data: {
+        ...this.config.data,
+        tweet
+      }
     });
   }
 
@@ -47,7 +56,10 @@ export class DialogService {
         top: '5%'
       },
       width: '640px',
-      data: {tweet}
+      data: {
+        ...this.config.data,
+        tweet
+      }
     });
   }
 }

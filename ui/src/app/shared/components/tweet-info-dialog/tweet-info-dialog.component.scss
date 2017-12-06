@@ -1,3 +1,5 @@
+@import "../../../../styles/colors";
+
 .tweet-info-dialog-component {
   .base-tweet {
     padding: 30px 40px;
@@ -5,5 +7,20 @@
   .comments-list /deep/ .tweet-block-wrapper {
     padding-left: 40px;
     padding-right: 40px;
+  }
+  .footer {
+    background-color: $secondaryBackgroundColor;
+    padding: 15px 50px;
+
+    .icon-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 32px;
+
+      .icon {
+        color: $secondaryTextColor;
+      }
+    }
   }
 }
