@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
-import { AuthService } from "../../../../shared/services/auth.service";
 import { Router } from "@angular/router";
-import { CONSTANTS } from "../../../../config/Constants";
-import { LoginDTO } from "../../../../dto/LoginDTO";
+import { AuthService } from "../../services/auth.service";
+import { CONSTANTS } from "../../../config/Constants";
+import { LoginDTO } from "../../../dto/LoginDTO";
 
 @Component({
   selector: 'app-login-form',
@@ -34,31 +34,6 @@ export class LoginFormComponent implements OnInit {
         error => {
           console.log("error login", error);
         });
-  }
-
-  mocklogin() {
-    this.authService.signup({
-      username: this.makeid(),
-      email: this.makeid() + "@google.com",
-      fullName: "AdminAdmin",
-      password: "admin123"
-    })
-      .subscribe(response => {
-        console.log(response);
-        this.router.navigate(CONSTANTS.DEFAULT_AUTH_ROUTE);
-      }, error => {
-        console.error(error);
-      });
-  }
-
-  makeid() {
-    let text = "";
-    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for (let i = 0; i < 5; i++) {
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return text;
   }
 
   private initForm(): void {

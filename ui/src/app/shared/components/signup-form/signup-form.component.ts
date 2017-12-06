@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
-import { AuthService } from "../../../../shared/services/auth.service";
 import { Router } from "@angular/router";
-import { SignupDTO } from "../../../../dto/SignupDTO";
-import { CONSTANTS } from "../../../../config/Constants";
+import { AuthService } from "../../services/auth.service";
+import { CONSTANTS } from "../../../config/Constants";
+import { SignupDTO } from "../../../dto/SignupDTO";
 
 @Component({
   selector: 'app-signup-form',

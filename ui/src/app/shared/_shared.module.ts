@@ -43,6 +43,8 @@ import { BirthdatePipe } from './pipes/birthdate.pipe';
 import { NewTweetInlineComponent } from './components/new-tweet-inline/new-tweet-inline.component';
 import { TweetInfoBlockComponent } from './components/tweet-info-block/tweet-info-block.component';
 import { TweetInfoDialogComponent } from './components/tweet-info-dialog/tweet-info-dialog.component';
+import { LoginFormComponent } from "./components/login-form/login-form.component";
+import { SignupFormComponent } from "./components/signup-form/signup-form.component";
 
 @NgModule({
   imports: [
@@ -86,6 +88,8 @@ import { TweetInfoDialogComponent } from './components/tweet-info-dialog/tweet-i
     NewTweetInlineComponent,
     TweetInfoBlockComponent,
     TweetInfoDialogComponent,
+    LoginFormComponent,
+    SignupFormComponent,
   ],
   exports: [
     DynamicColorDirective,
@@ -109,6 +113,8 @@ import { TweetInfoDialogComponent } from './components/tweet-info-dialog/tweet-i
     UserCardListComponent,
     UserBasicBigComponent,
     NewTweetInlineComponent,
+    LoginFormComponent,
+    SignupFormComponent,
   ],
   entryComponents: [
     NewTweetDialogComponent,

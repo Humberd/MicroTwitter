@@ -5,11 +5,9 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
-import { LoginFormComponent } from './login/login-form/login-form.component';
 import { MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatSnackBarModule } from "@angular/material";
 import { RouterModule } from "@angular/router";
 import { SharedModule } from "../../shared/_shared.module";
-import { SignupFormComponent } from './signup/signup-form/signup-form.component';
 
 @NgModule({
   imports: [
@@ -28,13 +26,7 @@ import { SignupFormComponent } from './signup/signup-form/signup-form.component'
   declarations: [
     LoginComponent,
     SignupComponent,
-    LoginFormComponent,
-    SignupFormComponent,
   ],
-  exports: [
-    LoginFormComponent
-  ],
-  providers: []
 })
 export class AuthViewsModule {
 }

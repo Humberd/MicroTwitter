@@ -1,0 +1,4 @@
+<app-landing-page *ngIf="!authService.isUserLoggedIn(); else wall"></app-landing-page>
+<ng-template #wall>
+  <app-wall></app-wall>
+</ng-template>

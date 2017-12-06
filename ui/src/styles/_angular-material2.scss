@@ -7,3 +7,7 @@
 .mat-dialog-container {
   max-height: 80vh !important;
 }
+
+.mat-input-element::placeholder {
+  color: red;
+}

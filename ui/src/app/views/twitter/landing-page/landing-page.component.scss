@@ -1,0 +1,67 @@
+@import "../../../../styles/colors";
+@import "../../../../styles/sizing";
+
+.landing-page {
+  position: relative;
+  height: calc(100vh - #{$navbarHeight});
+  width: 100%;
+  overflow: hidden;
+
+  .background {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    z-index: 10;
+
+    .background-image {
+      width: 100%;
+      min-height: 100%;
+    }
+  }
+  .content {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 15;
+    margin: 80px auto 0;
+
+    .left-side {
+      color: $white;
+      width: 470px;
+
+      .welcome {
+        font-size: 27px;
+        line-height: 32px;
+        margin-bottom: 30px;
+        font-weight: bold;
+      }
+
+
+      .description {
+        font-size: 21px;
+        line-height: 28px;
+        font-weight: bold;
+      }
+    }
+
+    .right-side {
+      .login-form {
+        border: 1px solid $lightBorderColor;
+        background-color: $white;
+        width: 300px;
+        padding: 12px 12px 6px;
+        margin-bottom: 11px;
+      }
+
+      .signup-form {
+        border: 1px solid $lightBorderColor;
+        background-color: $white;
+        width: 300px;
+        padding: 12px 12px 6px;
+      }
+    }
+  }
+}

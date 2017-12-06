@@ -1,0 +1,26 @@
+<div class="landing-page">
+  <div class="background">
+    <img class="background-image"
+         src="https://i.imgur.com/y3Zawr8.png">
+  </div>
+  <div class="content medium-container">
+    <div class="left-side">
+      <div class="welcome">
+        Welcome to {{CONSTANTS.APP_NAME}}
+      </div>
+      <div class="description">
+        Connect with your friends — and other fascinating people.
+        Get in-the-moment updates on the things that interest you.
+        And watch events unfold, in real time, from every angle.
+      </div>
+    </div>
+    <div class="right-side">
+      <div class="login-form">
+        <app-login-form></app-login-form>
+      </div>
+      <div class="signup-form">
+        <app-signup-form [shouldAutofocus]="false"></app-signup-form>
+      </div>
+    </div>
+  </div>
+</div>
