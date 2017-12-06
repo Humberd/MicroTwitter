@@ -8,7 +8,8 @@ import { TweetUserResponseDTO } from "../../../dto/TweetResponseDTO";
   styleUrls: ['./user-basic-big.component.scss']
 })
 export class UserBasicBigComponent {
-  @Input() user: UserResponseDTO | TweetUserResponseDTO;
+  @Input() user: UserResponseDTO;
+  @Input() tweetUser: TweetUserResponseDTO;
 
   constructor() {
   }

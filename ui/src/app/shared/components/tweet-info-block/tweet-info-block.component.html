@@ -3,7 +3,8 @@
     <img class="avatar user-icon-medium"
          src="https://pbs.twimg.com/profile_images/931968026743918592/PARoJaa5_400x400.jpg">
     <div class="user-info">
-      <app-user-basic-big [user]="tweet?.user || user"></app-user-basic-big>
+      <app-user-basic-big [user]="user"
+                          [tweetUser]="tweet?.user"></app-user-basic-big>
     </div>
     <div class="follow-button">
       <app-follow-button [user]="user"></app-follow-button>
