@@ -124,6 +124,12 @@
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
+        <!--Adding because https://stackoverflow.com/questions/27341604/exception-when-using-testresttemplate-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>

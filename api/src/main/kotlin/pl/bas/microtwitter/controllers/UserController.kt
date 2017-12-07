@@ -4,6 +4,7 @@ import org.hibernate.collection.internal.PersistentBag
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import pl.bas.microtwitter.builders.ResponseBuilder
 import pl.bas.microtwitter.dao.UserDAO
@@ -23,6 +24,7 @@ class UserController(
     /**
      * Gets logged in user info
      */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/me")
     fun getMe(user: UserDAO): ResponseEntity<UserResponseDTO> {
         return ResponseEntity.ok(responseBuilder.buildUserResponse(user, user))
@@ -31,6 +33,7 @@ class UserController(
     /**
      * Updates user profile
      */
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     @PutMapping("/me/profile")
     fun updateProfile(@RequestBody body: ProfileUpdateDTO,
@@ -54,6 +57,7 @@ class UserController(
     /**
      * Gets a paginated list of users selected by [username] or [profile.fullName]
      */
+    @PreAuthorize("permitAll()")
     @GetMapping("/users")
     fun getUsers(@RequestParam usernameOrfullName: String,
                  pageable: Pageable,
@@ -66,6 +70,7 @@ class UserController(
         return ResponseEntity.ok(page.map { userDAO -> responseBuilder.buildUserResponse(user, userDAO) })
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/users/{username}/following-users")
     fun getFollowingUsers(@PathVariable username: String?,
                           pageable: Pageable,
@@ -78,6 +83,7 @@ class UserController(
         return ResponseEntity.ok(page.map { userDAO -> responseBuilder.buildUserResponse(user, userDAO) })
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/users/{username}/followers")
     fun getFollowers(@PathVariable username: String?,
                           pageable: Pageable,
@@ -93,6 +99,7 @@ class UserController(
     /**
      * Gets a user info by [username]
      */
+    @PreAuthorize("permitAll()")
     @GetMapping("/users/{username}")
     fun getUser(@PathVariable username: String,
                 user: UserDAO): ResponseEntity<UserResponseDTO> {
@@ -111,6 +118,7 @@ class UserController(
      * Follows a user
      * If user x follows user y, then user x will receive user y tweets on his wall
      */
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     @PostMapping("/users/{userId}/follow")
     fun followUser(@PathVariable userId: Long,
@@ -135,6 +143,7 @@ class UserController(
      * Unfollows a user
      *
      */
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     @PostMapping("/users/{userId}/unfollow")
     fun unfollowUser(@PathVariable userId: Long,

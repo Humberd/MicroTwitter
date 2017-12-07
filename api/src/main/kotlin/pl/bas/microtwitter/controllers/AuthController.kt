@@ -2,6 +2,7 @@ package pl.bas.microtwitter.controllers
 
 import mu.KLogging
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
@@ -25,6 +26,7 @@ class AuthController(
     /**
      * Signs up user
      */
+    @PreAuthorize("isAnonymous()")
     @Transactional
     @PostMapping("/signup")
     fun signup(@RequestBody body: SignupDTO): ResponseEntity<Unit> {
@@ -46,7 +48,8 @@ class AuthController(
      * Logs in user and responds with ["Authorization"] header
      * Login is handled by JWT filters in a [pl.bas.microtwitter.security] package
      */
-    @PostMapping("login")
+    @PreAuthorize("isAnonymous()")
+    @PostMapping("/login")
     fun login(@RequestBody body: LoginDTO): ResponseEntity<Unit> {
         return ResponseEntity.ok(Unit)
     }
@@ -54,6 +57,7 @@ class AuthController(
     /**
      * Updates user password
      */
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     @PostMapping("/password")
     fun updatePassword(@RequestBody body: UpdatePasswordDTO,

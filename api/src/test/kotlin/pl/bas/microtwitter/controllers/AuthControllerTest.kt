@@ -97,7 +97,7 @@ internal class AuthControllerTest {
         @Test
         fun `should not login a not existing user`() {
             AuthHelper.login(http).apply {
-                assertEquals(HttpStatus.FORBIDDEN, this.statusCode)
+                assertEquals(HttpStatus.UNAUTHORIZED, this.statusCode)
             }
         }
     }

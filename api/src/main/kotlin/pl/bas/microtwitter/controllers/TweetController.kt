@@ -5,6 +5,7 @@ import org.hibernate.collection.internal.PersistentList
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import pl.bas.microtwitter.builders.ResponseBuilder
 import pl.bas.microtwitter.dao.TweetDAO
@@ -26,6 +27,7 @@ class TweetController(
         val responseBuilder: ResponseBuilder) {
     companion object : KLogging()
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/wall")
     fun getWall(pageable: Pageable,
                 user: UserDAO): ResponseEntity<Page<TweetResponseDTO>> {
@@ -39,6 +41,7 @@ class TweetController(
     /**
      * Gets a paginated list of tweets by given [username]
      */
+    @PreAuthorize("permitAll()")
     @GetMapping("/tweets")
     fun getTweets(@RequestParam username: String?,
                   pageable: Pageable,
@@ -54,6 +57,7 @@ class TweetController(
     /**
      * Gets a page of user liked tweets
      */
+    @PreAuthorize("permitAll()")
     @GetMapping("/liked-tweets")
     fun getUserLikedTweets(@RequestParam username: String?,
                            pageable: Pageable,
@@ -69,6 +73,7 @@ class TweetController(
     /**
      * Creates a tweet and returns its new instance
      */
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/tweets")
     fun createTweet(@RequestBody body: TweetCreateDTO,
                     user: UserDAO): ResponseEntity<TweetResponseDTO> {
@@ -90,6 +95,7 @@ class TweetController(
     /**
      * Gets a tweet by [tweetId]
      */
+    @PreAuthorize("permitAll()")
     @GetMapping("/tweets/{tweetId}")
     fun getTweet(@PathVariable tweetId: Long,
                  user: UserDAO): ResponseEntity<TweetResponseDTO> {
@@ -104,6 +110,7 @@ class TweetController(
     /**
      * Deletes a tweet by [tweetId] only by a tweet creator
      */
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     @DeleteMapping("/tweets/{tweetId}")
     fun deleteTweet(@PathVariable tweetId: Long): ResponseEntity<Unit> {
@@ -126,6 +133,7 @@ class TweetController(
      * Adds a like to a tweet.
      * Likes from user are unique per tweet
      */
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     @PostMapping("/tweets/{tweetId}/like")
     fun likeTweet(@PathVariable tweetId: Long,
@@ -154,6 +162,7 @@ class TweetController(
     /**
      * Removes a like from a tweet
      */
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     @PostMapping("/tweets/{tweetId}/unlike")
     fun unlikeTweet(@PathVariable tweetId: Long,
@@ -177,6 +186,7 @@ class TweetController(
     /**
      * Gets a comment list of a tweet with [tweetId]
      */
+    @PreAuthorize("permitAll()")
     @GetMapping("/tweets/{tweetId}/comments")
     fun getComments(@PathVariable tweetId: Long,
                     pageable: Pageable,

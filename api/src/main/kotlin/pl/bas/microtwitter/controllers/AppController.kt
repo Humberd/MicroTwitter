@@ -1,9 +1,13 @@
 package pl.bas.microtwitter.controllers
 
+import org.springframework.security.access.annotation.Secured
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.annotation.security.PermitAll
 
 @CrossOrigin
 @RestController()
@@ -16,6 +20,7 @@ class AppController {
      *  * Jenkins build number
      *  * Git commit id
      */
+    @PreAuthorize("permitAll()")
     @GetMapping("/status", produces = arrayOf("text/html"))
     fun getStatus(): String {
         return """
@@ -32,6 +37,7 @@ class AppController {
     /**
      * Returns a hardcoded message to check if the service is alive
      */
+    @PreAuthorize("permitAll()")
     @GetMapping("/ping")
     fun ping(): String {
         return "pong"
