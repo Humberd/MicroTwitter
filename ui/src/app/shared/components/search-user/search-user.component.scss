@@ -29,6 +29,10 @@
       color: $primaryTextColor;
       opacity: 1;
     }
+
+    &::placeholder {
+      color: $secondaryTextColor;
+    }
   }
   .search-icon {
     cursor: pointer;

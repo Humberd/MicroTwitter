@@ -8,8 +8,3 @@
 .mat-dialog-container {
   max-height: 80vh !important;
 }
-
-input.mat-input-element::placeholder,
-textarea.mat-input-element::placeholder{
-  color: $secondaryTextColor !important;
-}

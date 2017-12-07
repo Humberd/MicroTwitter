@@ -100,4 +100,8 @@ textarea.twitter-textarea {
     color: $primaryTextColor;
     opacity: 1;
   }
+
+  &::placeholder {
+    color: $secondaryTextColor !important;
+  }
 }
