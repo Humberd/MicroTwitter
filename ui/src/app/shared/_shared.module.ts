@@ -45,6 +45,7 @@ import { TweetInfoBlockComponent } from './components/tweet-info-block/tweet-inf
 import { TweetInfoDialogComponent } from './components/tweet-info-dialog/tweet-info-dialog.component';
 import { LoginFormComponent } from "./components/login-form/login-form.component";
 import { SignupFormComponent } from "./components/signup-form/signup-form.component";
+import { AfterAuthCheckGuard } from "./guards/after-auth-check.guard";
 
 @NgModule({
   imports: [
@@ -129,6 +130,7 @@ import { SignupFormComponent } from "./components/signup-form/signup-form.compon
 
     AuthorizedGuard,
     UnauthorizedGuard,
+    AfterAuthCheckGuard,
 
     AuthService,
     DialogService,
