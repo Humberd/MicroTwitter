@@ -9,8 +9,6 @@ import { AuthService } from "../services/auth.service";
 @Injectable()
 export class AfterAuthCheckGuard implements CanActivate {
   constructor(private authService: AuthService) {
-    this.authService.isInitialAuthCheckFinished()
-      .subscribe(response => console.log("auth check finished", response))
   }
 
   canActivate(next: ActivatedRouteSnapshot,

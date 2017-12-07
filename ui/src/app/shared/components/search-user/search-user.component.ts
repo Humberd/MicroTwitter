@@ -27,9 +27,10 @@ export class SearchUserComponent implements OnInit {
       .filter(value => value !== "")
       .debounceTime(300)
       .do(value => console.info(`Getting users for query: ${value}`))
-      .switchMap(inputValue => this.userHttpService.getUsers(inputValue))
-      .do(page => console.info(`Received ${page.numberOfElements} users`))
-      .map(page => page.content);
+      .switchMap(inputValue => this.userHttpService.getUsers(inputValue)
+        .do(page => console.info(`Received ${page.numberOfElements} users`))
+        .map(page => page.content)
+        .catch(e => Observable.of([])));
   }
 
   goToUserPage(event: any) {
