@@ -9,6 +9,7 @@
   max-height: 80vh !important;
 }
 
-.mat-input-element::placeholder {
+input.mat-input-element::placeholder,
+textarea.mat-input-element::placeholder{
   color: $secondaryTextColor !important;
 }

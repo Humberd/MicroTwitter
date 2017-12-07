@@ -9,6 +9,7 @@ import { UserHttpService } from "../http/user-http.service";
 import { CONSTANTS } from "../../config/Constants";
 import { isObject, isString } from "util";
 import { UserResponseDTO } from "../../dto/UserResponseDTO";
+import { Subject } from "rxjs/Subject";
 
 @Injectable()
 export class AuthService {
@@ -18,6 +19,11 @@ export class AuthService {
   initialJWT: string;
   private appUser: AppUser;
   private storage: Storage;
+
+  /**
+   * This observable should be triggered only once, when the initial user retrieve try is finished.
+   */
+  private initialAuthCheckFinished = new BehaviorSubject<any>(null);
   /**
    * It has 3 states:
    *  * undefined - when the app has already started and getting auth user requests hasn't completed yet
@@ -54,6 +60,24 @@ export class AuthService {
    */
   public isUserLoggedIn(): boolean {
     return !!this.appUser;
+  }
+
+  /**
+   * The promise resolves, when the initial check for user is finished
+   * @returns {Promise<any>}
+   */
+  public isInitialAuthCheckFinished(): Promise<any> {
+    return this.initialAuthCheckFinished
+      .filter(val => val)
+      .toPromise();
+  }
+
+  private finishInitialAuthCheck(): void {
+    this.initialAuthCheckFinished.next(true);
+  }
+
+  private isInitialAuthCheck(): boolean {
+    return this.initialAuthCheckFinished === null;
   }
 
   /**
@@ -100,6 +124,9 @@ export class AuthService {
         return jwtHeader.replace(CONSTANTS.AUTH_TOKEN_PREFIX, "");
       })
       .catch(error => {
+        if (this.isInitialAuthCheck()) {
+          this.finishInitialAuthCheck();
+        }
         console.error("Cannot acquire jwt token from login request", error);
         return Observable.throw(error);
       })
@@ -122,6 +149,9 @@ export class AuthService {
         this.saveUser(appUser);
       })
       .catch(error => {
+        if (this.isInitialAuthCheck()) {
+          this.finishInitialAuthCheck();
+        }
         console.error("Cannot retrieve user data from getMe request", error);
         this.logout();
         return Observable.throw(error);
@@ -157,7 +187,13 @@ export class AuthService {
       .flatMap(() => this.login({
         username: signupData.username,
         password: signupData.password
-      }));
+      }))
+      .catch(err => {
+        if (this.isInitialAuthCheck()) {
+          this.finishInitialAuthCheck();
+        }
+        return Observable.throw(err);
+      });
   }
 
   public readFromStorage() {
