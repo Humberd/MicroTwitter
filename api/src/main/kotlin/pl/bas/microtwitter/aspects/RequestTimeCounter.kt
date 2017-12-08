@@ -16,7 +16,7 @@ class RequestTimeCounter {
         val start = System.currentTimeMillis()
         return point.proceed().apply {
             val end = System.currentTimeMillis()
-            logger.info { "Request time: ${end - start}ms for method ${point.signature.name}()" }
+            logger.info { "Response time: ${end - start}ms for method ${point.signature.name}()" }
         }
     }
 
