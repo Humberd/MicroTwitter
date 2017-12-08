@@ -13,11 +13,11 @@ class TweetDAO {
     var id: Long? = null
 
     @NotNull
-    @Column(name = "content")
+    @Column(name = "content", nullable = false)
     var content: String? = null
 
     @NotNull
-    @Column(name = "createdAt")
+    @Column(name = "createdAt", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     var createdAt: Date? = null
 

@@ -1,12 +1,13 @@
 package pl.bas.microtwitter.dao
 
 import pl.bas.microtwitter.exceptions.InvalidColorException
+import pl.bas.microtwitter.helpers.buildValidUrl
 import pl.bas.microtwitter.helpers.isHexColor
 import javax.persistence.*
 
 @Entity
 @Table(name = "profile",
-        indexes = arrayOf(Index(name = "fullNameIndex", columnList = "lcfullName", unique = false)))
+        indexes = arrayOf(Index(name = "fullNameIndex", columnList = "fullnameLc", unique = false)))
 class ProfileDAO {
     @Id
     @Column(name = "id")
@@ -16,7 +17,7 @@ class ProfileDAO {
     @Column(name = "fullName", nullable = false)
     var fullName: String? = null
     @Column(nullable = false)
-    var lcfullName: String? = null
+    var fullnameLc: String? = null
 
     @Column(name = "description", nullable = false)
     var description: String? = null
@@ -25,10 +26,16 @@ class ProfileDAO {
     var location: String? = null
 
     @Column(name = "profileLinkColor", nullable = false)
-    var profileLinkColor: String? = "#1b95e0"
+    var profileLinkColor: String? = null
 
     @Column(name = "url", nullable = false)
     var url: String? = null
+
+    @Column(name = "avatarUrl", nullable = false)
+    var avatarUrl: String? = null
+
+    @Column(name = "backgroundUrl", nullable = false)
+    var backgroundUrl: String? = null
 
     @OneToOne(fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL))
     @JoinColumn(name = "birthdateId")
@@ -37,15 +44,27 @@ class ProfileDAO {
     @PrePersist
     @PreUpdate
     protected fun preUpdate() {
-        fullName = fullName ?: ""
-        lcfullName = fullName?.toLowerCase()
-        description = description ?: ""
-        location = location ?: ""
-        profileLinkColor = profileLinkColor ?: ""
-        url = url ?: ""
+        fullName = fullName?.trim() ?: ""
+        fullnameLc = fullName?.toLowerCase()
+        description = description?.trim() ?: ""
+        location = location?.trim() ?: ""
+        profileLinkColor = profileLinkColor?.trim() ?: "#1b95e0"
+        url = url?.trim() ?: ""
+        avatarUrl = avatarUrl?.trim() ?: ""
+        backgroundUrl = backgroundUrl?.trim() ?: ""
 
         if (!isHexColor(profileLinkColor!!)) {
             throw InvalidColorException("Invalid color format. Allowed format: '#12a04b'")
+        }
+
+        if (url?.isNotEmpty()!!) {
+            url = buildValidUrl(url)
+        }
+        if (avatarUrl?.isNotEmpty()!!) {
+            avatarUrl = buildValidUrl(avatarUrl)
+        }
+        if (backgroundUrl?.isNotEmpty()!!) {
+            backgroundUrl = buildValidUrl(backgroundUrl)
         }
     }
 }

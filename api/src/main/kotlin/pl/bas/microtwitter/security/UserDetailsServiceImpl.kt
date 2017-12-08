@@ -14,7 +14,7 @@ import java.util.Collections.emptyList
 class UserDetailsServiceImpl(private val applicationUserRepository: UserRepository) : UserDetailsService {
 
     override fun loadUserByUsername(username: String): UserDetails {
-        val applicationUser = applicationUserRepository.findByLcusername(username.toLowerCase()) ?: throw UsernameNotFoundException(username)
+        val applicationUser = applicationUserRepository.findByUsernameLc(username.toLowerCase()) ?: throw UsernameNotFoundException(username)
         return User(applicationUser.username, applicationUser.password, emptyList<GrantedAuthority>())
     }
 }

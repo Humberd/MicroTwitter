@@ -63,12 +63,14 @@ class UserControllerTest {
                 description = "foobar",
                 location = "location",
                 profileLinkColor = "#aa14a1",
-                url = "www.google.com",
+                url = "https://www.google.com",
                 birthdate = BirthdateDTO(
                         day = 1,
                         month = 1,
                         year = 1978
-                )
+                ),
+                avatarUrl = "https://pbs.twimg.com/profile_images/931968026743918592/PARoJaa5_400x400.jpg",
+                backgroundUrl = "https://pbs.twimg.com/profile_banners/2182752278/1511033434/1500x500"
         )
 
         @BeforeEach
@@ -88,6 +90,17 @@ class UserControllerTest {
                 assertEquals(newProfileData.birthdate?.day, body?.profile?.birthdate?.day)
                 assertEquals(newProfileData.birthdate?.month, body?.profile?.birthdate?.month)
                 assertEquals(newProfileData.birthdate?.year, body?.profile?.birthdate?.year)
+                assertEquals(newProfileData.avatarUrl, body?.profile?.avatarUrl)
+                assertEquals(newProfileData.backgroundUrl, body?.profile?.backgroundUrl)
+            }
+        }
+
+        @Test
+        fun `should update when url has no protocol`() {
+            val data = newProfileData.copy(url = "google.com")
+            http.exchange(url, HttpMethod.PUT, HttpEntity(data, authHeaders), UserResponseDTO::class.java).apply {
+                assertEquals(HttpStatus.OK, statusCode)
+                assertEquals("https://google.com", body?.profile?.url)
             }
         }
 

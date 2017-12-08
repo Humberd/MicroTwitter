@@ -8,26 +8,26 @@ import javax.validation.constraints.NotNull
 @Table(name = "userx")// need to name it like this because 'user' is a reserved keyword in postgres
 class UserDAO {
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
     @NotNull
-    @Column(name = "createdAt")
+    @Column(name = "createdAt", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     var createdAt: Date? = null
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     var username: String? = null
-    @Column(name = "lcusername", unique = true)
-    var lcusername: String? = null
+    @Column(name = "usernameLc", nullable = false, unique = true)
+    var usernameLc: String? = null
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     var email: String? = null
-    @Column(name = "lcemail", unique = true)
-    var lcemail: String? = null
+    @Column(name = "emailLc", nullable = false, unique = true)
+    var emailLc: String? = null
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     var password: String? = null
 
     @OneToOne(fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
@@ -64,7 +64,7 @@ class UserDAO {
     }
 
     private fun lowerCaseFields() {
-        lcusername = username?.toLowerCase()
-        lcemail = email?.toLowerCase()
+        usernameLc = username?.toLowerCase()
+        emailLc = email?.toLowerCase()
     }
 }

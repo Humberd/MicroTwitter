@@ -6,7 +6,9 @@ data class ProfileUpdateDTO(
         var location: String?,
         var profileLinkColor: String?,
         var url: String?,
-        var birthdate: BirthdateDTO?
+        var birthdate: BirthdateDTO?,
+        var avatarUrl: String?,
+        var backgroundUrl: String?
 )
 
 data class BirthdateDTO(

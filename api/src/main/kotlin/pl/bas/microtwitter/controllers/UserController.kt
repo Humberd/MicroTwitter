@@ -50,6 +50,8 @@ class UserController(
                 month = body.birthdate?.month
                 year = body.birthdate?.year
             }
+            avatarUrl = body.avatarUrl
+            backgroundUrl = body.backgroundUrl
         }
 
         return ResponseEntity.ok(responseBuilder.buildUserResponse(user, user))
@@ -104,10 +106,10 @@ class UserController(
     @GetMapping("/users/{username}")
     fun getUser(@PathVariable username: String,
                 @Optional user: UserDAO?): ResponseEntity<UserResponseDTO> {
-        val selectedUser = if (user?.lcusername == username.toLowerCase()) {
+        val selectedUser = if (user?.usernameLc == username.toLowerCase()) {
             user
         } else {
-            userRepository.findByLcusername(username.toLowerCase()).apply {
+            userRepository.findByUsernameLc(username.toLowerCase()).apply {
                 if (this === null) throw BadRequestException("User does not exist")
             }!!
         }
@@ -142,7 +144,6 @@ class UserController(
 
     /**
      * Unfollows a user
-     *
      */
     @PreAuthorize("isAuthenticated()")
     @Transactional

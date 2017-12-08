@@ -23,7 +23,7 @@ class UserDAOResolver(val userRepository: UserRepository) : HandlerMethodArgumen
             throw AuthException("Trying to resolve UserDAO parameter, but the principal is null")
         }
 
-        val userDAO = userRepository.findByLcusername(principal.name.toLowerCase())
+        val userDAO = userRepository.findByUsernameLc(principal.name.toLowerCase())
         if (userDAO === null) {
             throw AuthException("Trying to resolve UserDAO parameter, but there is no user with a name '${principal.name}'")
         }

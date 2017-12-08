@@ -9,14 +9,14 @@ import org.springframework.data.repository.query.Param
 import pl.bas.microtwitter.dao.UserDAO
 
 interface UserRepository : JpaRepository<UserDAO, Long> {
-    fun findByLcusername(lcusername: String): UserDAO?
+    fun findByUsernameLc(usernameLc: String): UserDAO?
 
     @Language("JPAQL")
     @Query("""
         select u
         from UserDAO as u
-        where u.lcusername like concat('%',:usernameOrFullName,'%')
-        or u.profile.lcfullName like concat('%',:usernameOrFullName,'%')
+        where u.usernameLc like concat('%',:usernameOrFullName,'%')
+        or u.profile.fullnameLc like concat('%',:usernameOrFullName,'%')
         """)
     fun findByUsernameOrFullName(@Param("usernameOrFullName") usernameOrFullName: String,
                                  pageable: Pageable): Page<UserDAO>
@@ -31,7 +31,7 @@ interface UserRepository : JpaRepository<UserDAO, Long> {
         join u.followedUsers fu
         where u = :user
         """)
-    fun countFollowedUsers(@Param("user")user: UserDAO): Int?
+    fun countFollowedUsers(@Param("user") user: UserDAO): Int?
 
     @Language("JPAQL")
     @Query("""
@@ -50,9 +50,9 @@ interface UserRepository : JpaRepository<UserDAO, Long> {
         select fu
         from UserDAO u
         join u.followedUsers fu
-        where u.lcusername = :lcusername
+        where u.usernameLc = :usernameLc
         """)
-    fun findFollowedUsers(@Param("lcusername") lcusername: String,
+    fun findFollowedUsers(@Param("usernameLc") lcusername: String,
                           pageable: Pageable): Page<UserDAO>
 
     /**
@@ -63,8 +63,8 @@ interface UserRepository : JpaRepository<UserDAO, Long> {
         select fbu
         from UserDAO u
         join u.followedByUsers fbu
-        where u.lcusername = :lcusername
+        where u.usernameLc = :usernameLc
         """)
-    fun findFollowers(@Param("lcusername") lcusername: String,
-                            pageable: Pageable): Page<UserDAO>
+    fun findFollowers(@Param("usernameLc") lcusername: String,
+                      pageable: Pageable): Page<UserDAO>
 }

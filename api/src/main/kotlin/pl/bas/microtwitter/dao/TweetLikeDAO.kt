@@ -13,7 +13,7 @@ class TweetLikeDAO {
     var id: Long? = null
 
     @NotNull
-    @Column(name = "createdAt")
+    @Column(name = "createdAt", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     var createdAt: Date? = null
 

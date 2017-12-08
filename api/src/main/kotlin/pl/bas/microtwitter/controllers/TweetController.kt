@@ -50,7 +50,7 @@ class TweetController(
         if (username.isNullOrBlank()) {
             throw BadRequestException("Username must be a not empty string")
         }
-        val page = tweetRepository.findAllByUserLcusernameOrderByIdDesc(username!!.toLowerCase(), pageable)
+        val page = tweetRepository.findAllByUser_UsernameLc_OrderByIdDesc(username!!.toLowerCase(), pageable)
 
         return ResponseEntity.ok(page.map { tweet -> responseBuilder.buildTweetResponse(user, tweet) })
     }
@@ -66,7 +66,7 @@ class TweetController(
         if (username.isNullOrBlank()) {
             throw BadRequestException("Username must be a not empty string")
         }
-        val page = tweetRepository.findAllByLikes_UserLcusername(username!!.toLowerCase(), pageable)
+        val page = tweetRepository.findAllByLikes_User_UsernameLc(username!!.toLowerCase(), pageable)
 
         return ResponseEntity.ok(page.map { tweet -> responseBuilder.buildTweetResponse(user, tweet) })
     }

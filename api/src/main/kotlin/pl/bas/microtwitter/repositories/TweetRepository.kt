@@ -10,20 +10,20 @@ import pl.bas.microtwitter.dao.TweetDAO
 import pl.bas.microtwitter.dao.UserDAO
 
 interface TweetRepository : JpaRepository<TweetDAO, Long> {
-    fun findAllByUserLcusernameOrderByIdDesc(lcusername: String,
-                                             pageable: Pageable): Page<TweetDAO>
+    fun findAllByUser_UsernameLc_OrderByIdDesc(usernameLc: String,
+                                               pageable: Pageable): Page<TweetDAO>
 
     fun countByInReplyToTweet(inReplyToTweet: TweetDAO): Int
     fun findAllByInReplyToTweet(inReplyToTweet: TweetDAO,
                                 pageable: Pageable): Page<TweetDAO>
 
-    fun findAllByLikes_UserLcusername(username: String,
-                                      pageable: Pageable): Page<TweetDAO>
+    fun findAllByLikes_User_UsernameLc(username: String,
+                                       pageable: Pageable): Page<TweetDAO>
 
     /**
     SELECT DISTINCT t.* FROM
-        tweet t,
-        (SELECT * FROM user_follower uf WHERE uf.user_id = 1) myFollower
+    tweet t,
+    (SELECT * FROM user_follower uf WHERE uf.user_id = 1) myFollower
     WHERE t.user_id = 1 OR t.user_id = myFollower.followed_user_id;
      */
     @Language("JPAQL")
