@@ -17,11 +17,11 @@ class ResponseBuilder(
         val tweetLikeRepository: TweetLikeRepository,
         val userRepository: UserRepository) {
 
-    fun buildTweetResponse(me: UserDAO, tweetDAO: TweetDAO): TweetResponseDTO {
+    fun buildTweetResponse(me: UserDAO?, tweetDAO: TweetDAO): TweetResponseDTO {
         return buildTweetResponseDTO(me, tweetDAO, tweetLikeRepository, tweetRepository)
     }
 
-    fun buildUserResponse(me: UserDAO, user: UserDAO): UserResponseDTO {
+    fun buildUserResponse(me: UserDAO?, user: UserDAO): UserResponseDTO {
         return buildUserResponseDTO(me, user, userRepository)
     }
 }

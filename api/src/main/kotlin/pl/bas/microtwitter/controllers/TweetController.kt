@@ -16,6 +16,7 @@ import pl.bas.microtwitter.dto.TweetResponseDTO
 import pl.bas.microtwitter.exceptions.BadRequestException
 import pl.bas.microtwitter.repositories.TweetLikeRepository
 import pl.bas.microtwitter.repositories.TweetRepository
+import pl.bas.microtwitter.resolvers.Optional
 import javax.transaction.Transactional
 
 @CrossOrigin
@@ -45,7 +46,7 @@ class TweetController(
     @GetMapping("/tweets")
     fun getTweets(@RequestParam username: String?,
                   pageable: Pageable,
-                  user: UserDAO): ResponseEntity<Page<TweetResponseDTO>> {
+                  @Optional() user: UserDAO?): ResponseEntity<Page<TweetResponseDTO>> {
         if (username.isNullOrBlank()) {
             throw BadRequestException("Username must be a not empty string")
         }
@@ -61,7 +62,7 @@ class TweetController(
     @GetMapping("/liked-tweets")
     fun getUserLikedTweets(@RequestParam username: String?,
                            pageable: Pageable,
-                           user: UserDAO): ResponseEntity<Page<TweetResponseDTO>> {
+                           @Optional() user: UserDAO?): ResponseEntity<Page<TweetResponseDTO>> {
         if (username.isNullOrBlank()) {
             throw BadRequestException("Username must be a not empty string")
         }
@@ -76,7 +77,7 @@ class TweetController(
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/tweets")
     fun createTweet(@RequestBody body: TweetCreateDTO,
-                    user: UserDAO): ResponseEntity<TweetResponseDTO> {
+                    @Optional() user: UserDAO?): ResponseEntity<TweetResponseDTO> {
         val tweetData = TweetDAO().apply {
             content = body.content
             this.user = user
@@ -98,7 +99,7 @@ class TweetController(
     @PreAuthorize("permitAll()")
     @GetMapping("/tweets/{tweetId}")
     fun getTweet(@PathVariable tweetId: Long,
-                 user: UserDAO): ResponseEntity<TweetResponseDTO> {
+                 @Optional() user: UserDAO?): ResponseEntity<TweetResponseDTO> {
         val tweet = tweetRepository.findById(tweetId).let {
             if (!it.isPresent) throw BadRequestException("Cannot find a tweet with id '$tweetId'")
             it.get()
@@ -190,7 +191,7 @@ class TweetController(
     @GetMapping("/tweets/{tweetId}/comments")
     fun getComments(@PathVariable tweetId: Long,
                     pageable: Pageable,
-                    user: UserDAO): ResponseEntity<Page<TweetResponseDTO>> {
+                    @Optional() user: UserDAO?): ResponseEntity<Page<TweetResponseDTO>> {
         val baseTweet = tweetRepository.findById(tweetId).let {
             if (!it.isPresent) {
                 throw BadRequestException("Tweet does not exist")

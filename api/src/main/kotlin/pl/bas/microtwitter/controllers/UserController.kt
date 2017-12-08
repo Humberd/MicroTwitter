@@ -12,6 +12,7 @@ import pl.bas.microtwitter.dto.ProfileUpdateDTO
 import pl.bas.microtwitter.dto.UserResponseDTO
 import pl.bas.microtwitter.exceptions.BadRequestException
 import pl.bas.microtwitter.repositories.UserRepository
+import pl.bas.microtwitter.resolvers.Optional
 import javax.transaction.Transactional
 
 @CrossOrigin
@@ -61,7 +62,7 @@ class UserController(
     @GetMapping("/users")
     fun getUsers(@RequestParam usernameOrfullName: String,
                  pageable: Pageable,
-                 user: UserDAO): ResponseEntity<Page<UserResponseDTO>> {
+                 @Optional user: UserDAO?): ResponseEntity<Page<UserResponseDTO>> {
         if (usernameOrfullName.isBlank()) {
             throw BadRequestException("Username or FullName must be a not empty string")
         }
@@ -74,7 +75,7 @@ class UserController(
     @GetMapping("/users/{username}/following-users")
     fun getFollowingUsers(@PathVariable username: String?,
                           pageable: Pageable,
-                          user: UserDAO): ResponseEntity<Page<UserResponseDTO>> {
+                          @Optional user: UserDAO?): ResponseEntity<Page<UserResponseDTO>> {
         if (username.isNullOrBlank()) {
             throw BadRequestException("Username must be a not empty string")
         }
@@ -86,8 +87,8 @@ class UserController(
     @PreAuthorize("permitAll()")
     @GetMapping("/users/{username}/followers")
     fun getFollowers(@PathVariable username: String?,
-                          pageable: Pageable,
-                          user: UserDAO): ResponseEntity<Page<UserResponseDTO>> {
+                     pageable: Pageable,
+                     @Optional user: UserDAO?): ResponseEntity<Page<UserResponseDTO>> {
         if (username.isNullOrBlank()) {
             throw BadRequestException("Username must be a not empty string")
         }
@@ -102,8 +103,8 @@ class UserController(
     @PreAuthorize("permitAll()")
     @GetMapping("/users/{username}")
     fun getUser(@PathVariable username: String,
-                user: UserDAO): ResponseEntity<UserResponseDTO> {
-        val selectedUser = if (user.lcusername == username.toLowerCase()) {
+                @Optional user: UserDAO?): ResponseEntity<UserResponseDTO> {
+        val selectedUser = if (user?.lcusername == username.toLowerCase()) {
             user
         } else {
             userRepository.findByLcusername(username.toLowerCase()).apply {

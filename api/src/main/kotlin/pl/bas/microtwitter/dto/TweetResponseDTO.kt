@@ -25,7 +25,7 @@ data class TweetUserResponseDTO(
 )
 
 
-fun buildTweetResponseDTO(me: UserDAO,
+fun buildTweetResponseDTO(me: UserDAO?,
                           tweet: TweetDAO,
                           tweetLikeRepository: TweetLikeRepository,
                           tweetRepository: TweetRepository): TweetResponseDTO {
@@ -40,7 +40,7 @@ fun buildTweetResponseDTO(me: UserDAO,
                     username = tweet.user?.username,
                     fullName = tweet.user?.profile?.fullName
             ),
-            isLiked = if (tweetLikeRepository.countByTweetAndUser(tweet, me) == 0) false else true,
+            isLiked = if (me === null) null else if (tweetLikeRepository.countByTweetAndUser(tweet, me) == 0) false else true,
             inReplyToTweetId = tweet.inReplyToTweet?.id,
             inReplyToUser = TweetUserResponseDTO(
                     id = tweet.inReplyToUser?.id,

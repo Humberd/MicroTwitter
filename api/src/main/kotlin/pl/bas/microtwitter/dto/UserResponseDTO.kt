@@ -33,19 +33,19 @@ data class BirthdateResponseDTO(
         var year: Short?
 )
 
-fun buildUserResponseDTO(me: UserDAO,
+fun buildUserResponseDTO(me: UserDAO?,
                          user: UserDAO,
                          userRepository: UserRepository): UserResponseDTO {
     return UserResponseDTO(
             id = user.id,
             createdAt = user.createdAt,
             username = user.username,
-            email = if (me.id == user.id) user.email else null,
+            email = if (me === null) null else if (me.id == user.id) user.email else null,
             tweetsCount = userRepository.countByTweets_User(user),
             likesCount = userRepository.countByLikes_User(user),
             followedUsersCount = userRepository.countFollowedUsers(user),
             followedByUsersCount = userRepository.countFollowers(user),
-            isFollowing = if (me.id == user.id) null
+            isFollowing = if (me === null) null else if (me.id == user.id) null
             else me.followedUsers.find { followingUser -> followingUser.id == user.id } !== null,
             profile = ProfileResponseDTO(
                     fullName = user.profile!!.fullName,

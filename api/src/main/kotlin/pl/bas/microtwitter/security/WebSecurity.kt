@@ -56,16 +56,6 @@ class WebSecurity(private val userDetailsService: UserDetailsService,
         auth!!.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder)
     }
 
-    override fun configure(web: WebSecurity?) {
-        web?.expressionHandler(object : DefaultWebSecurityExpressionHandler() {
-            override fun createSecurityExpressionRoot(authentication: Authentication?, fi: FilterInvocation?): SecurityExpressionOperations {
-                return super.createSecurityExpressionRoot(authentication, fi).apply {
-                    setDefaultRolePrefix("")
-                }
-            }
-        })
-    }
-
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val source = UrlBasedCorsConfigurationSource()

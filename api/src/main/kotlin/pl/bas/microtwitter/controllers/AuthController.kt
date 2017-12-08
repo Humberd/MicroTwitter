@@ -26,7 +26,7 @@ class AuthController(
     /**
      * Signs up user
      */
-    @PreAuthorize("isAnonymous()")
+    @PreAuthorize("permitAll()")
     @Transactional
     @PostMapping("/signup")
     fun signup(@RequestBody body: SignupDTO): ResponseEntity<Unit> {
@@ -48,7 +48,7 @@ class AuthController(
      * Logs in user and responds with ["Authorization"] header
      * Login is handled by JWT filters in a [pl.bas.microtwitter.security] package
      */
-    @PreAuthorize("isAnonymous()")
+    @PreAuthorize("permitAll()")
     @PostMapping("/login")
     fun login(@RequestBody body: LoginDTO): ResponseEntity<Unit> {
         return ResponseEntity.ok(Unit)
