@@ -11,7 +11,7 @@
   <mat-autocomplete #auto
                     (optionSelected)="goToUserPage($event)">
     <mat-option *ngFor="let user of results | async"
-                [value]="user">
+                [value]="user.username">
       <app-user-list-element-small [user]="user">
       </app-user-list-element-small>
     </mat-option>

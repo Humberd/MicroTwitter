@@ -34,8 +34,8 @@ export class SearchUserComponent implements OnInit {
   }
 
   goToUserPage(event: any) {
-    const user: UserResponseDTO = event.option.value;
-    this.router.navigate(['/u', user.username]);
+    const username: string = event.option.value;
+    this.router.navigate(['/u', username]);
   }
 
 }
