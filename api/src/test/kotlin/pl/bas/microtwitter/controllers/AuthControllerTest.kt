@@ -55,7 +55,7 @@ internal class AuthControllerTest {
                 this.username = AuthHelper.user3.username
             }
             AuthHelper.signUp(http, userWithSameUsername).apply {
-                assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, this.statusCode)
+                assertEquals(HttpStatus.BAD_REQUEST, this.statusCode)
             }
         }
 
@@ -69,7 +69,7 @@ internal class AuthControllerTest {
                 this.email = AuthHelper.user3.email
             }
             AuthHelper.signUp(http, userWithSameEmail).apply {
-                assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, this.statusCode)
+                assertEquals(HttpStatus.BAD_REQUEST, this.statusCode)
             }
         }
 
