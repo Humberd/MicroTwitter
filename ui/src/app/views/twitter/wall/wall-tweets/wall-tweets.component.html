@@ -6,4 +6,14 @@
        (scrolled)="requestNextPage()">
     <app-tweet-list [tweetList]="itemsList"></app-tweet-list>
   </div>
+  <div class="empty-timeline"
+       *ngIf="itemsList?.length === 0">
+    <div class="header">
+      No Tweets yet?
+    </div>
+    <div class="body">
+      Your timeline won't be empty for too long.
+      When you start observing other users their Tweets will appear here.
+    </div>
+  </div>
 </div>

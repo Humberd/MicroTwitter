@@ -2,4 +2,27 @@
 
 .tweet-list {
   background-color: $white;
+
+  .empty-timeline {
+    padding: 64px;
+    background-color: $secondaryBackgroundColor;
+
+    .header {
+      font-size: 27px;
+      line-height: 32px;
+      margin-bottom: 8px;
+      margin-left: 8px;
+      text-align: left;
+      font-weight: bolder;
+    }
+
+    .body {
+      color: $secondaryTextColor;
+      font-size: 14px;
+      line-height: 20px;
+      margin-bottom: 32px;
+      margin-left: 8px;
+      text-align: left;
+    }
+  }
 }
