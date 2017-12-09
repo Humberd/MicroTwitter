@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserResponseDTO } from "../../dto/UserResponseDTO";
 import { CONSTANTS } from "../../config/Constants";
 import { isNull } from "util";
+import { ColorConverter } from "../../helpers/ColorConverter";
 
 @Injectable()
 export class DynamicStylesService {
@@ -43,6 +44,7 @@ export class DynamicStylesService {
   }
 
   private generateStylesheet(userColor: string): string {
+    const lightBackgroundColor = ColorConverter.lighten(90, userColor);
     // language=CSS
     return `
       .dynamic-button-primary:not([disabled]) {
@@ -60,6 +62,9 @@ export class DynamicStylesService {
       }
       .dynamic-color-hover:hover {
         color: ${userColor} !important;
+      }
+      .dynamic-background-color-light {
+        background-color: ${lightBackgroundColor} !important;
       }
       
       /* styles to a profile tabs component */

@@ -4,6 +4,13 @@
   background-color: $white;
   border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 
+  .mat-tab-link {
+    opacity: 1;
+  }
+
+  .twitter-logo {
+    color: $defaultTwitterColor;
+  }
   .wrapper {
     display: flex;
     justify-content: space-between;
