@@ -1,7 +1,7 @@
 <div class="tweet-info-block-component">
   <div class="top-bar">
     <img class="avatar user-icon-medium"
-         src="https://pbs.twimg.com/profile_images/931968026743918592/PARoJaa5_400x400.jpg">
+         [src]="tweet?.user?.avatarUrl | avatarUrl">
     <div class="user-info">
       <app-user-basic-big [user]="user"
                           [tweetUser]="tweet?.user"></app-user-basic-big>

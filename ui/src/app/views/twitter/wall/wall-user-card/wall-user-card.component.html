@@ -1,36 +1,40 @@
 <div class="wall-user-card-component">
   <div class="banner-wrapper">
+    <div class="banner"
+         [ngStyle]="{backgroundColor: user?.profile.profileLinkColor}"
+         *ngIf="!user?.profile.backgroundUrl"></div>
     <img class="banner"
-         src="https://pbs.twimg.com/profile_banners/2182752278/1511033434/1500x500">
+         *ngIf="user?.profile.backgroundUrl"
+         [src]="user?.profile.backgroundUrl">
   </div>
   <div class="container">
     <div class="top-row">
       <div class="avatar-wrapper">
         <img class="avatar"
-             src="https://pbs.twimg.com/profile_images/931968026743918592/PARoJaa5_400x400.jpg">
+             [src]="user?.profile.avatarUrl | avatarUrl">
       </div>
       <app-user-basic-big class="user-basic"
                           [user]="user"></app-user-basic-big>
     </div>
     <div class="bottom-row">
       <a class="item"
-          [routerLink]="['/u',user?.username]">
+         [routerLink]="['/u',user?.username]">
         <div class="label">Tweets</div>
-        <div class="value">
+        <div class="value dynamic-color">
           {{user?.tweetsCount}}
         </div>
       </a>
       <a class="item"
          [routerLink]="['/u',user?.username,'following']">
         <div class="label">Following</div>
-        <div class="value">
+        <div class="value dynamic-color">
           {{user?.followedUsersCount}}
         </div>
       </a>
       <a class="item"
          [routerLink]="['/u',user?.username, 'followers']">
         <div class="label">Followers</div>
-        <div class="value">
+        <div class="value dynamic-color">
           {{user?.followedByUsersCount}}
         </div>
       </a>

@@ -10,6 +10,7 @@ import { AuthService } from "../../../shared/services/auth.service";
 import { UpdateProfileFormComponent } from "../../../shared/components/update-profile-form/update-profile-form.component";
 import { SnackBarService } from "../../../shared/services/snack-bar.service";
 import { isString } from "util";
+import { DynamicStylesService } from "../../../shared/services/dynamic-styles.service";
 
 @Component({
   selector: 'app-profile',
@@ -27,6 +28,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
               private userHttpService: UserHttpService,
               public authService: AuthService,
               private snackBarService: SnackBarService,
+              private dynamicStylesService: DynamicStylesService,
               private title: Title) {
   }
 
@@ -46,8 +48,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private getUser(username: string): Observable<UserResponseDTO> {
     return this.userHttpService.getUser(username)
-      .do(user => this.user = user)
-      .do(user => this.title.setTitle(`${user.profile.fullName} (@${user.username}) on ${CONSTANTS.APP_NAME}`));
+      .do(user => {
+        this.user = user;
+        this.title.setTitle(`${user.profile.fullName} (@${user.username}) on ${CONSTANTS.APP_NAME}`);
+        this.dynamicStylesService.setUser(user);
+      });
   }
 
   updateProfile(): void {
@@ -55,6 +60,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .subscribe(newUser => {
         this.isProfileEditing = false;
         this.user = newUser;
+        this.authService.requestUserDataUpdate();
+        this.title.setTitle(`${newUser.profile.fullName} (@${newUser.username}) on ${CONSTANTS.APP_NAME}`);
+        this.dynamicStylesService.setUser(newUser);
         this.snackBarService.showInfoSnackBar("Profile has been updated");
       }, error => {
         if (isString(error)) {

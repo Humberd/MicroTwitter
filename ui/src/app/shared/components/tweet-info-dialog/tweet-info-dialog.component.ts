@@ -9,6 +9,7 @@ import { PageDTO } from "../../../dto/PageDTO";
 import { Observable } from "rxjs/Observable";
 import { NewTweetInlineComponent } from "../new-tweet-inline/new-tweet-inline.component";
 import { DialogService } from "../../services/dialog.service";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: 'app-tweet-info-dialog',

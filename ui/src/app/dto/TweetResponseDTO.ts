@@ -14,4 +14,5 @@ export interface TweetUserResponseDTO {
   id?: number;
   username?: string;
   fullName?: string;
+  avatarUrl?: string;
 }

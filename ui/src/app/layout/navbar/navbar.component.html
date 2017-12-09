@@ -8,25 +8,21 @@
     <div class="left">
       <a mat-tab-link
          [routerLink]="['']">
-        <mat-icon>
-          home
-        </mat-icon>
+        <mat-icon class="no-select">home</mat-icon>
         Home
       </a>
     </div>
     <div class="center">
       <a mat-tab-link>
-        <mat-icon class="no-select">
-          accessible
-        </mat-icon>
+        <mat-icon class="no-select">accessible</mat-icon>
       </a>
     </div>
     <div class="right">
       <app-search-user class="search-user"></app-search-user>
       <div *ngIf="authService.isUserLoggedIn(); else notLoggedIn"
            class="content-wrapper">
-        <img src="https://pbs.twimg.com/profile_images/931968026743918592/PARoJaa5_normal.jpg"
-             class="user-menu-trigger user-icon-small"
+        <img class="user-menu-trigger user-icon-small"
+             [src]="authService.getUser().data.profile.avatarUrl | avatarUrl"
              [matMenuTriggerFor]="appMenu"/>
         <mat-menu class="user-menu"
                   #appMenu
@@ -49,6 +45,7 @@
           </button>
         </mat-menu>
         <button mat-raised-button
+                class="dynamic-button-primary"
                 color="primary"
                 (click)="dialogService.showNewTweetDialog()">
           Tweet

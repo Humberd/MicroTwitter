@@ -1,6 +1,7 @@
 <div class="follow-button-component"
      *ngIf="!authService.isMe(user)">
   <button mat-raised-button
+          class="dynamic-button"
           *ngIf="!user?.following"
           (click)="triggerFollowUserAction()">
     Follow
@@ -8,6 +9,7 @@
   <button class="unfollow-button"
           mat-raised-button
           *ngIf="user?.following"
+          [ngClass]="{'dynamic-button-primary': !isUnfollowButtonHovered}"
           [color]="isUnfollowButtonHovered? 'warn': 'primary'"
           (mouseenter)="isUnfollowButtonHovered = true"
           (mouseleave)="isUnfollowButtonHovered = false"

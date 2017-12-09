@@ -18,8 +18,6 @@ import {
   MatSnackBarModule
 } from "@angular/material";
 import { AutofocusDirective } from "./directives/autofocus.directive";
-import { DynamicBackgroundColorDirective } from "./directives/dynamic-background-color.directive";
-import { DynamicColorDirective } from "./directives/dynamic-color.directive";
 import { SearchUserComponent } from './components/search-user/search-user.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { UserListElementSmallComponent } from './components/user-list-element-small/user-list-element-small.component';
@@ -49,6 +47,8 @@ import { AfterAuthCheckGuard } from "./guards/after-auth-check.guard";
 import { SnackBarService } from "./services/snack-bar.service";
 import { UpdateProfileFormComponent } from './components/update-profile-form/update-profile-form.component';
 import { UrlPipe } from './pipes/url.pipe';
+import { AvatarUrlPipe } from './pipes/avatar-url.pipe';
+import { DynamicStylesService } from "./services/dynamic-styles.service";
 
 @NgModule({
   imports: [
@@ -68,12 +68,11 @@ import { UrlPipe } from './pipes/url.pipe';
     InfiniteScrollModule,
   ],
   declarations: [
-    DynamicColorDirective,
-    DynamicBackgroundColorDirective,
     AutofocusDirective,
 
     BirthdatePipe,
     UrlPipe,
+    AvatarUrlPipe,
 
     SearchUserComponent,
     UserListElementSmallComponent,
@@ -98,12 +97,11 @@ import { UrlPipe } from './pipes/url.pipe';
     UpdateProfileFormComponent,
   ],
   exports: [
-    DynamicColorDirective,
-    DynamicBackgroundColorDirective,
     AutofocusDirective,
 
     BirthdatePipe,
     UrlPipe,
+    AvatarUrlPipe,
 
     SearchUserComponent,
     NewTweetFormComponent,
@@ -142,6 +140,7 @@ import { UrlPipe } from './pipes/url.pipe';
     AuthService,
     DialogService,
     SnackBarService,
+    DynamicStylesService,
   ]
 })
 export class SharedModule {

@@ -1,22 +1,25 @@
 <div class="tweet-component">
   <img class="user-icon user-icon-medium"
-       src="https://pbs.twimg.com/profile_images/931968026743918592/PARoJaa5_normal.jpg"/>
+       [src]="tweet?.user?.avatarUrl | avatarUrl"/>
   <div class="tweet">
     <div class="header">
-      <a class="user-full-name"
+      <a class="user-full-name dynamic-color-hover"
          [routerLink]="['/u',tweet.user.username]">
         {{tweet.user.fullName}}
       </a>
       <div class="user-username">
         @{{tweet.user.username}}
       </div>
-      <a class="tweet-date">
+      <a class="tweet-date dynamic-color-hover">
         {{tweet.createdAt | date}}
       </a>
     </div>
-    <div class="reply-users" *ngIf="tweet.inReplyToUser?.username">
+    <div class="reply-users"
+         *ngIf="tweet.inReplyToUser?.username">
       Replying to
-      <a class="app-link">@{{tweet.inReplyToUser.username}}</a>
+      <a class="app-link dynamic-link">
+        @{{tweet.inReplyToUser.username}}
+      </a>
     </div>
     <p class="content">
       {{tweet.content}}

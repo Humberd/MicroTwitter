@@ -1,7 +1,7 @@
 <div class="new-tweet-inline">
   <div class="avatar">
     <img class="user-icon user-icon-small"
-         src="https://pbs.twimg.com/profile_images/931968026743918592/PARoJaa5_normal.jpg"/>
+         [src]="authService.getUser()?.data.profile.avatarUrl | avatarUrl"/>
   </div>
   <div class="new-tweet-form-wrapper">
     <app-new-tweet-form [shouldAutofocus]="false"

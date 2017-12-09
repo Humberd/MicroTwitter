@@ -17,7 +17,8 @@
        *ngIf="user?.profile.url">
     <mat-icon class="icon">link</mat-icon>
     <div class="data">
-      <a [href]="user?.profile.url | url" class="app-link">
+      <a class="app-link dynamic-link"
+         [href]="user?.profile.url | url">
         {{user?.profile.url}}
       </a>
     </div>
