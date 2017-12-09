@@ -78,8 +78,14 @@ export class DynamicStylesService {
         background-color: ${userColor} !important;
       }
       
+      /* sttyle for wall-user-card-component */
       .wall-user-card-component .item:hover > .label {
         color: ${userColor} !important;
+      }
+      
+      /* styles for nav-bar*/
+      .app-nav-bar .mat-tab-links > .mat-ink-bar  {
+        background-color: ${userColor} !important;
       }
     `;
   }

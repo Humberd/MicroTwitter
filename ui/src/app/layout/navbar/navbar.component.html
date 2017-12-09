@@ -7,8 +7,12 @@
        }">
     <div class="left">
       <a mat-tab-link
-         [routerLink]="['']">
-        <mat-icon class="no-select">home</mat-icon>
+         class="dynamic-color-hover app-tab-link"
+         [routerLink]="['/']"
+         [routerLinkActiveOptions]="{exact: true}"
+         [ngClass]="{'dynamic-color': rla.isActive}"
+         routerLinkActive="active" #rla="routerLinkActive">
+        <mat-icon class="icon no-select">home</mat-icon>
         Home
       </a>
     </div>
