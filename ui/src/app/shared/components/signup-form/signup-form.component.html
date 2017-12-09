@@ -9,22 +9,27 @@
              [formControlName]="'username'"
              [appAutofocus]="shouldAutofocus"
              placeholder="Username">
+      <mat-error *ngIf="signupForm.get('username').hasError('required')">This field is required</mat-error>
     </mat-form-field>
     <mat-form-field>
       <input matInput
              [formControlName]="'email'"
              placeholder="Email">
+      <mat-error *ngIf="signupForm.get('email').hasError('required')">This field is required</mat-error>
+      <mat-error *ngIf="signupForm.get('email').hasError('email')">Invalid email format</mat-error>
     </mat-form-field>
     <mat-form-field>
       <input matInput
              [formControlName]="'fullName'"
              placeholder="Full Name">
+      <mat-error *ngIf="signupForm.get('fullName').hasError('required')">This field is required</mat-error>
     </mat-form-field>
     <mat-form-field>
       <input matInput
              [formControlName]="'password'"
              type="password"
              placeholder="Password">
+      <mat-error *ngIf="signupForm.get('password').hasError('required')">This field is required</mat-error>
     </mat-form-field>
     <div class="form-buttons">
       <button mat-raised-button
