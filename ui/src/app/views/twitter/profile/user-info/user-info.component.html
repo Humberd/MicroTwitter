@@ -17,7 +17,7 @@
        *ngIf="user?.profile.url">
     <mat-icon class="icon">link</mat-icon>
     <div class="data">
-      <a [href]="'//'+ user?.profile.url" class="app-link">
+      <a [href]="user?.profile.url | url" class="app-link">
         {{user?.profile.url}}
       </a>
     </div>
@@ -30,7 +30,7 @@
     </div>
   </div>
   <div class="item"
-       *ngIf="user?.profile.birthdate">
+       *ngIf="!isBirthdate(user?.profile.birthdate)">
     <mat-icon class="icon">face</mat-icon>
     <div class="data">
       {{user?.profile.birthdate | birthdate | date}}

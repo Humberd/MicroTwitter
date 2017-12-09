@@ -1,0 +1,41 @@
+<div class="form-component">
+  <form class="form-component-content"
+        [formGroup]="profileForm"
+        novalidate>
+    <mat-form-field>
+      <input matInput
+             [formControlName]="'fullName'"
+             placeholder="Full Name">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [formControlName]="'description'"
+             placeholder="Description">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [formControlName]="'location'"
+             placeholder="Location">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [formControlName]="'profileLinkColor'"
+             placeholder="Theme color">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [formControlName]="'url'"
+             placeholder="Site URL">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [formControlName]="'avatarUrl'"
+             placeholder="Avatar URL">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [formControlName]="'backgroundUrl'"
+             placeholder="Background URL">
+    </mat-form-field>
+  </form>
+</div>

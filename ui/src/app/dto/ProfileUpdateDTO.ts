@@ -5,6 +5,8 @@ export interface ProfileUpdateDTO {
   profileLinkColor?: string;
   url?: string;
   birthdate?: BirthdateDTO;
+  avatarUrl ?: string;
+  backgroundUrl ?: string;
 }
 
 export interface BirthdateDTO {

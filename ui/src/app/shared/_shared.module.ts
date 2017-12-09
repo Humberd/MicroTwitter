@@ -47,6 +47,8 @@ import { LoginFormComponent } from "./components/login-form/login-form.component
 import { SignupFormComponent } from "./components/signup-form/signup-form.component";
 import { AfterAuthCheckGuard } from "./guards/after-auth-check.guard";
 import { SnackBarService } from "./services/snack-bar.service";
+import { UpdateProfileFormComponent } from './components/update-profile-form/update-profile-form.component';
+import { UrlPipe } from './pipes/url.pipe';
 
 @NgModule({
   imports: [
@@ -71,6 +73,7 @@ import { SnackBarService } from "./services/snack-bar.service";
     AutofocusDirective,
 
     BirthdatePipe,
+    UrlPipe,
 
     SearchUserComponent,
     UserListElementSmallComponent,
@@ -92,6 +95,7 @@ import { SnackBarService } from "./services/snack-bar.service";
     TweetInfoDialogComponent,
     LoginFormComponent,
     SignupFormComponent,
+    UpdateProfileFormComponent,
   ],
   exports: [
     DynamicColorDirective,
@@ -99,6 +103,7 @@ import { SnackBarService } from "./services/snack-bar.service";
     AutofocusDirective,
 
     BirthdatePipe,
+    UrlPipe,
 
     SearchUserComponent,
     NewTweetFormComponent,
@@ -117,6 +122,7 @@ import { SnackBarService } from "./services/snack-bar.service";
     NewTweetInlineComponent,
     LoginFormComponent,
     SignupFormComponent,
+    UpdateProfileFormComponent,
   ],
   entryComponents: [
     NewTweetDialogComponent,

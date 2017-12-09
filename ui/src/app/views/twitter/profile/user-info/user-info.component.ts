@@ -11,4 +11,8 @@ export class UserInfoComponent {
 
   constructor() {
   }
+
+  isBirthdate(birthdate) {
+    return typeof birthdate === "object";
+  }
 }

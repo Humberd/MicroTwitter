@@ -19,6 +19,8 @@ export interface ProfileResponseDTO {
   profileLinkColor?: string;
   url?: string;
   birthdate: BirthdateResponseDTO;
+  avatarUrl ?: string;
+  backgroundUrl ?: string;
 }
 
 export interface BirthdateResponseDTO {

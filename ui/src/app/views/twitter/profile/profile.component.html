@@ -16,17 +16,35 @@
       </div>
       <div class="actions side-panel">
         <button mat-raised-button
-                *ngIf="authService.isUserLoggedIn() && user?.id === authService.getUser()?.data.id">
+                *ngIf="isProfileEditing"
+                (click)="isProfileEditing = false">
+          Cancel
+        </button>
+        <button mat-raised-button
+                color="primary"
+                *ngIf="isProfileEditing"
+                (click)="updateProfile()">
+          Save changes
+        </button>
+
+        <button mat-raised-button
+                *ngIf="!isProfileEditing && authService.isMe(user)"
+                (click)="isProfileEditing = true">
           Edit Profile
         </button>
-        <app-follow-button [user]="user"></app-follow-button>
+        <app-follow-button *ngIf="!isProfileEditing"
+                           [user]="user"></app-follow-button>
       </div>
     </div>
   </div>
   <div class="profile-container large-container">
     <div class="left-panel side-panel">
       <div class="module">
-        <app-user-info [user]="user"></app-user-info>
+        <app-update-profile-form #updateProfileForm
+                                 *ngIf="isProfileEditing"
+                                 [user]="user"></app-update-profile-form>
+        <app-user-info *ngIf="!isProfileEditing"
+                       [user]="user"></app-user-info>
       </div>
     </div>
     <div class="center-panel">
