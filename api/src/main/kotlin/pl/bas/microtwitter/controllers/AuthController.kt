@@ -11,9 +11,11 @@ import pl.bas.microtwitter.dao.ProfileDAO
 import pl.bas.microtwitter.dao.UserDAO
 import pl.bas.microtwitter.dto.LoginDTO
 import pl.bas.microtwitter.dto.SignupDTO
+import pl.bas.microtwitter.dto.SignupDTOJ
 import pl.bas.microtwitter.dto.UpdatePasswordDTO
 import pl.bas.microtwitter.exceptions.BadRequestException
 import pl.bas.microtwitter.repositories.UserRepository
+import javax.validation.Valid
 
 @CrossOrigin
 @RestController
@@ -29,7 +31,7 @@ class AuthController(
     @PreAuthorize("permitAll()")
     @Transactional
     @PostMapping("/signup")
-    fun signup(@RequestBody body: SignupDTO): ResponseEntity<Unit> {
+    fun signup(@RequestBody @Valid body: SignupDTOJ): ResponseEntity<Unit> {
         val user = UserDAO().apply {
             username = body.username
             email = body.email

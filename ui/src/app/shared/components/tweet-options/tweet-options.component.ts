@@ -4,6 +4,7 @@ import { MatSnackBar } from "@angular/material";
 import * as copy from 'copy-to-clipboard';
 import { DialogService } from "../../services/dialog.service";
 import { AuthService } from "../../services/auth.service";
+import { SnackBarService } from "../../services/snack-bar.service";
 
 @Component({
   selector: 'app-tweet-options',
@@ -14,7 +15,7 @@ export class TweetOptionsComponent {
   @Input() tweet: TweetResponseDTO;
   @Output() tweetDeleted = new EventEmitter<TweetResponseDTO>();
 
-  constructor(private snackBar: MatSnackBar,
+  constructor(private snackBarService: SnackBarService,
               public dialogService: DialogService,
               public authService: AuthService) {
   }
@@ -25,11 +26,7 @@ export class TweetOptionsComponent {
 
     copy(url.toString());
 
-    this.snackBar.open("Link copied.", null,
-      {
-        verticalPosition: 'top',
-        duration: 2000,
-      });
+    this.snackBarService.showInfoSnackBar("Link copied.");
   }
 
   showDeleteTweetDialog(): void {

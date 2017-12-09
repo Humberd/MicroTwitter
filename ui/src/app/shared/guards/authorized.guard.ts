@@ -4,12 +4,13 @@ import { Observable } from 'rxjs/Observable';
 import { AuthService } from "../services/auth.service";
 import { MatSnackBar } from '@angular/material';
 import { isUndefined } from "util";
+import { SnackBarService } from "../services/snack-bar.service";
 
 @Injectable()
 export class AuthorizedGuard implements CanActivate {
   constructor(private authService: AuthService,
               private router: Router,
-              private snackBar: MatSnackBar) {
+              private snackBarService: SnackBarService) {
   }
 
   canActivate(next: ActivatedRouteSnapshot,
@@ -19,7 +20,7 @@ export class AuthorizedGuard implements CanActivate {
       .map(user => !!user)
       .do(isAuthorized => {
         if (!isAuthorized) {
-          this.snackBar.open("You need to be authorized.", "Close");
+          this.snackBarService.showInfoSnackBar("You need to be aythorized.");
           console.info(`Cannot go to the ${state.url}. User must be authorized`);
 
           /* If this is the first route loading */

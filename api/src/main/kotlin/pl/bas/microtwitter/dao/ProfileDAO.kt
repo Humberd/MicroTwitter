@@ -1,5 +1,7 @@
 package pl.bas.microtwitter.dao
 
+import org.hibernate.validator.constraints.NotBlank
+import org.hibernate.validator.constraints.URL
 import pl.bas.microtwitter.exceptions.InvalidColorException
 import pl.bas.microtwitter.helpers.buildValidUrl
 import pl.bas.microtwitter.helpers.isHexColor
@@ -14,9 +16,11 @@ class ProfileDAO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
-    @Column(name = "fullName", nullable = false)
+    @NotBlank
+    @Column(name = "fullName")
     var fullName: String? = null
-    @Column(nullable = false)
+    @NotBlank
+    @Column(name = "fullNameLc")
     var fullnameLc: String? = null
 
     @Column(name = "description", nullable = false)
@@ -28,12 +32,15 @@ class ProfileDAO {
     @Column(name = "profileLinkColor", nullable = false)
     var profileLinkColor: String? = null
 
+    @URL
     @Column(name = "url", nullable = false)
     var url: String? = null
 
+    @URL
     @Column(name = "avatarUrl", nullable = false)
     var avatarUrl: String? = null
 
+    @URL
     @Column(name = "backgroundUrl", nullable = false)
     var backgroundUrl: String? = null
 

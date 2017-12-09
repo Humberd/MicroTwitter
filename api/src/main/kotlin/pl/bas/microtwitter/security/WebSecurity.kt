@@ -36,7 +36,7 @@ class WebSecurity(private val userDetailsService: UserDetailsService,
 
     override fun configure(http: HttpSecurity) {
         http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+//                .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers(HttpMethod.GET,
                         SWAGGER_API_DOCS_URL,
                         SWAGGER_RESOURCES_URL,

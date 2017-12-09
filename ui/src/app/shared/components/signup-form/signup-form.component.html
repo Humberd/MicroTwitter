@@ -2,7 +2,7 @@
   <h1 class="mat-h1">Join MicroTwitter Today</h1>
   <form class="form-component-content"
         [formGroup]="signupForm"
-        (ngSubmit)="signup()"
+        (ngSubmit)="signupForm.valid && signup()"
         novalidate>
     <mat-form-field>
       <input matInput
@@ -28,6 +28,7 @@
     </mat-form-field>
     <div class="form-buttons">
       <button mat-raised-button
+              [disabled]="signupForm.invalid"
               color="primary">
         Signup
       </button>

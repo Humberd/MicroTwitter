@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 import { CONSTANTS } from "../../../config/Constants";
 import { SignupDTO } from "../../../dto/SignupDTO";
+import { SnackBarService } from "../../services/snack-bar.service";
 
 @Component({
   selector: 'app-signup-form',
@@ -17,6 +18,7 @@ export class SignupFormComponent implements OnInit {
   @Input() shouldAutofocus: boolean;
 
   constructor(private authService: AuthService,
+              private snackBarService: SnackBarService,
               private router: Router) {
   }
 
@@ -32,16 +34,20 @@ export class SignupFormComponent implements OnInit {
           this.router.navigate(CONSTANTS.DEFAULT_AUTH_ROUTE);
         },
         error => {
-          console.log("error signup", error);
+          this.snackBarService.showLongInfoSnackBar("Error signing up");
+          console.error("Cannot signup", error);
         });
   }
 
   private initForm(): void {
     this.signupForm = new FormGroup({
-      username: new FormControl(""),
-      email: new FormControl(""),
-      fullName: new FormControl(""),
-      password: new FormControl("")
+      username: new FormControl("", Validators.required),
+      email: new FormControl("", [
+        Validators.required,
+        Validators.email
+      ]),
+      fullName: new FormControl("", Validators.required),
+      password: new FormControl("", Validators.required)
     });
   }
 

@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 import { CONSTANTS } from "../../../config/Constants";
 import { LoginDTO } from "../../../dto/LoginDTO";
+import { SnackBarService } from "../../services/snack-bar.service";
 
 @Component({
   selector: 'app-login-form',
@@ -17,6 +18,7 @@ export class LoginFormComponent implements OnInit {
   @Input() shouldAutofocus: boolean;
 
   constructor(private authService: AuthService,
+              private snackBarService: SnackBarService,
               private router: Router) {
   }
 
@@ -32,7 +34,9 @@ export class LoginFormComponent implements OnInit {
           this.router.navigate(CONSTANTS.DEFAULT_AUTH_ROUTE);
         },
         error => {
-          console.log("error login", error);
+          this.snackBarService.showLongInfoSnackBar(
+            "The username and password that you entered did not match our records. Please double-check and try again.");
+          console.error("Cannot login", error);
         });
   }
 

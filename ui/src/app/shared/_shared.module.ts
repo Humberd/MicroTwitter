@@ -46,6 +46,7 @@ import { TweetInfoDialogComponent } from './components/tweet-info-dialog/tweet-i
 import { LoginFormComponent } from "./components/login-form/login-form.component";
 import { SignupFormComponent } from "./components/signup-form/signup-form.component";
 import { AfterAuthCheckGuard } from "./guards/after-auth-check.guard";
+import { SnackBarService } from "./services/snack-bar.service";
 
 @NgModule({
   imports: [
@@ -134,6 +135,7 @@ import { AfterAuthCheckGuard } from "./guards/after-auth-check.guard";
 
     AuthService,
     DialogService,
+    SnackBarService,
   ]
 })
 export class SharedModule {

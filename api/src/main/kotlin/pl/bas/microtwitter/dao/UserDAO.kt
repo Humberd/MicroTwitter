@@ -1,8 +1,12 @@
 package pl.bas.microtwitter.dao
 
+import org.hibernate.validator.constraints.Email
+import org.hibernate.validator.constraints.NotBlank
+import org.hibernate.validator.constraints.URL
 import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
 
 @Entity
 @Table(name = "userx")// need to name it like this because 'user' is a reserved keyword in postgres
@@ -17,17 +21,24 @@ class UserDAO {
     @Temporal(TemporalType.TIMESTAMP)
     var createdAt: Date? = null
 
-    @Column(name = "username", nullable = false)
+    @NotBlank
+    @Column(name = "username")
     var username: String? = null
-    @Column(name = "usernameLc", nullable = false, unique = true)
+    @NotBlank
+    @Column(name = "usernameLc", unique = true)
     var usernameLc: String? = null
 
-    @Column(name = "email", nullable = false)
+    @Email
+    @NotBlank
+    @Column(name = "email")
     var email: String? = null
-    @Column(name = "emailLc", nullable = false, unique = true)
+    @Email
+    @NotBlank
+    @Column(name = "emailLc", unique = true)
     var emailLc: String? = null
 
-    @Column(name = "password", nullable = false)
+    @NotBlank
+    @Column(name = "password")
     var password: String? = null
 
     @OneToOne(fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)

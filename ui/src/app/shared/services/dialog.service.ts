@@ -8,7 +8,7 @@ import { TweetInfoDialogComponent } from "../components/tweet-info-dialog/tweet-
 
 @Injectable()
 export class DialogService {
-  private config: MatDialogConfig = {
+  private readonly config: MatDialogConfig = {
     width: '590px',
     panelClass: 'app-custom-dialog',
     position: {
