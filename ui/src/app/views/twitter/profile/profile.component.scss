@@ -1,9 +1,20 @@
 @import "../../../../styles/colors";
 
 .profile-view {
-  .profile-banner {
-    width: 100%;
+  .profile-banner-wrapper {
+    position: relative;
     height: 500px;
+    overflow: hidden;
+
+    .profile-banner {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -9999px;
+      bottom: -9999px;
+      margin: auto;
+      width: 100%;
+    }
   }
   .profile-banner-empty {
     width: 100%;
