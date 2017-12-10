@@ -2,9 +2,9 @@
   <div class="profile-banner-empty"
        [ngStyle]="{backgroundColor: user?.profile.profileLinkColor}"
        *ngIf="!user?.profile.backgroundUrl"></div>
-  <div class="profile-banner-wrapper">
+  <div class="profile-banner-wrapper"
+       *ngIf="user?.profile.backgroundUrl">
     <img class="profile-banner"
-         *ngIf="user?.profile.backgroundUrl"
          [src]="user?.profile.backgroundUrl">
   </div>
   <div class="profile-navbar">
