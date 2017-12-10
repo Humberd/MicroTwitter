@@ -5,6 +5,7 @@ import { TweetResponseDTO } from "../../dto/TweetResponseDTO";
 import { ReplyNewTweetDialogComponent } from "../components/reply-new-tweet-dialog/reply-new-tweet-dialog.component";
 import { DeleteTweetDialogComponent } from "../components/delete-tweet-dialog/delete-tweet-dialog.component";
 import { TweetInfoDialogComponent } from "../components/tweet-info-dialog/tweet-info-dialog.component";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class DialogService {
@@ -19,7 +20,8 @@ export class DialogService {
     }
   };
 
-  constructor(private matDialog: MatDialog) {
+  constructor(private matDialog: MatDialog,
+              private router: Router) {
   }
 
   public showNewTweetDialog(): MatDialogRef<NewTweetDialogComponent> {
@@ -48,8 +50,8 @@ export class DialogService {
     });
   }
 
-  public showTweetInfoDialog(tweet: TweetResponseDTO): MatDialogRef<TweetInfoDialogComponent> {
-    return this.matDialog.open(TweetInfoDialogComponent, {
+  public showTweetInfoDialog(tweet: TweetResponseDTO, preventUrlChange = false): MatDialogRef<TweetInfoDialogComponent> {
+    const dialogRef = this.matDialog.open(TweetInfoDialogComponent, {
       ...this.config,
       panelClass: "app-custom-dialog-tweet-info",
       position: {
@@ -61,5 +63,22 @@ export class DialogService {
         tweet
       }
     });
+
+    if (!preventUrlChange) {
+      let previousUrl: string;
+
+      dialogRef.afterOpen()
+        .subscribe(() => {
+          previousUrl = this.router.routerState.snapshot.url;
+          window.history.pushState("", "", ["/u", tweet.user.username, "tweet", tweet.id].join("/"));
+        });
+
+      dialogRef.afterClosed()
+        .subscribe(() => {
+          window.history.pushState("", "", previousUrl);
+        });
+    }
+
+    return dialogRef;
   }
 }

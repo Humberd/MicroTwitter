@@ -29,3 +29,4 @@ Everything is automatically built on push to `master` branch.
  * Commenting a Tweet
  * Viewing comments of a Tweet
  * Changing a profile color, so that other users that come to profile would see everything in a color the profile owner chose.
+ * Sharing a Tweet by a unique url.

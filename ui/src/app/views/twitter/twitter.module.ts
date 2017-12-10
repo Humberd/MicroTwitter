@@ -17,6 +17,7 @@ import { WallUserCardComponent } from './wall/wall-user-card/wall-user-card.comp
 import { TweetComponent } from './tweet/tweet.component';
 import { RootWrapperComponent } from "./root-wrapper/root-wrapper.component";
 import { LandingPageComponent } from "./landing-page/landing-page.component";
+import { TweetInfoRouteComponent } from './tweet-info-route/tweet-info-route.component';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { LandingPageComponent } from "./landing-page/landing-page.component";
     TweetComponent,
     RootWrapperComponent,
     LandingPageComponent,
+    TweetInfoRouteComponent,
   ]
 })
 export class TwitterViewsModule {

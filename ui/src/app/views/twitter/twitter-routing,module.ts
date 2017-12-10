@@ -6,6 +6,7 @@ import { FollowersComponent } from "./profile/followers/followers.component";
 import { LikesComponent } from "./profile/likes/likes.component";
 import { RootWrapperComponent } from "./root-wrapper/root-wrapper.component";
 import { AfterAuthCheckGuard } from "../../shared/guards/after-auth-check.guard";
+import { TweetInfoRouteComponent } from "./tweet-info-route/tweet-info-route.component";
 
 export const twitterRoutes: Route[] = [
   {
@@ -35,6 +36,10 @@ export const twitterRoutes: Route[] = [
         path: "likes",
         component: LikesComponent,
       },
+      {
+        path: "tweet/:tweetId",
+        component: TweetInfoRouteComponent,
+      }
     ]
-  }
+  },
 ];
