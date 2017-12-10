@@ -1,6 +1,6 @@
 # MicroTwitter
 
-The direct copy of Twitter for educational purposes only.
+The social network website highly influenced by Twitter. For educational purposes only.
 
 ## Links
 
