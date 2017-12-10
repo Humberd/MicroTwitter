@@ -6,6 +6,9 @@ html, body, textarea {
   background-color: $defaultBackground;
   color: $primaryTextColor;
 }
+body {
+  margin-bottom: 40px;
+}
 
 html {
   overflow-y: scroll;
