@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: "http://api.micro-twitter.quazarus.com"
+  apiUrl: "https://api.micro-twitter.quazarus.com"
 };
