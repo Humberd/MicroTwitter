@@ -1,10 +1,6 @@
 <nav mat-tab-nav-bar
      class="app-nav-bar">
-  <div class="wrapper large-container"
-       [ngClass]="{
-        'large-container': authService.isUserLoggedIn(),
-        'medium-container': !authService.isUserLoggedIn()
-       }">
+  <div class="wrapper large-container">
     <div class="left">
       <a mat-tab-link
          class="dynamic-color-hover app-tab-link"
