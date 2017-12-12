@@ -1,0 +1,27 @@
+<div class="dialog-header">
+  <div class="dialog-title">
+    Log in to {{CONSTANTS.APP_NAME}}
+  </div>
+</div>
+
+<div class="content">
+  <div class="form-container">
+    <div class="app-icon">
+      <mat-icon>cloud</mat-icon>
+    </div>
+    <app-login-form [shouldRedirectAfterLogin]="false"
+                    [shouldAutofocus]="true"
+                    (successLogin)="onSuccessLogin()"></app-login-form>
+  </div>
+</div>
+
+<div class="dialog-footer">
+  <p class="signup-text">
+    Don't have an account?
+    <a class="app-link"
+       [routerLink]="['/signup']"
+       (click)="dialogRef.close()">
+      Sign up »
+    </a>
+  </p>
+</div>

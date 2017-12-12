@@ -3,7 +3,7 @@
   <button mat-raised-button
           class="dynamic-button"
           *ngIf="!user?.following"
-          (click)="triggerFollowUserAction()">
+          (authOnlyClick)="triggerFollowUserAction()">
     Follow
   </button>
   <button class="unfollow-button"

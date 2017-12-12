@@ -26,6 +26,7 @@ export class TweetInfoDialogComponent extends AbstractScrollPageableComponent<Tw
 
   constructor(private userHttpService: UserHttpService,
               private tweetHttpService: TweetHttpService,
+              public authService: AuthService,
               public dialogRef: MatDialogRef<TweetInfoDialogComponent>,
               @Inject(MAT_DIALOG_DATA) private data: any) {
     super();

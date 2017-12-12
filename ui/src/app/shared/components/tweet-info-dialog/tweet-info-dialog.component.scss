@@ -4,6 +4,10 @@
   .base-tweet {
     padding: 30px 40px;
   }
+  .reply-form {
+    border-bottom: 1px solid $lightBorderColor;
+  }
+
   .comments-list /deep/ .tweet-block-wrapper {
     padding-left: 40px;
     padding-right: 40px;

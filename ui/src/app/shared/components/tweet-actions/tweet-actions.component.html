@@ -1,6 +1,6 @@
 <div class="tweet-actions">
   <div class="action-item comment-action"
-       (click)="triggerReplyCommentAction(); $event.stopPropagation()">
+       (authOnlyClick)="triggerReplyCommentAction(); $event.stopPropagation()">
     <mat-icon class="action-icon">chat_bubble_outline</mat-icon>
     <div class="count"
          *ngIf="tweet?.commentsCount > 0">
@@ -9,7 +9,7 @@
   </div>
   <div class="action-item like-action"
        [ngClass]="{liked: tweet?.liked}"
-       (click)="toggleLikeAction(); $event.stopPropagation()">
+       (authOnlyClick)="toggleLikeAction(); $event.stopPropagation()">
     <mat-icon class="action-icon" *ngIf="!tweet?.liked">favorite_border</mat-icon>
     <mat-icon class="action-icon" *ngIf="tweet?.liked">favorite</mat-icon>
     <div class="count"

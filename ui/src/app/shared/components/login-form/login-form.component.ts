@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
@@ -15,7 +15,9 @@ import { SnackBarService } from "../../services/snack-bar.service";
 })
 export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
+  @Input() shouldRedirectAfterLogin: boolean;
   @Input() shouldAutofocus: boolean;
+  @Output() successLogin = new EventEmitter();
 
   constructor(private authService: AuthService,
               private snackBarService: SnackBarService,
@@ -30,8 +32,11 @@ export class LoginFormComponent implements OnInit {
     const requestData = this.prepareData();
 
     this.authService.login(requestData)
-      .subscribe(() => {
-          this.router.navigate(CONSTANTS.DEFAULT_AUTH_ROUTE);
+      .subscribe(value => {
+          this.successLogin.next(value);
+          if (this.shouldRedirectAfterLogin) {
+            this.router.navigate(CONSTANTS.DEFAULT_AUTH_ROUTE);
+          }
         },
         error => {
           this.snackBarService.showLongInfoSnackBar(

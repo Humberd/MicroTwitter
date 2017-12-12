@@ -3,7 +3,8 @@
     <mat-card>
       <mat-card-content class="form-component-content">
         <div class="form-wrapper">
-          <app-login-form></app-login-form>
+          <h1 class="mat-h1">Log into MicroTwitter</h1>
+          <app-login-form [shouldRedirectAfterLogin]="true"></app-login-form>
         </div>
       </mat-card-content>
       <mat-card-footer class="form-component-footer">

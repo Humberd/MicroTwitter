@@ -5,7 +5,8 @@
                           [replyCommentAction]="replyCommentAction.bind(this)"></app-tweet-info-block>
   </div>
   <div class="reply-form">
-    <app-new-tweet-inline [inReplyToTweet]="tweet"
+    <app-new-tweet-inline *ngIf="authService.isUserLoggedIn()"
+                          [inReplyToTweet]="tweet"
                           (tweetCreated)="prependItem($event)"></app-new-tweet-inline>
   </div>
   <div class="comments-list"
@@ -22,7 +23,7 @@
   <div class="footer" *ngIf="itemsList?.length > 0">
     <div class="icon-wrapper no-select">
       <mat-icon class="icon">
-        accessible
+        cloud
       </mat-icon>
     </div>
   </div>

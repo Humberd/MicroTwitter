@@ -1,0 +1,28 @@
+@import "../../../../styles/colors";
+
+.content {
+  padding: 30px;
+
+  .form-container {
+    width: 260px;
+    margin: auto;
+
+    .app-icon {
+      text-align: center;
+      color: $defaultTwitterColor;
+      user-select: none;
+      padding-bottom: 10px;
+    }
+  }
+}
+
+.dialog-footer {
+  text-align: center;
+
+  .signup-text {
+    color: $secondaryTextColor;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1;
+  }
+}

@@ -6,6 +6,7 @@ import { ReplyNewTweetDialogComponent } from "../components/reply-new-tweet-dial
 import { DeleteTweetDialogComponent } from "../components/delete-tweet-dialog/delete-tweet-dialog.component";
 import { TweetInfoDialogComponent } from "../components/tweet-info-dialog/tweet-info-dialog.component";
 import { Router } from "@angular/router";
+import { LoginDialogComponent } from "../components/login-dialog/login-dialog.component";
 
 @Injectable()
 export class DialogService {
@@ -50,6 +51,18 @@ export class DialogService {
     });
   }
 
+  public showLoginDialog(): MatDialogRef<LoginDialogComponent> {
+    return this.matDialog.open(LoginDialogComponent, {
+      ...this.config,
+      position: {},
+    });
+  }
+
+  /**
+   * By default When the tweet info dialog appears it also changes url, but don't reload the route, only url change.
+   * After dialog closes it restores the previous url.
+   * [preventUrlChange] flag stop this behaviour
+   */
   public showTweetInfoDialog(tweet: TweetResponseDTO, preventUrlChange = false): MatDialogRef<TweetInfoDialogComponent> {
     const dialogRef = this.matDialog.open(TweetInfoDialogComponent, {
       ...this.config,

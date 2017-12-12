@@ -49,6 +49,8 @@ import { UpdateProfileFormComponent } from './components/update-profile-form/upd
 import { UrlPipe } from './pipes/url.pipe';
 import { AvatarUrlPipe } from './pipes/avatar-url.pipe';
 import { DynamicStylesService } from "./services/dynamic-styles.service";
+import { AuthOnlyClickDirective } from './directives/auth-only-click.directive';
+import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 
 @NgModule({
   imports: [
@@ -69,6 +71,7 @@ import { DynamicStylesService } from "./services/dynamic-styles.service";
   ],
   declarations: [
     AutofocusDirective,
+    AuthOnlyClickDirective,
 
     BirthdatePipe,
     UrlPipe,
@@ -95,9 +98,11 @@ import { DynamicStylesService } from "./services/dynamic-styles.service";
     LoginFormComponent,
     SignupFormComponent,
     UpdateProfileFormComponent,
+    LoginDialogComponent,
   ],
   exports: [
     AutofocusDirective,
+    AuthOnlyClickDirective,
 
     BirthdatePipe,
     UrlPipe,
@@ -121,12 +126,14 @@ import { DynamicStylesService } from "./services/dynamic-styles.service";
     LoginFormComponent,
     SignupFormComponent,
     UpdateProfileFormComponent,
+    LoginDialogComponent,
   ],
   entryComponents: [
     NewTweetDialogComponent,
     ReplyNewTweetDialogComponent,
     DeleteTweetDialogComponent,
     TweetInfoDialogComponent,
+    LoginDialogComponent,
   ],
   providers: [
     AuthHttpService,

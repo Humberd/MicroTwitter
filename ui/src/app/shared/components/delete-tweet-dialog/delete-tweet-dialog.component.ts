@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { TweetHttpService } from "../../http/tweet-http.service";
 import { TweetResponseDTO } from "../../../dto/TweetResponseDTO";
-import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from "@angular/material";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { SnackBarService } from "../../services/snack-bar.service";
 
 @Component({

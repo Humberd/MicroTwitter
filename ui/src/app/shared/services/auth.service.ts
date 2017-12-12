@@ -183,11 +183,11 @@ export class AuthService {
       console.info("Acquired jwt token from storage");
       this.initialJWT = jwt;
       this.updateUserData(jwt)
-        .subscribe(() => {
+        .finally(() => {
           this.finishInitialAuthCheck();
-        }, error2 => {
-          this.finishInitialAuthCheck();
-        });
+          this.initialJWT = null;
+        })
+        .subscribe();
     } else {
       this.logout();
       this.finishInitialAuthCheck() ;
