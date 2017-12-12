@@ -1,0 +1,18 @@
+@import "../../../../styles/colors";
+
+.panel-component {
+  .header {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  .description {
+    color: $secondaryTextColor;
+    line-height: 1.375;
+    font-size: 14px;
+  }
+  .signup-button {
+    margin-top: 8px;
+    width: 100%;
+    font-size: 18px;
+  }
+}

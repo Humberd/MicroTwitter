@@ -22,7 +22,8 @@ export class AuthService {
   /**
    * This observable should be triggered only once, when the initial user retrieve try is finished.
    */
-  private initialAuthCheckFinished = new BehaviorSubject<boolean>(false);
+  private initialAuthCheckFinishedObs = new BehaviorSubject<boolean>(false);
+  private initialAuthCheckFinished: boolean = false;
   /**
    * It has 3 states:
    *  * undefined - when the app has already started and getting auth user requests hasn't completed yet
@@ -58,19 +59,28 @@ export class AuthService {
    * @returns {boolean}
    */
   public isUserLoggedIn(): boolean {
-    return !!this.appUser;
+    return this.initialAuthCheckFinished && !!this.appUser;
+  }
+
+  /**
+   * Checks if a user is not logged in
+   * @returns {boolean}
+   */
+  public isUserNotLoggedIn(): boolean {
+    return this.initialAuthCheckFinished && !this.appUser;
   }
 
   /**
    * The promise resolves, when the initial check for user is finished
    * @returns {Promise<any>}
    */
-  public isInitialAuthCheckFinished(): Observable<boolean> {
-    return this.initialAuthCheckFinished;
+  public isInitialAuthCheckFinishedObs(): Observable<boolean> {
+    return this.initialAuthCheckFinishedObs;
   }
 
   private finishInitialAuthCheck(): void {
-    this.initialAuthCheckFinished.next(true);
+    this.initialAuthCheckFinishedObs.next(true);
+    this.initialAuthCheckFinished = true;
   }
 
   /**
@@ -84,15 +94,6 @@ export class AuthService {
     } else if (isObject(userOrUsername)) {
       return this.isUserLoggedIn() && this.appUser.data.id === (userOrUsername as UserResponseDTO).id;
     }
-  }
-
-  /**
-   * Gets an observable stream of checks if a user is logged in
-   * @returns {Observable<boolean>}
-   */
-  public isUserLoggedInObs(): Observable<boolean> {
-    return this.appUserObs.asObservable()
-      .map(appUser => !!appUser);
   }
 
   /**
@@ -190,7 +191,7 @@ export class AuthService {
         .subscribe();
     } else {
       this.logout();
-      this.finishInitialAuthCheck() ;
+      this.finishInitialAuthCheck();
     }
   }
 

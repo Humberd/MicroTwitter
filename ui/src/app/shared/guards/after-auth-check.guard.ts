@@ -13,7 +13,7 @@ export class AfterAuthCheckGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.authService.isInitialAuthCheckFinished()
+    return this.authService.isInitialAuthCheckFinishedObs()
       .filter(val => val);
   }
 }

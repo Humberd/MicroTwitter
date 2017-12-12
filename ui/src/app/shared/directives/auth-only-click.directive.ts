@@ -23,7 +23,6 @@ export class AuthOnlyClickDirective {
       e.stopPropagation();
       this.dialogService.showLoginDialog();
     } else {
-      console.log("click?");
       this.authOnlyClick.next(event);
     }
   }

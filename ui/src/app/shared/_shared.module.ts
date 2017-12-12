@@ -51,6 +51,7 @@ import { AvatarUrlPipe } from './pipes/avatar-url.pipe';
 import { DynamicStylesService } from "./services/dynamic-styles.service";
 import { AuthOnlyClickDirective } from './directives/auth-only-click.directive';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
+import { NewToTwitterPanelComponent } from './components/new-to-twitter-panel/new-to-twitter-panel.component';
 
 @NgModule({
   imports: [
@@ -99,6 +100,7 @@ import { LoginDialogComponent } from './components/login-dialog/login-dialog.com
     SignupFormComponent,
     UpdateProfileFormComponent,
     LoginDialogComponent,
+    NewToTwitterPanelComponent,
   ],
   exports: [
     AutofocusDirective,
@@ -127,6 +129,7 @@ import { LoginDialogComponent } from './components/login-dialog/login-dialog.com
     SignupFormComponent,
     UpdateProfileFormComponent,
     LoginDialogComponent,
+    NewToTwitterPanelComponent,
   ],
   entryComponents: [
     NewTweetDialogComponent,

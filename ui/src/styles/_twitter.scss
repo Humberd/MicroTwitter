@@ -42,6 +42,16 @@ a.app-link {
   width: $centerPanel;
 }
 
+.panel-item {
+  padding: 15px;
+  background-color: $white;
+  border: 1px solid $lightBorderColor;
+
+  &:not(:first-child) {
+    margin-top: 10px;
+  }
+}
+
 //--------------------------------
 @each $name, $size in $userIconSizes {
   .user-icon-#{$name} {

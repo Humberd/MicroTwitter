@@ -56,7 +56,10 @@
       <router-outlet></router-outlet>
     </div>
     <div class="right-panel side-panel">
-      <!--right panel-->
+      <div class="panel-item"
+           *ngIf="authService.isUserNotLoggedIn()">
+        <app-new-to-twitter-panel></app-new-to-twitter-panel>
+      </div>
     </div>
   </div>
 </div>
